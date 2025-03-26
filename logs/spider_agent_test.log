@@ -1,0 +1,638 @@
+2025-03-24 17:55:37,161 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:55:37,161 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:55:37,161 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:55:37,162 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:55:37,162 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:55:37,162 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:55:37,163 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:55:37,163 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:55:37,164 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:55:37,164 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:55:37,164 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:55:37,164 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:56:59,871 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:56:59,871 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:56:59,871 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:56:59,872 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:56:59,872 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:56:59,873 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:56:59,873 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:56:59,873 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:56:59,873 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:56:59,874 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:56:59,874 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:56:59,874 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:57:02,573 - core.enhanced_chat_manager - INFO - Final SQL: 
+2025-03-24 17:57:52,932 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:57:52,932 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:57:52,932 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:57:52,933 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:57:52,933 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:57:52,933 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:57:52,934 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:57:52,934 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:57:52,934 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:57:52,934 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:57:52,934 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:57:52,935 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:58:52,782 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:58:52,782 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:58:52,783 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:58:52,783 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:58:52,784 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:58:52,784 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:58:52,784 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:58:52,784 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:58:52,784 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:58:52,785 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:58:52,785 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:58:52,785 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:01:42,221 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:01:42,221 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:01:42,221 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:01:42,222 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:01:42,222 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:01:42,222 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:01:42,222 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:01:42,223 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:01:42,223 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:01:42,223 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:01:42,223 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:01:42,223 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:01:47,527 - core.enhanced_chat_manager - INFO - Final SQL: # Step 1: Analyze the problem and understand what is being asked.
+We are tasked with finding the name and rank of the 3 youngest winners across all matches. This involves joining the players table with the matches and rankings tables to gather the necessary information.
+2025-03-24 18:03:40,052 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:03:40,052 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:03:40,052 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:03:40,053 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:03:40,053 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:03:40,053 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:03:40,054 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:03:40,054 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:03:40,054 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:03:40,055 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:03:40,055 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:03:40,055 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:03:44,552 - core.enhanced_chat_manager - INFO - Final SQL: SELECT DISTINCT Cartoon.title 
+FROM Cartoon 
+JOIN TV_Channel ON Cartoon.Channel = TV_Channel.id 
+WHERE TV_Channel.series_name = 'Sky Radio'
+2025-03-24 18:03:44,553 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:06:08,837 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:06:08,837 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:06:08,837 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:06:08,838 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:06:08,838 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:06:08,838 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:06:08,839 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:06:08,839 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:06:08,839 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:06:08,839 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:06:08,839 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:06:08,840 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:06:11,616 - core.enhanced_chat_manager - INFO - Final SQL: SELECT first_name, birth_date 
+FROM players 
+WHERE code = 'USA'
+2025-03-24 18:06:12,959 - core.enhanced_chat_manager - INFO - Final SQL: SELECT 1
+2025-03-24 18:06:12,959 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:06:14,986 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."mobile_phone_number" 
+FROM Students AS "T1" 
+JOIN Addresses AS "T2" 
+ON T1."permanent_address_id" = T2."address_id" 
+WHERE T1."first_name" = 'Timmothy' AND T1."last_name" = 'Ward'
+2025-03-24 18:06:19,191 - core.enhanced_chat_manager - INFO - Final SQL: SELECT COUNT(PetID) 
+FROM pets_1 
+WHERE weight > 10;
+2025-03-24 18:06:23,053 - core.enhanced_chat_manager - INFO - Final SQL: SELECT first_name, birth_date 
+FROM players 
+WHERE nationality = 'USA'
+2025-03-24 18:08:39,301 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:08:39,301 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:08:39,302 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:08:39,302 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:08:39,303 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:08:39,303 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:08:39,303 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:08:39,303 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:08:39,303 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:08:39,304 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:08:39,304 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:08:39,304 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:09:22,281 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:09:22,281 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:09:22,281 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:09:22,282 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:09:22,282 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:09:22,282 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:09:22,283 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:09:22,283 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:09:22,283 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:09:22,283 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:09:22,284 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:09:22,284 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:09:37,518 - core.enhanced_chat_manager - INFO - Final SQL: SELECT address_id, address_line1, address_line2, city, postal_code 
+FROM Addresses 
+WHERE address_id IN (
+  SELECT current_address_id 
+  FROM Students 
+  GROUP BY current_address_id 
+  ORDER BY COUNT(current_address_id) DESC 
+  LIMIT 1
+)
+2025-03-24 18:09:53,616 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."first_name", T1."country_code" 
+FROM players AS "T1" 
+JOIN rankings AS "T2" 
+ON T1."player_id" = T2."player_id" 
+GROUP BY T1."first_name", T1."country_code" 
+ORDER BY COUNT(T2."tour_id") DESC 
+LIMIT 1;
+2025-03-24 18:09:55,216 - core.enhanced_chat_manager - INFO - Final SQL: SELECT 1
+2025-03-24 18:09:55,216 - core.enhanced_chat_manager - INFO - Execution match: False
+2025-03-24 18:10:05,177 - core.enhanced_chat_manager - INFO - Final SQL: SELECT COUNT(DISTINCT nationality) 
+FROM people
+2025-03-24 18:10:05,177 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:10:07,438 - core.enhanced_chat_manager - INFO - Final SQL: SELECT name, id 
+FROM countries 
+WHERE id IN ( 
+    SELECT Country 
+    FROM car_makers 
+)
+2025-03-24 18:14:09,057 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:14:09,057 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:14:09,057 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:14:09,058 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:14:09,058 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:14:09,058 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:14:09,059 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:14:09,059 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:14:09,059 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:14:09,059 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:14:09,060 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:14:09,060 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:16:22,587 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:16:22,587 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:16:22,587 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:16:22,588 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:16:22,588 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:16:22,588 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:16:22,589 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:16:22,589 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:16:22,589 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:16:22,590 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:16:22,590 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:16:22,590 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:16:27,643 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."FormOfGovernment", SUM(T2."Population") 
+FROM country_code AS "T1" 
+JOIN city AS "T2" 
+ON T1."Code" = T2."CountryCode" 
+JOIN countrylanguage AS "T3" 
+ON T1."Code" = T3."CountryCode" 
+WHERE T1."LifeExpectancy" > 72 
+GROUP BY T1."FormOfGovernment" 
+HAVING AVG(T1."LifeExpectancy") > 72
+2025-03-24 18:16:30,430 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."grade" FROM Highschooler AS "T1" GROUP BY T1."grade" HAVING COUNT(T1."ID") >= 4
+2025-03-24 18:16:30,430 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:16:34,955 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T2."City" 
+FROM flights T1 
+JOIN airports T2 
+ON T1."DestAirport" = T2."AirportCode" 
+GROUP BY T2."City" 
+ORDER BY COUNT(T1."DestAirport") DESC 
+LIMIT 1
+2025-03-24 18:16:34,956 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:16:38,908 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Name" 
+FROM city AS "T1" 
+JOIN country_code AS "T2" ON T1."CountryCode" = T2."Code" 
+JOIN countrylanguage AS "T3" ON T2."Code" = T3."CountryCode" 
+WHERE T2."Continent" = 'Europe' 
+AND T3."Language" != 'English' 
+AND T3."IsOfficial" = 'T' 
+GROUP BY T1."Name" 
+HAVING COUNT(T1."ID") > 0
+2025-03-24 18:16:40,921 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Maker_Full_Name", COUNT(T2."Model") 
+FROM car_makers T1 
+JOIN model_list T2 ON T1."Id" = T2."Maker" 
+GROUP BY T1."Maker_Full_Name"
+2025-03-24 18:18:39,812 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:18:39,812 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:18:39,812 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:18:39,813 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:18:39,813 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:18:39,814 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:18:39,814 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:18:39,814 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:18:39,814 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:18:39,815 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:18:39,815 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:18:39,815 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:18:45,250 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Location", T1."Name" 
+FROM stadium AS "T1" 
+WHERE T1."Capacity" BETWEEN 5000 AND 10000
+2025-03-24 18:18:45,250 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:18:48,607 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Singer_Name" FROM singer AS "T1" ORDER BY T1."Net_Worth" ASC
+2025-03-24 18:19:58,152 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:19:58,152 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:19:58,152 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:19:58,153 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:19:58,153 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:19:58,153 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:19:58,154 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:19:58,154 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:19:58,154 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:19:58,155 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:19:58,155 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:19:58,155 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:20:15,164 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Id", T1."Name", COUNT(T2."Model") 
+FROM car_makers AS "T1" 
+JOIN model_list AS "T2" 
+ON T1."Id" = T2."Maker" 
+GROUP BY T1."Id", T1."Name"
+2025-03-24 18:20:21,970 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."section_name" 
+FROM Sections AS "T1" 
+ORDER BY T1."section_name" DESC
+2025-03-24 18:20:21,970 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:20:24,900 - core.enhanced_chat_manager - INFO - Final SQL: SELECT COUNT(*) 
+FROM airlines T1 
+JOIN flights T2 ON T1."AirlineCode" = T2."Airline" 
+JOIN airports T3 ON T2."DestAirport" = T3."AirportCode" 
+WHERE T1."Name" = 'United Airlines' 
+AND T3."City" = 'Aberdeen' 
+GROUP BY T1."Name" , T3."City" 
+LIMIT 1
+2025-03-24 18:24:50,309 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:24:50,309 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:24:50,310 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:24:50,310 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:24:50,311 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:24:50,311 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:24:50,311 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:24:50,311 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:24:50,311 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:24:50,312 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:24:50,312 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:24:50,312 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:24:53,798 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T2."last_name" 
+FROM Dogs AS "T1" 
+JOIN Owners AS "T2" 
+ON T1."owner_id" = T2."owner_id" 
+ORDER BY T1."age" 
+LIMIT 1
+2025-03-24 18:24:53,798 - core.enhanced_chat_manager - INFO - Execution match: False
+2025-03-24 18:25:57,641 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 18:25:57,641 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 18:25:57,641 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 18:25:57,642 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 18:25:57,643 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 18:25:57,643 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 18:25:57,643 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 18:25:57,643 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 18:25:57,644 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', '_fix_common_column_names', '_fix_table_aliases', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:25:57,644 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 18:25:57,644 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 18:25:57,644 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 18:26:00,907 - core.enhanced_chat_manager - INFO - Final SQL: SELECT COUNT(DISTINCT T1."PetType") FROM Pets AS "T1"
+2025-03-24 18:26:00,907 - core.enhanced_chat_manager - INFO - Execution match: True
+2025-03-24 18:26:06,190 - core.enhanced_chat_manager - INFO - Final SQL: SELECT DISTINCT T2."state" 
+FROM Owners AS "T1" 
+INNER JOIN Addresses AS "T2" 
+ON T1."address_id" = T2."address_id" 
+INNER JOIN Professionals AS "T3" 
+INNER JOIN Addresses AS "T4" 
+ON T3."address_id" = T4."address_id" 
+ON T2."state" = T4."state"
+2025-03-24 18:26:09,480 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."Abbreviation" FROM airlines AS "T1" WHERE T1."Airline" = 'JetBlue Airways'
+2025-03-24 18:26:09,480 - core.enhanced_chat_manager - INFO - Execution match: True
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: conductor
+  Conductor_ID (INT)
+  Name (TEXT)
+  Age (INT)
+  Nationality (TEXT)
+  Year_of_Work (INT)
+
+Table: orchestra
+  Orchestra_ID (INT)
+  Orchestra (TEXT)
+  Conductor_ID (INT)
+  Record_Company (TEXT)
+  Year_of_Founded (REAL)
+  Major_Record_Format (TEXT)
+
+Table: performance
+  Performance_ID (INT)
+  Orchestra_ID (INT)
+  Type (TEXT)
+  Date (TEXT)
+  Official_ratings_(millions) (REAL)
+  Weekly_rank (TEXT)
+  Share (TEXT)
+
+Table: show
+  Show_ID (INT)
+  Performance_ID (INT)
+  If_first_show (bool)
+  Result (TEXT)
+  Attendance (REAL)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the major record formats of orchestras, sorted by their frequency?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: conductor
+  Conductor_ID (INT)
+  Name (TEXT)
+  Age (INT)
+  Nationality (TEXT)
+  Year_of_Work (INT)
+
+Table: orchestra
+  Orchestra_ID (INT)
+  Orchestra (TEXT)
+  Conductor_ID (INT)
+  Record_Company (TEXT)
+  Year_of_Founded (REAL)
+  Major_Record_Format (TEXT)
+
+Table: performance
+  Performance_ID (INT)
+  Orchestra_ID (INT)
+  Type (TEXT)
+  Date (TEXT)
+  Official_ratings_(millions) (REAL)
+  Weekly_rank (TEXT)
+  Share (TEXT)
+
+Table: show
+  Show_ID (INT)
+  Performance_ID (INT)
+  If_first_show (bool)
+  Result (TEXT)
+  Attendance (REAL)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the major record formats of orchestras, sorted by their frequency?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: conductor
+  Conductor_ID (INT)
+  Name (TEXT)
+  Age (INT)
+  Nationality (TEXT)
+  Year_of_Work (INT)
+
+Table: orchestra
+  Orchestra_ID (INT)
+  Orchestra (TEXT)
+  Conductor_ID (INT)
+  Record_Company (TEXT)
+  Year_of_Founded (REAL)
+  Major_Record_Format (TEXT)
+
+Table: performance
+  Performance_ID (INT)
+  Orchestra_ID (INT)
+  Type (TEXT)
+  Date (TEXT)
+  Official_ratings_(millions) (REAL)
+  Weekly_rank (TEXT)
+  Share (TEXT)
+
+Table: show
+  Show_ID (INT)
+  Performance_ID (INT)
+  If_first_show (bool)
+  Result (TEXT)
+  Attendance (REAL)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the major record formats of orchestras, sorted by their frequency?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: conductor
+  Conductor_ID (INT)
+  Name (TEXT)
+  Age (INT)
+  Nationality (TEXT)
+  Year_of_Work (INT)
+
+Table: orchestra
+  Orchestra_ID (INT)
+  Orchestra (TEXT)
+  Conductor_ID (INT)
+  Record_Company (TEXT)
+  Year_of_Founded (REAL)
+  Major_Record_Format (TEXT)
+
+Table: performance
+  Performance_ID (INT)
+  Orchestra_ID (INT)
+  Type (TEXT)
+  Date (TEXT)
+  Official_ratings_(millions) (REAL)
+  Weekly_rank (TEXT)
+  Share (TEXT)
+
+Table: show
+  Show_ID (INT)
+  Performance_ID (INT)
+  If_first_show (bool)
+  Result (TEXT)
+  Attendance (REAL)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the major record formats of orchestras, sorted by their frequency?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: conductor
+  Conductor_ID (INT)
+  Name (TEXT)
+  Age (INT)
+  Nationality (TEXT)
+  Year_of_Work (INT)
+
+Table: orchestra
+  Orchestra_ID (INT)
+  Orchestra (TEXT)
+  Conductor_ID (INT)
+  Record_Company (TEXT)
+  Year_of_Founded (REAL)
+  Major_Record_Format (TEXT)
+
+Table: performance
+  Performance_ID (INT)
+  Orchestra_ID (INT)
+  Type (TEXT)
+  Date (TEXT)
+  Official_ratings_(millions) (REAL)
+  Weekly_rank (TEXT)
+  Share (TEXT)
+
+Table: show
+  Show_ID (INT)
+  Performance_ID (INT)
+  If_first_show (bool)
+  Result (TEXT)
+  Attendance (REAL)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the major record formats of orchestras, sorted by their frequency?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+
+
+********************
+
+Given the following database schema and a question, identify the tables and columns that are relevant for answering the question.
+
+DATABASE SCHEMA:
+Table: players
+  player_id (INT)
+  first_name (TEXT)
+  last_name (TEXT)
+  hand (TEXT)
+  birth_date (DATE)
+  country_code (TEXT)
+
+Table: matches
+  best_of (INT)
+  draw_size (INT)
+  loser_age (FLOAT)
+  loser_entry (TEXT)
+  loser_hand (TEXT)
+  loser_ht (INT)
+  loser_id (INT)
+  loser_ioc (TEXT)
+  loser_name (TEXT)
+  loser_rank (INT)
+  loser_rank_points (INT)
+  loser_seed (INT)
+  match_num (INT)
+  minutes (INT)
+  round (TEXT)
+  score (TEXT)
+  surface (TEXT)
+  tourney_date (DATE)
+  tourney_id (TEXT)
+  tourney_level (TEXT)
+  tourney_name (TEXT)
+  winner_age (FLOAT)
+  winner_entry (TEXT)
+  winner_hand (TEXT)
+  winner_ht (INT)
+  winner_id (INT)
+  winner_ioc (TEXT)
+  winner_name (TEXT)
+  winner_rank (INT)
+  winner_rank_points (INT)
+  winner_seed (INT)
+  year (INT)
+
+Table: rankings
+  ranking_date (DATE)
+  ranking (INT)
+  player_id (INT)
+  ranking_points (INT)
+  tours (INT)
+
+FOREIGN KEY CONSTRAINTS:
+
+
+QUESTION: What are the full names of all players, sorted by birth date?
+
+Think step by step to select the relevant tables and columns for answering this question.
+First, identify key entities and conditions from the question.
+Then, trace through the schema to find matching tables and their relationships.
+Focus on tables and columns that are directly relevant to the question.
+Consider join conditions needed to connect relevant tables.
+
+FORMAT YOUR RESPONSE EXACTLY LIKE THE ORIGINAL SCHEMA, STARTING WITH 'Database:' AND KEEPING ONLY THE RELEVANT TABLES.
+Include table names prefixed with '# Table:' and maintain the format with square brackets and column definitions.
+Be sure to include essential tables/columns needed for JOIN relationships even if not directly mentioned in the question.
+
+PRUNED DATABASE SCHEMA:
+
+====================
+

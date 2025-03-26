@@ -1,0 +1,259 @@
+/* COLUMN AND TABLE NAME MAPPINGS:
+TABLE MAPPINGS:
+COLUMN MAPPINGS:
+  badges.User Id = UserId
+  comments.Post Id = PostId
+  comments.Creation Date = CreationDate
+  comments.User Id = UserId
+  comments.User Display Name = UserDisplayName
+  postHistory.Post History Type Id = PostHistoryTypeId
+  postHistory.Post Id = PostId
+  postHistory.Revision GUID = RevisionGUID
+  postHistory.Creation Date = CreationDate
+  postHistory.User Id = UserId
+  postHistory.User Display Name = UserDisplayName
+  postLinks.Creation Date = CreationDate
+  postLinks.Post Id = PostId
+  postLinks.Related Post Id = RelatedPostId
+  postLinks.Link Type Id = LinkTypeId
+  posts.Post Type Id = PostTypeId
+  posts.Accepted Answer Id = AcceptedAnswerId
+  posts.Creation Date = CreaionDate
+  posts.View Count = ViewCount
+  posts.Owner User Id = OwnerUserId
+  posts.Last Activity Date = LasActivityDate
+  posts.Answer Count = AnswerCount
+  posts.Comment Count = CommentCount
+  posts.Favorite Count = FavoriteCount
+  posts.Last Editor User Id = LastEditorUserId
+  posts.Last Edit Date = LastEditDate
+  posts.Community Owned Date = CommunityOwnedDate
+  posts.Closed Date = ClosedDate
+  posts.Owner Display Name = OwnerDisplayName
+  posts.Last Editor Display Name = LastEditorDisplayName
+  tags.Tag Name = TagName
+  tags.Excerpt Post Id = ExcerptPostId
+  tags.Wiki Post Id = WikiPostId
+  users.Creation Date = CreationDate
+  users.Display Name = DisplayName
+  users.Last Access Date = LastAccessDate
+  users.Website Url = WebsiteUrl
+  users.About Me = AboutMe
+  users.Account Id = AccountId
+  users.Profile Image Url = ProfileImageUrl
+  votes.Post Id = PostId
+  votes.Vote Type Id = VoteTypeId
+  votes.Creation Date = CreationDate
+  votes.User Id = UserId
+  votes.Bounty Amount = BountyAmount
+*/
+
+CREATE TABLE badges (
+  Id INTEGER,
+  User Id INTEGER,
+  Name TEXT,
+  Date DATETIME,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (User Id) REFERENCES users(Id)
+);
+
+
+/* Sample data for badges */
+/* Id | User Id | Name | Date */
+/* 1 | 5 | 'Teacher' | '2010-07-19 19:39:07.0' */
+/* 2 | 6 | 'Teacher' | '2010-07-19 19:39:07.0' */
+/* 3 | 8 | 'Teacher' | '2010-07-19 19:39:07.0' */
+
+
+CREATE TABLE comments (
+  Id INTEGER,
+  Post Id INTEGER,
+  Score INTEGER,
+  Text TEXT,
+  Creation Date DATETIME,
+  User Id INTEGER,
+  User Display Name TEXT,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (User Id) REFERENCES users(Id),
+  FOREIGN KEY (Post Id) REFERENCES posts(Id)
+);
+
+
+/* Sample data for comments */
+/* Id | Post Id | Score | Text | Creation Date | User Id | User Display Name */
+/* 1 | 3 | 5 | 'Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.' | '2010-07-19 19:15:52.0' | 13 | NULL */
+/* 2 | 5 | 0 | 'Yes, R is nice- but WHY is it 'valuable'.' | '2010-07-19 19:16:14.0' | 13 | NULL */
+/* 3 | 9 | 0 | 'Again- why?  How would I convince my boss to use this over, say, Excel.' | '2010-07-19 19:18:54.0' | 13 | NULL */
+
+
+CREATE TABLE postHistory (
+  Id INTEGER,
+  Post History Type Id INTEGER,
+  Post Id INTEGER,
+  Revision GUID TEXT,
+  Creation Date DATETIME,
+  User Id INTEGER,
+  Text TEXT,
+  Comment TEXT,
+  User Display Name TEXT,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (User Id) REFERENCES users(Id),
+  FOREIGN KEY (Post Id) REFERENCES posts(Id)
+);
+
+
+/* Sample data for postHistory */
+/* Id | Post History Type Id | Post Id | Revision GUID | Creation Date | User Id | Text | Comment | User Display Name */
+/* 1 | 2 | 1 | 'e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69' | '2010-07-19 19:12:12.0' | 8 | 'How should I elicit prior distributions from experts when fitting a Bayesian model?' | '' | '' */
+/* 2 | 1 | 1 | 'e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69' | '2010-07-19 19:12:12.0' | 8 | 'Eliciting priors from experts' | '' | '' */
+/* 3 | 3 | 1 | 'e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69' | '2010-07-19 19:12:12.0' | 8 | '<bayesian><prior><elicitation>' | '' | '' */
+
+
+CREATE TABLE postLinks (
+  Id INTEGER,
+  Creation Date DATETIME,
+  Post Id INTEGER,
+  Related Post Id INTEGER,
+  Link Type Id INTEGER,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (Related Post Id) REFERENCES posts(Id),
+  FOREIGN KEY (Post Id) REFERENCES posts(Id)
+);
+
+
+/* Sample data for postLinks */
+/* Id | Creation Date | Post Id | Related Post Id | Link Type Id */
+/* 108 | '2010-07-21 14:47:33.0' | 395 | 173 | 1 */
+/* 145 | '2010-07-23 16:30:41.0' | 548 | 539 | 1 */
+/* 217 | '2010-07-26 20:12:15.0' | 375 | 30 | 1 */
+
+
+CREATE TABLE posts (
+  Id INTEGER,
+  Post Type Id INTEGER,
+  Accepted Answer Id INTEGER,
+  Creation Date DATETIME,
+  Score INTEGER,
+  View Count INTEGER,
+  Body TEXT,
+  Owner User Id INTEGER,
+  Last Activity Date DATETIME,
+  Title TEXT,
+  Tags TEXT,
+  Answer Count INTEGER,
+  Comment Count INTEGER,
+  Favorite Count INTEGER,
+  Last Editor User Id INTEGER,
+  Last Edit Date DATETIME,
+  Community Owned Date DATETIME,
+  ParentId INTEGER,
+  Closed Date DATETIME,
+  Owner Display Name TEXT,
+  Last Editor Display Name TEXT,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (ParentId) REFERENCES posts(Id),
+  FOREIGN KEY (Owner User Id) REFERENCES users(Id),
+  FOREIGN KEY (Last Editor User Id) REFERENCES users(Id)
+);
+
+
+/* Sample data for posts */
+/* Id | Post Type Id | Accepted Answer Id | Creation Date | Score | View Count | Body | Owner User Id | Last Activity Date | Title | Tags | Answer Count | Comment Count | Favorite Count | Last Editor User Id | Last Edit Date | Community Owned Date | ParentId | Closed Date | Owner Display Name | Last Editor Display Name */
+/* 1 | 1 | 15 | '2010-07-19 19:12:12.0' | 23 | 1278 | '<p>How should I elicit prior distributions from experts when fitting a Bayesian model?</p>
+' | 8 | '2010-09-15 21:08:26.0' | 'Eliciting priors from experts' | '<bayesian><prior><elicitation>' | 5 | 1 | 14 | NULL | NULL | NULL | NULL | NULL | NULL | NULL */
+/* 2 | 1 | 59 | '2010-07-19 19:12:57.0' | 22 | 8198 | '<p>In many different statistical methods there is an "assumption of normality".  What is "normality" and how do I know if there is normality?</p>
+' | 24 | '2012-11-12 09:21:54.0' | 'What is normality?' | '<distributions><normality>' | 7 | 1 | 8 | 88 | '2010-08-07 17:56:44.0' | NULL | NULL | NULL | NULL | NULL */
+/* 3 | 1 | 5 | '2010-07-19 19:13:28.0' | 54 | 3613 | '<p>What are some valuable Statistical Analysis open source projects available right now?</p>
+
+<p>Edit: as pointed out by Sharpie, valuable could mean helping you get things done faster or more cheaply.</p>
+' | 18 | '2013-05-27 14:48:36.0' | 'What are some valuable Statistical Analysis open source projects?' | '<software><open-source>' | 19 | 4 | 36 | 183 | '2011-02-12 05:50:03.0' | '2010-07-19 19:13:28.0' | NULL | NULL | NULL | NULL */
+
+
+CREATE TABLE tags (
+  Id INTEGER,
+  Tag Name TEXT,
+  Count INTEGER,
+  Excerpt Post Id INTEGER,
+  Wiki Post Id INTEGER,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (Excerpt Post Id) REFERENCES posts(Id)
+);
+
+
+/* Sample data for tags */
+/* Id | Tag Name | Count | Excerpt Post Id | Wiki Post Id */
+/* 1 | 'bayesian' | 1342 | 20258 | 20257 */
+/* 2 | 'prior' | 168 | 62158 | 62157 */
+/* 3 | 'elicitation' | 6 | NULL | NULL */
+
+
+CREATE TABLE users (
+  Id INTEGER,
+  Reputation INTEGER,
+  Creation Date DATETIME,
+  Display Name TEXT,
+  Last Access Date DATETIME,
+  Website Url TEXT,
+  Location TEXT,
+  About Me TEXT,
+  Views INTEGER,
+  UpVotes INTEGER,
+  DownVotes INTEGER,
+  Account Id INTEGER,
+  Age INTEGER,
+  Profile Image Url TEXT,
+  PRIMARY KEY (Id)
+);
+
+
+/* Sample data for users */
+/* Id | Reputation | Creation Date | Display Name | Last Access Date | Website Url | Location | About Me | Views | UpVotes | DownVotes | Account Id | Age | Profile Image Url */
+/* -1 | 1 | '2010-07-19 06:55:26.0' | 'Community' | '2010-07-19 06:55:26.0' | 'http://meta.stackexchange.com/' | 'on the server farm' | '<p>Hi, I'm not really a person.</p>
+
+<p>I'm a background process that helps keep this site clean!</p>
+
+<p>I do things like</p>
+
+<ul>
+<li>Randomly poke old unanswered questions every hour so they get some attention</li>
+<li>Own community questions and answers so nobody gets unnecessary reputation from them</li>
+<li>Own downvotes on spam/evil posts that get permanently deleted</li>
+<li>Own suggested edits from anonymous users</li>
+<li><a href="http://meta.stackexchange.com/a/92006">Remove abandoned questions</a></li>
+</ul>
+' | 0 | 5007 | 1920 | -1 | NULL | NULL */
+/* 2 | 101 | '2010-07-19 14:01:36.0' | 'Geoff Dalgas' | '2013-11-12 22:07:23.0' | 'http://stackoverflow.com' | 'Corvallis, OR' | '<p>Developer on the StackOverflow team.  Find me on</p>
+
+<p><a href="http://www.twitter.com/SuperDalgas" rel="nofollow">Twitter</a>
+<br><br>
+<a href="http://blog.stackoverflow.com/2009/05/welcome-stack-overflow-valued-associate-00003/">Stack Overflow Valued Associate #00003</a></p>
+' | 25 | 3 | 0 | 2 | 37 | NULL */
+/* 3 | 101 | '2010-07-19 15:34:50.0' | 'Jarrod Dixon' | '2014-08-08 06:42:58.0' | 'http://stackoverflow.com' | 'New York, NY' | '<p><a href="http://blog.stackoverflow.com/2009/01/welcome-stack-overflow-valued-associate-00002/">Developer on the Stack Overflow team</a>.</p>
+
+<p>Was dubbed <strong>SALTY SAILOR</strong> by Jeff Atwood, as filth and flarn would oft-times fly when dealing with a particularly nasty bug!</p>
+
+<ul>
+<li>Twitter me: <a href="http://twitter.com/jarrod_dixon" rel="nofollow">jarrod_dixon</a></li>
+<li>Email me: jarrod.m.dixon@gmail.com</li>
+</ul>
+' | 22 | 19 | 0 | 3 | 35 | NULL */
+
+
+CREATE TABLE votes (
+  Id INTEGER,
+  Post Id INTEGER,
+  Vote Type Id INTEGER,
+  Creation Date DATE,
+  User Id INTEGER,
+  Bounty Amount INTEGER,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (User Id) REFERENCES users(Id),
+  FOREIGN KEY (Post Id) REFERENCES posts(Id)
+);
+
+
+/* Sample data for votes */
+/* Id | Post Id | Vote Type Id | Creation Date | User Id | Bounty Amount */
+/* 1 | 3 | 2 | '2010-07-19' | NULL | NULL */
+/* 2 | 2 | 2 | '2010-07-19' | NULL | NULL */
+/* 3 | 5 | 2 | '2010-07-19' | NULL | NULL */

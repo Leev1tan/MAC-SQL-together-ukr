@@ -1,0 +1,202 @@
+2025-03-24 17:20:58,705 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:20:58,705 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:20:58,705 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:20:58,710 - core.enhanced_chat_manager - INFO - Starting agent chat for db_id: student_transcripts_tracking
+2025-03-24 17:20:58,710 - core.enhanced_chat_manager - INFO - Query: What other details can you tell me about students in reverse alphabetical order?
+2025-03-24 17:20:58,710 - core.enhanced_chat_manager - INFO - Message directed to: Selector
+2025-03-24 17:20:58,710 - core.enhanced_chat_manager - ERROR - Agent Selector not found in chat group
+2025-03-24 17:21:47,031 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:21:47,031 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:21:47,031 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:21:47,034 - core.enhanced_chat_manager - INFO - Starting agent chat for db_id: cre_Doc_Template_Mgt
+2025-03-24 17:21:47,034 - core.enhanced_chat_manager - INFO - Query: Return the id and type code of the template that is used for the greatest number of documents.
+2025-03-24 17:21:47,034 - core.enhanced_chat_manager - INFO - Message directed to: Selector
+2025-03-24 17:21:47,034 - core.enhanced_chat_manager - ERROR - Agent Selector not found in chat group
+2025-03-24 17:22:16,177 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:22:16,177 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:22:16,178 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:22:16,178 - core.enhanced_chat_manager - INFO - Agent 0 has no name attribute
+2025-03-24 17:22:16,179 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:22:16,179 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'tables_json_path', 'talk']
+2025-03-24 17:22:16,179 - core.enhanced_chat_manager - INFO - Agent 1 has no name attribute
+2025-03-24 17:22:16,179 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:22:16,179 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'talk']
+2025-03-24 17:22:16,180 - core.enhanced_chat_manager - INFO - Agent 2 has no name attribute
+2025-03-24 17:22:16,180 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:22:16,180 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'talk']
+2025-03-24 17:22:16,182 - core.enhanced_chat_manager - INFO - Starting agent chat for db_id: cre_Doc_Template_Mgt
+2025-03-24 17:22:16,182 - core.enhanced_chat_manager - INFO - Query: What is the version number and template type code for the template with version number later than 5?
+2025-03-24 17:22:16,183 - core.enhanced_chat_manager - INFO - Message directed to: Selector
+2025-03-24 17:22:16,183 - core.enhanced_chat_manager - ERROR - Agent Selector not found in chat group
+2025-03-24 17:22:55,095 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:22:55,096 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:22:55,096 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:22:55,097 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:22:55,097 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:22:55,097 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:22:55,097 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:22:55,098 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:22:55,098 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:22:55,098 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:22:55,098 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:22:55,098 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:22:55,100 - core.enhanced_chat_manager - INFO - Starting agent chat for db_id: wta_1
+2025-03-24 17:22:55,100 - core.enhanced_chat_manager - INFO - Query: Count the number of matches.
+2025-03-24 17:22:55,101 - core.enhanced_chat_manager - INFO - Message directed to: Selector
+2025-03-24 17:22:55,101 - core.enhanced_chat_manager - INFO - Activating agent: Selector
+2025-03-24 17:22:55,135 - core.enhanced_chat_manager - INFO - Agent Selector completed processing
+2025-03-24 17:23:20,022 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:23:20,022 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:23:20,022 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:23:20,023 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:23:20,023 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:23:20,023 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:23:20,024 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:23:20,024 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:23:20,024 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:23:20,025 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:23:20,025 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:23:20,025 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:23:20,027 - core.enhanced_chat_manager - INFO - Starting agent chat for db_id: pets_1
+2025-03-24 17:23:20,027 - core.enhanced_chat_manager - INFO - Query: What is the first name of every student who has a dog but does not have a cat?
+2025-03-24 17:23:20,027 - core.enhanced_chat_manager - INFO - Message directed to: Selector
+2025-03-24 17:23:20,027 - core.enhanced_chat_manager - INFO - Activating agent: Selector
+2025-03-24 17:23:20,032 - core.enhanced_chat_manager - INFO - Agent Selector completed processing
+2025-03-24 17:29:40,674 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:29:40,674 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:29:40,674 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:29:40,675 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:29:40,675 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:29:40,675 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:29:40,675 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:29:40,675 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:29:40,676 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:29:40,676 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:29:40,676 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:29:40,676 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:32:47,848 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:32:47,848 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:32:47,848 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:32:47,848 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:32:47,848 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:32:47,849 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:32:47,849 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:32:47,849 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:32:47,849 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:32:47,850 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:32:47,850 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:32:47,850 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:34:43,516 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:34:43,517 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:34:43,517 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:34:43,517 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:34:43,517 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:34:43,517 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:34:43,518 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:34:43,518 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:34:43,518 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:34:43,519 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:34:43,519 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:34:43,519 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:35:16,536 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:35:16,536 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:35:16,536 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:35:16,537 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:35:16,537 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:35:16,537 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:35:16,537 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:35:16,537 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:35:16,538 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:35:16,538 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:35:16,538 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:35:16,538 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:36:24,766 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:36:24,766 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:36:24,766 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:36:24,767 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:36:24,767 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:36:24,767 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:36:24,767 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:36:24,767 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:36:24,768 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:36:24,768 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:36:24,768 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:36:24,768 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:36:29,400 - core.enhanced_chat_manager - INFO - Final SQL: I am not able to complete this task as it falls outside of the scope of the originally requested work. I do not have a database schema to work with.
+2025-03-24 17:38:37,133 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:38:37,134 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:38:37,134 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:38:37,134 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:38:37,134 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:38:37,134 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:38:37,135 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:38:37,135 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:38:37,135 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:38:37,136 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:38:37,136 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:38:37,136 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:38:43,272 - core.enhanced_chat_manager - INFO - Final SQL: To write the correct SQL query for the question, we need the exact database schema. Since you didn't provide it, let's assume we have two tables: `countries` and `car_makers`. The `car_makers` table has a column `country_id` that references the `id` in the `countries` table.
+2025-03-24 17:39:57,508 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:39:57,509 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:39:57,509 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:39:57,509 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:39:57,509 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:39:57,509 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:39:57,510 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:39:57,510 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:39:57,510 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:39:57,511 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:39:57,511 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:39:57,511 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:40:01,027 - core.enhanced_chat_manager - INFO - Final SQL: SELECT T1."name", T1."age" FROM Visitors AS "T1" INNER JOIN Tickets AS "T2" ON T1."id" = T2."visitor_id" GROUP BY T1."id" ORDER BY COUNT(T2."id") DESC LIMIT 1
+2025-03-24 17:41:04,677 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:41:04,677 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:41:04,677 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:41:04,678 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:41:04,678 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:41:04,678 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:41:04,679 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:41:04,679 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:41:04,679 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:41:04,679 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:41:04,680 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:41:04,680 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:41:06,393 - core.enhanced_chat_manager - INFO - Final SQL: Error: Invalid response format from LLM.
+2025-03-24 17:43:11,846 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:43:11,847 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:43:11,847 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:43:11,847 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:43:11,847 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:43:11,847 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:43:11,848 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:43:11,848 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:43:11,848 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:43:11,849 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:43:11,849 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:43:11,849 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:43:51,013 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:43:51,013 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:43:51,013 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:43:51,013 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:43:51,013 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:43:51,014 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:43:51,014 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:43:51,015 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:43:51,015 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:43:51,015 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:43:51,015 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:43:51,015 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:43:55,653 - core.enhanced_chat_manager - INFO - Final SQL: I am not able to execute this query. Please provide the database schema for this question, and I'll be happy to help you with the SQL query.
+2025-03-24 17:45:07,884 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-24 17:45:07,884 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-24 17:45:07,885 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-24 17:45:07,885 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-24 17:45:07,886 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-24 17:45:07,886 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_format_spider_schema', '_load_db_info', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2infos', 'model_name', 'name', 'tables_json_path', 'talk']
+2025-03-24 17:45:07,886 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-24 17:45:07,886 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-24 17:45:07,886 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_decompose', 'call_llm', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:45:07,887 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-24 17:45:07,887 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-24 17:45:07,887 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_refine', 'call_llm', 'data_path', 'dataset_name', 'model_name', 'name', 'talk']
+2025-03-24 17:45:09,144 - core.enhanced_chat_manager - INFO - Final SQL: 

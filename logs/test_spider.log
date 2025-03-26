@@ -1,0 +1,174 @@
+2025-03-24 17:09:21,001 - __main__ - ERROR - Spider data directory not found at data\spider
+2025-03-24 17:09:21,001 - __main__ - ERROR - Spider dataset files not found
+2025-03-25 16:46:48,393 - core.debug_llm - INFO - Debug mode enabled
+2025-03-25 16:46:48,393 - core.debug_llm - DEBUG - Debug mode enabled from environment variables
+2025-03-25 16:46:48,395 - core.spider_extensions - WARNING - Could not import from run_with_together
+2025-03-25 16:46:48,397 - __main__ - INFO - Found Spider data directory at: MAC-SQL\data\spider
+2025-03-25 16:46:48,397 - __main__ - INFO - Loading 2 sample queries from MAC-SQL\data\spider\dev.json
+2025-03-25 16:46:48,414 - core.macsql_together_adapter - INFO - Configured rate limits: 45 RPM, 4 RPS
+2025-03-25 16:46:48,416 - core.macsql_together_adapter - INFO - Successfully patched api_func to use Together AI
+2025-03-25 16:46:48,416 - core.enhanced_chat_manager - INFO - Found spider data directory at: MAC-SQL\data\spider\database
+2025-03-25 16:46:48,417 - core.enhanced_chat_manager - INFO - Found spider tables.json at: MAC-SQL\data\spider\tables.json
+2025-03-25 16:46:48,417 - core.enhanced_chat_manager - INFO - Initializing EnhancedChatManager with dataset: spider
+2025-03-25 16:46:48,417 - core.enhanced_chat_manager - INFO - Creating agents for dataset: spider
+2025-03-25 16:46:48,417 - core.enhanced_chat_manager - INFO - Using enhanced Spider agents
+2025-03-25 16:46:48,417 - core.enhanced_chat_manager - INFO - Using enhanced BIRD agents
+2025-03-25 16:46:48,421 - core.enhanced_chat_manager - INFO - Agent 0 name: Selector
+2025-03-25 16:46:48,421 - core.enhanced_chat_manager - INFO - Agent 0 class: EnhancedSpiderSelector
+2025-03-25 16:46:48,422 - core.enhanced_chat_manager - INFO - Agent 0 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_build_bird_table_schema_list_str', '_build_bird_table_schema_sqlite_str', '_format_spider_schema', '_get_column_attributes', '_get_db_desc_str', '_get_unique_column_values_str', '_get_value_examples_str', '_is_need_prune', '_load_all_db_info', '_load_db_info', '_load_single_db_info', '_message', '_prune', 'call_llm', 'data_path', 'dataset_name', 'db2dbjsons', 'db2infos', 'description', 'init_db2jsons', 'model_name', 'name', 'tables_json_path', 'talk', 'without_selector']
+2025-03-25 16:46:48,422 - core.enhanced_chat_manager - INFO - Agent 1 name: Decomposer
+2025-03-25 16:46:48,422 - core.enhanced_chat_manager - INFO - Agent 1 class: Decomposer
+2025-03-25 16:46:48,423 - core.enhanced_chat_manager - INFO - Agent 1 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_message', 'call_llm', 'dataset_name', 'description', 'model_name', 'name', 'talk']
+2025-03-25 16:46:48,423 - core.enhanced_chat_manager - INFO - Agent 2 name: Refiner
+2025-03-25 16:46:48,423 - core.enhanced_chat_manager - INFO - Agent 2 class: EnhancedSpiderRefiner
+2025-03-25 16:46:48,424 - core.enhanced_chat_manager - INFO - Agent 2 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_execute_sql', '_find_common_spider_errors', '_fix_spider_column_names', '_is_need_refine', '_message', '_refine', 'call_llm', 'data_path', 'dataset_name', 'description', 'model_name', 'name', 'talk']
+2025-03-25 16:46:48,425 - core.enhanced_chat_manager - INFO - Pretty debug output enabled
+2025-03-25 16:46:48,425 - __main__ - INFO - Processing query 1/2: pets_1
+2025-03-25 16:46:48,425 - __main__ - INFO - Question: Find the major and age of students who do not have a cat pet.
+2025-03-25 16:46:48,425 - core.spider_extensions - INFO - Selector processing message for db_id: pets_1
+2025-03-25 16:46:48,426 - core.spider_extensions - INFO - Successfully extracted schema for pets_1 from database file
+2025-03-25 16:46:49,851 - core.spider_extensions - INFO - Selector completed for pets_1
+2025-03-25 16:46:49,867 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Student
+  - StuID [INTEGER]
+  - Age [INTEGER]
+  - Major [INTEGER]
+
+# Table: Has_P...
+2025-03-25 16:46:49,867 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:46:54,260 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Student
+  - StuID [INTEGER]
+  - Age [INTEGER]
+  - Major [INTEGER]
+
+# Table: Has_P...
+2025-03-25 16:46:54,261 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:46:54,262 - core.debug_llm - DEBUG -   final_sql: SELECT S.Major, S.Age
+FROM Student S
+WHERE S.StuID NOT IN (
+  SELECT S.StuID
+  FROM Student S
+  JOIN...
+2025-03-25 16:46:54,280 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Student
+  - StuID [INTEGER]
+  - Age [INTEGER]
+  - Major [INTEGER]
+
+# Table: Has_P...
+2025-03-25 16:46:54,281 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:46:54,281 - core.debug_llm - DEBUG -   pred: SELECT S.Major, S.Age
+FROM Student S
+WHERE S.StuID NOT IN (
+  SELECT S.StuID
+  FROM Student S
+  JOIN...
+2025-03-25 16:46:54,282 - core.debug_llm - DEBUG -   final_sql: SELECT S.Major, S.Age
+FROM Student S
+WHERE S.StuID NOT IN (
+  SELECT S.StuID
+  FROM Student S
+  JOIN...
+2025-03-25 16:46:54,283 - core.enhanced_chat_manager - INFO - Final SQL: SELECT S.Major, S.Age
+FROM Student S
+WHERE S.StuID NOT IN (
+  SELECT S.StuID
+  FROM Student S
+  JOIN Has_Pet HP ON S.StuID = HP.StuID
+  JOIN Pets P ON HP.PetID = P.PetID
+  WHERE P.PetType = 'cat'
+);
+2025-03-25 16:46:54,284 - __main__ - INFO - Generated SQL: SELECT S.Major, S.Age
+FROM Student S
+WHERE S.StuID NOT IN (
+  SELECT S.StuID
+  FROM Student S
+  JOIN Has_Pet HP ON S.StuID = HP.StuID
+  JOIN Pets P ON HP.PetID = P.PetID
+  WHERE P.PetType = 'cat'
+);
+2025-03-25 16:46:54,284 - __main__ - INFO - Execution match: False
+2025-03-25 16:46:54,284 - __main__ - INFO - --------------------------------------------------
+2025-03-25 16:46:54,285 - __main__ - INFO - Processing query 2/2: network_1
+2025-03-25 16:46:54,285 - __main__ - INFO - Question: Show the names of high schoolers who have at least 3 friends.
+2025-03-25 16:46:54,285 - core.spider_extensions - INFO - Selector processing message for db_id: network_1
+2025-03-25 16:46:54,286 - core.spider_extensions - INFO - Successfully extracted schema for network_1 from database file
+2025-03-25 16:46:55,109 - core.spider_extensions - INFO - Selector completed for network_1
+2025-03-25 16:46:55,113 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Highschooler
+  - ID (INT)
+  - name (TEXT)
+  - grade (INT)
+
+# Table: Friend
+  - st...
+2025-03-25 16:46:55,114 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:47:00,341 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Highschooler
+  - ID (INT)
+  - name (TEXT)
+  - grade (INT)
+
+# Table: Friend
+  - st...
+2025-03-25 16:47:00,342 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:47:00,342 - core.debug_llm - DEBUG -   final_sql: SELECT H.name
+FROM Highschooler H
+WHERE H.ID IN (
+  SELECT id
+  FROM (
+    SELECT student_id AS id, ...
+2025-03-25 16:47:00,348 - core.debug_llm - DEBUG -   desc_str: Database:
+# Table: Highschooler
+  - ID (INT)
+  - name (TEXT)
+  - grade (INT)
+
+# Table: Friend
+  - st...
+2025-03-25 16:47:00,349 - core.debug_llm - DEBUG -   fk_str: 
+2025-03-25 16:47:00,349 - core.debug_llm - DEBUG -   pred: SELECT H.name
+FROM Highschooler H
+WHERE H.ID IN (
+  SELECT id
+  FROM (
+    SELECT student_id AS id, ...
+2025-03-25 16:47:00,350 - core.debug_llm - DEBUG -   final_sql: SELECT H.name
+FROM Highschooler H
+WHERE H.ID IN (
+  SELECT id
+  FROM (
+    SELECT student_id AS id, ...
+2025-03-25 16:47:00,351 - core.enhanced_chat_manager - INFO - Final SQL: SELECT H.name
+FROM Highschooler H
+WHERE H.ID IN (
+  SELECT id
+  FROM (
+    SELECT student_id AS id, friend_id AS friend
+    FROM Friend
+    UNION
+    SELECT friend_id AS id, student_id AS friend
+    FROM Friend
+  ) T
+  GROUP BY id
+  HAVING COUNT(DISTINCT friend) >= 3
+);
+2025-03-25 16:47:00,352 - __main__ - INFO - Generated SQL: SELECT H.name
+FROM Highschooler H
+WHERE H.ID IN (
+  SELECT id
+  FROM (
+    SELECT student_id AS id, friend_id AS friend
+    FROM Friend
+    UNION
+    SELECT friend_id AS id, student_id AS friend
+    FROM Friend
+  ) T
+  GROUP BY id
+  HAVING COUNT(DISTINCT friend) >= 3
+);
+2025-03-25 16:47:00,353 - __main__ - INFO - Execution match: False
+2025-03-25 16:47:00,353 - __main__ - INFO - --------------------------------------------------
+2025-03-25 16:47:00,353 - __main__ - INFO - Results saved to output/test_spider_results.json
+2025-03-25 16:47:00,354 - __main__ - INFO - Execution accuracy: 0.00% (0/2)

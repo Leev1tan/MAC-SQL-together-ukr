@@ -1,0 +1,34 @@
+[
+  {
+    "db_id": "flight_2",
+    "question": "What is the code of airport that has fewest number of flights?",
+    "predicted_sql": "SELECT AirportCode\nFROM (\n  SELECT a.AirportCode, \n    COALESCE(\n      (SELECT COUNT(*) \n       FROM flights \n       WHERE SourceAirport = a.AirportCode OR DestAirport = a.AirportCode), 0) AS FlightCount\n  FROM airports a\n)\nORDER BY FlightCount ASC\nLIMIT 1;",
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
+    "execution_match": false,
+    "execution_results": {
+      "pred_result": "[('AAF',)]",
+      "gold_result": "[]"
+    },
+    "metrics": {
+      "exact_match": 0.0,
+      "execution_accuracy": 0.5,
+      "valid_efficiency_score": 0.0
+    }
+  },
+  {
+    "db_id": "course_teach",
+    "question": "Show names of teachers and the number of courses they teach.",
+    "predicted_sql": "SELECT \n    t.Name, \n    COUNT(ca.Course_ID) AS Number_of_Courses\nFROM \n    teacher t\nINNER JOIN \n    course_arrange ca ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY \n    t.Name\nORDER BY \n    t.Name ASC;",
+    "gold_sql": "SELECT T2.Name ,  COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name",
+    "execution_match": true,
+    "execution_results": {
+      "pred_result": "[('Anne Walker', 2), ('Gustaaf Deloor', 1), ('Kearsley Brown', 1), ('Lucy Wong', 1), ('Vicente Carretero', 1)]",
+      "gold_result": "[('Anne Walker', 2), ('Gustaaf Deloor', 1), ('Kearsley Brown', 1), ('Lucy Wong', 1), ('Vicente Carretero', 1)]"
+    },
+    "metrics": {
+      "exact_match": 0.0,
+      "execution_accuracy": 0.5,
+      "valid_efficiency_score": 0.0
+    }
+  }
+]

@@ -1,0 +1,375 @@
+/* COLUMN AND TABLE NAME MAPPINGS:
+TABLE MAPPINGS:
+COLUMN MAPPINGS:
+  Player_Attributes.player federation international football association api id = player_fifa_api_id
+  Player_Attributes.player api id = player_api_id
+  Player_Attributes.preferred foot = preferred_foot
+  Player_Attributes.attacking work rate = attacking_work_rate
+  Player_Attributes.heading accuracy = heading_accuracy
+  Player_Attributes.short passing = short_passing
+  Player_Attributes.free kick accuracy = free_kick_accuracy
+  Player_Attributes.long passing = long_passing
+  Player_Attributes.ball control = ball_control
+  Player_Attributes.sprint speed = sprint_speed
+  Player_Attributes.shot power = shot_power
+  Player_Attributes.long shots = long_shots
+  Player_Attributes.standing tackle = standing_tackle
+  Player_Attributes.sliding tackle = sliding_tackle
+  Player_Attributes.goalkeep diving = gk_diving
+  Player_Attributes.goalkeep handling = gk_handling
+  Player_Attributes.goalkeep kicking = gk_kicking
+  Player_Attributes.goalkeep positioning = gk_positioning
+  Player_Attributes.goalkeep reflexes = gk_reflexes
+  Player.player api id = player_api_id
+  Player.player name = player_name
+  Player.player federation international football association api id = player_fifa_api_id
+  League.country id = country_id
+  Team.team api id = team_api_id
+  Team.team federation international football association api id = team_fifa_api_id
+  Team.team long name = team_long_name
+  Team.team short name = team_short_name
+  Team_Attributes.team federation international football association api id = team_fifa_api_id
+  Team_Attributes.team api id = team_api_id
+  Team_Attributes.build Up Play Speed = buildUpPlaySpeed
+  Team_Attributes.build Up Play Speed Class = buildUpPlaySpeedClass
+  Team_Attributes.build Up Play Dribbling = buildUpPlayDribbling
+  Team_Attributes.build Up Play Dribbling Class = buildUpPlayDribblingClass
+  Team_Attributes.build Up Play Passing = buildUpPlayPassing
+  Team_Attributes.build Up Play Passing Class = buildUpPlayPassingClass
+  Team_Attributes.build Up Play Positioning Class = buildUpPlayPositioningClass
+  Team_Attributes.chance Creation Passing = chanceCreationPassing
+  Team_Attributes.chance Creation Passing Class = chanceCreationPassingClass
+  Team_Attributes.chance Creation Crossing = chanceCreationCrossing
+  Team_Attributes.chance Creation Crossing Class = chanceCreationCrossingClass
+  Team_Attributes.chance Creation Shooting = chanceCreationShooting
+  Team_Attributes.chance Creation Shooting Class = chanceCreationShootingClass
+  Team_Attributes.chance Creation Positioning Class = chanceCreationPositioningClass
+  Team_Attributes.defence Pressure = defencePressure
+  Team_Attributes.defence Pressure Class = defencePressureClass
+  Team_Attributes.defence Aggression = defenceAggression
+  Team_Attributes.defence Aggression Class = defenceAggressionClass
+  Team_Attributes.defence Team Width = defenceTeamWidth
+  Team_Attributes.defence Team Width Class = defenceTeamWidthClass
+  Team_Attributes.defence Defender Line Class = defenceDefenderLineClass
+  Match.country id = country_id
+  Match.league id = league_id
+  Match.match api id = match_api_id
+  Match.home team api id = home_team_api_id
+  Match.away team api id = away_team_api_id
+  Match.home team goal = home_team_goal
+  Match.away team goal = away_team_goal
+  Match.shot on = shoton
+  Match.shot off = shotoff
+  Match.foul commit = foulcommit
+*/
+
+CREATE TABLE Player_Attributes (
+  id INTEGER,
+  player federation international football association api id INTEGER,
+  player api id INTEGER,
+  date TEXT,
+  overall_rating INTEGER,
+  potential INTEGER,
+  preferred foot TEXT,
+  attacking work rate TEXT,
+  defensive_work_rate TEXT,
+  crossing INTEGER,
+  finishing INTEGER,
+  heading accuracy INTEGER,
+  short passing INTEGER,
+  volleys INTEGER,
+  dribbling INTEGER,
+  curve INTEGER,
+  free kick accuracy INTEGER,
+  long passing INTEGER,
+  ball control INTEGER,
+  acceleration INTEGER,
+  sprint speed INTEGER,
+  agility INTEGER,
+  reactions INTEGER,
+  balance INTEGER,
+  shot power INTEGER,
+  jumping INTEGER,
+  stamina INTEGER,
+  strength INTEGER,
+  long shots INTEGER,
+  aggression INTEGER,
+  interceptions INTEGER,
+  positioning INTEGER,
+  vision INTEGER,
+  penalties INTEGER,
+  marking INTEGER,
+  standing tackle INTEGER,
+  sliding tackle INTEGER,
+  goalkeep diving INTEGER,
+  goalkeep handling INTEGER,
+  goalkeep kicking INTEGER,
+  goalkeep positioning INTEGER,
+  goalkeep reflexes INTEGER,
+  PRIMARY KEY (id),
+  FOREIGN KEY (player api id) REFERENCES Player(player api id),
+  FOREIGN KEY (player federation international football association api id) REFERENCES Player(player federation international football association api id)
+);
+
+
+/* Sample data for Player_Attributes */
+/* id | player federation international football association api id | player api id | date | overall_rating | potential | preferred foot | attacking work rate | defensive_work_rate | crossing | finishing | heading accuracy | short passing | volleys | dribbling | curve | free kick accuracy | long passing | ball control | acceleration | sprint speed | agility | reactions | balance | shot power | jumping | stamina | strength | long shots | aggression | interceptions | positioning | vision | penalties | marking | standing tackle | sliding tackle | goalkeep diving | goalkeep handling | goalkeep kicking | goalkeep positioning | goalkeep reflexes */
+/* 1 | 218353 | 505942 | '2016-02-18 00:00:00' | 67 | 71 | 'right' | 'medium' | 'medium' | 49 | 44 | 71 | 61 | 44 | 51 | 45 | 39 | 64 | 49 | 60 | 64 | 59 | 47 | 65 | 55 | 58 | 54 | 76 | 35 | 71 | 70 | 45 | 54 | 48 | 65 | 69 | 69 | 6 | 11 | 10 | 8 | 8 */
+/* 2 | 218353 | 505942 | '2015-11-19 00:00:00' | 67 | 71 | 'right' | 'medium' | 'medium' | 49 | 44 | 71 | 61 | 44 | 51 | 45 | 39 | 64 | 49 | 60 | 64 | 59 | 47 | 65 | 55 | 58 | 54 | 76 | 35 | 71 | 70 | 45 | 54 | 48 | 65 | 69 | 69 | 6 | 11 | 10 | 8 | 8 */
+/* 3 | 218353 | 505942 | '2015-09-21 00:00:00' | 62 | 66 | 'right' | 'medium' | 'medium' | 49 | 44 | 71 | 61 | 44 | 51 | 45 | 39 | 64 | 49 | 60 | 64 | 59 | 47 | 65 | 55 | 58 | 54 | 76 | 35 | 63 | 41 | 45 | 54 | 48 | 65 | 66 | 69 | 6 | 11 | 10 | 8 | 8 */
+
+
+CREATE TABLE Player (
+  id INTEGER,
+  player api id INTEGER,
+  player name TEXT,
+  player federation international football association api id INTEGER,
+  birthday TEXT,
+  height INTEGER,
+  weight INTEGER,
+  PRIMARY KEY (id)
+);
+
+
+/* Sample data for Player */
+/* id | player api id | player name | player federation international football association api id | birthday | height | weight */
+/* 1 | 505942 | 'Aaron Appindangoye' | 218353 | '1992-02-29 00:00:00' | 182 | 187 */
+/* 2 | 155782 | 'Aaron Cresswell' | 189615 | '1989-12-15 00:00:00' | 170 | 146 */
+/* 3 | 162549 | 'Aaron Doran' | 186170 | '1991-05-13 00:00:00' | 170 | 163 */
+
+
+CREATE TABLE League (
+  id INTEGER,
+  country id INTEGER,
+  name TEXT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (country id) REFERENCES Country(id)
+);
+
+
+/* Sample data for League */
+/* id | country id | name */
+/* 1 | 1 | 'Belgium Jupiler League' */
+/* 1729 | 1729 | 'England Premier League' */
+/* 4769 | 4769 | 'France Ligue 1' */
+
+
+CREATE TABLE Country (
+  id INTEGER,
+  name TEXT,
+  PRIMARY KEY (id)
+);
+
+
+/* Sample data for Country */
+/* id | name */
+/* 1 | 'Belgium' */
+/* 1729 | 'England' */
+/* 4769 | 'France' */
+
+
+CREATE TABLE Team (
+  id INTEGER,
+  team api id INTEGER,
+  team federation international football association api id INTEGER,
+  team long name TEXT,
+  team short name TEXT,
+  PRIMARY KEY (id)
+);
+
+
+/* Sample data for Team */
+/* id | team api id | team federation international football association api id | team long name | team short name */
+/* 1 | 9987 | 673 | 'KRC Genk' | 'GEN' */
+/* 2 | 9993 | 675 | 'Beerschot AC' | 'BAC' */
+/* 3 | 10000 | 15005 | 'SV Zulte-Waregem' | 'ZUL' */
+
+
+CREATE TABLE Team_Attributes (
+  id INTEGER,
+  team federation international football association api id INTEGER,
+  team api id INTEGER,
+  date TEXT,
+  build Up Play Speed INTEGER,
+  build Up Play Speed Class TEXT,
+  build Up Play Dribbling INTEGER,
+  build Up Play Dribbling Class TEXT,
+  build Up Play Passing INTEGER,
+  build Up Play Passing Class TEXT,
+  build Up Play Positioning Class TEXT,
+  chance Creation Passing INTEGER,
+  chance Creation Passing Class TEXT,
+  chance Creation Crossing INTEGER,
+  chance Creation Crossing Class TEXT,
+  chance Creation Shooting INTEGER,
+  chance Creation Shooting Class TEXT,
+  chance Creation Positioning Class TEXT,
+  defence Pressure INTEGER,
+  defence Pressure Class TEXT,
+  defence Aggression INTEGER,
+  defence Aggression Class TEXT,
+  defence Team Width INTEGER,
+  defence Team Width Class TEXT,
+  defence Defender Line Class TEXT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (team api id) REFERENCES Team(team api id),
+  FOREIGN KEY (team federation international football association api id) REFERENCES Team(team federation international football association api id)
+);
+
+
+/* Sample data for Team_Attributes */
+/* id | team federation international football association api id | team api id | date | build Up Play Speed | build Up Play Speed Class | build Up Play Dribbling | build Up Play Dribbling Class | build Up Play Passing | build Up Play Passing Class | build Up Play Positioning Class | chance Creation Passing | chance Creation Passing Class | chance Creation Crossing | chance Creation Crossing Class | chance Creation Shooting | chance Creation Shooting Class | chance Creation Positioning Class | defence Pressure | defence Pressure Class | defence Aggression | defence Aggression Class | defence Team Width | defence Team Width Class | defence Defender Line Class */
+/* 1 | 434 | 9930 | '2010-02-22 00:00:00' | 60 | 'Balanced' | NULL | 'Little' | 50 | 'Mixed' | 'Organised' | 60 | 'Normal' | 65 | 'Normal' | 55 | 'Normal' | 'Organised' | 50 | 'Medium' | 55 | 'Press' | 45 | 'Normal' | 'Cover' */
+/* 2 | 434 | 9930 | '2014-09-19 00:00:00' | 52 | 'Balanced' | 48 | 'Normal' | 56 | 'Mixed' | 'Organised' | 54 | 'Normal' | 63 | 'Normal' | 64 | 'Normal' | 'Organised' | 47 | 'Medium' | 44 | 'Press' | 54 | 'Normal' | 'Cover' */
+/* 3 | 434 | 9930 | '2015-09-10 00:00:00' | 47 | 'Balanced' | 41 | 'Normal' | 54 | 'Mixed' | 'Organised' | 54 | 'Normal' | 63 | 'Normal' | 64 | 'Normal' | 'Organised' | 47 | 'Medium' | 44 | 'Press' | 54 | 'Normal' | 'Cover' */
+
+
+CREATE TABLE Match (
+  id INTEGER,
+  country id INTEGER,
+  league id INTEGER,
+  season TEXT,
+  stage INTEGER,
+  date TEXT,
+  match api id INTEGER,
+  home team api id INTEGER,
+  away team api id INTEGER,
+  home team goal INTEGER,
+  away team goal INTEGER,
+  home_player_X1 INTEGER,
+  home_player_X2 INTEGER,
+  home_player_X3 INTEGER,
+  home_player_X4 INTEGER,
+  home_player_X5 INTEGER,
+  home_player_X6 INTEGER,
+  home_player_X7 INTEGER,
+  home_player_X8 INTEGER,
+  home_player_X9 INTEGER,
+  home_player_X10 INTEGER,
+  home_player_X11 INTEGER,
+  away_player_X1 INTEGER,
+  away_player_X2 INTEGER,
+  away_player_X3 INTEGER,
+  away_player_X4 INTEGER,
+  away_player_X5 INTEGER,
+  away_player_X6 INTEGER,
+  away_player_X7 INTEGER,
+  away_player_X8 INTEGER,
+  away_player_X9 INTEGER,
+  away_player_X10 INTEGER,
+  away_player_X11 INTEGER,
+  home_player_Y1 INTEGER,
+  home_player_Y2 INTEGER,
+  home_player_Y3 INTEGER,
+  home_player_Y4 INTEGER,
+  home_player_Y5 INTEGER,
+  home_player_Y6 INTEGER,
+  home_player_Y7 INTEGER,
+  home_player_Y8 INTEGER,
+  home_player_Y9 INTEGER,
+  home_player_Y10 INTEGER,
+  home_player_Y11 INTEGER,
+  away_player_Y1 INTEGER,
+  away_player_Y2 INTEGER,
+  away_player_Y3 INTEGER,
+  away_player_Y4 INTEGER,
+  away_player_Y5 INTEGER,
+  away_player_Y6 INTEGER,
+  away_player_Y7 INTEGER,
+  away_player_Y8 INTEGER,
+  away_player_Y9 INTEGER,
+  away_player_Y10 INTEGER,
+  away_player_Y11 INTEGER,
+  home_player_1 INTEGER,
+  home_player_2 INTEGER,
+  home_player_3 INTEGER,
+  home_player_4 INTEGER,
+  home_player_5 INTEGER,
+  home_player_6 INTEGER,
+  home_player_7 INTEGER,
+  home_player_8 INTEGER,
+  home_player_9 INTEGER,
+  home_player_10 INTEGER,
+  home_player_11 INTEGER,
+  away_player_1 INTEGER,
+  away_player_2 INTEGER,
+  away_player_3 INTEGER,
+  away_player_4 INTEGER,
+  away_player_5 INTEGER,
+  away_player_6 INTEGER,
+  away_player_7 INTEGER,
+  away_player_8 INTEGER,
+  away_player_9 INTEGER,
+  away_player_10 INTEGER,
+  away_player_11 INTEGER,
+  goal TEXT,
+  shot on TEXT,
+  shot off TEXT,
+  foul commit TEXT,
+  card TEXT,
+  cross TEXT,
+  corner TEXT,
+  possession TEXT,
+  B365H REAL,
+  B365D REAL,
+  B365A REAL,
+  BWH REAL,
+  BWD REAL,
+  BWA REAL,
+  IWH REAL,
+  IWD REAL,
+  IWA REAL,
+  LBH REAL,
+  LBD REAL,
+  LBA REAL,
+  PSH REAL,
+  PSD REAL,
+  PSA REAL,
+  WHH REAL,
+  WHD REAL,
+  WHA REAL,
+  SJH REAL,
+  SJD REAL,
+  SJA REAL,
+  VCH REAL,
+  VCD REAL,
+  VCA REAL,
+  GBH REAL,
+  GBD REAL,
+  GBA REAL,
+  BSH REAL,
+  BSD REAL,
+  BSA REAL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (away_player_11) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_10) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_9) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_8) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_7) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_6) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_5) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_4) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_3) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_2) REFERENCES Player(player api id),
+  FOREIGN KEY (away_player_1) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_11) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_10) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_9) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_8) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_7) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_6) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_5) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_4) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_3) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_2) REFERENCES Player(player api id),
+  FOREIGN KEY (home_player_1) REFERENCES Player(player api id),
+  FOREIGN KEY (away team api id) REFERENCES Team(team api id),
+  FOREIGN KEY (home team api id) REFERENCES Team(team api id)
+);
+
+
+/* Sample data for Match */
+/* id | country id | league id | season | stage | date | match api id | home team api id | away team api id | home team goal | away team goal | home_player_X1 | home_player_X2 | home_player_X3 | home_player_X4 | home_player_X5 | home_player_X6 | home_player_X7 | home_player_X8 | home_player_X9 | home_player_X10 | home_player_X11 | away_player_X1 | away_player_X2 | away_player_X3 | away_player_X4 | away_player_X5 | away_player_X6 | away_player_X7 | away_player_X8 | away_player_X9 | away_player_X10 | away_player_X11 | home_player_Y1 | home_player_Y2 | home_player_Y3 | home_player_Y4 | home_player_Y5 | home_player_Y6 | home_player_Y7 | home_player_Y8 | home_player_Y9 | home_player_Y10 | home_player_Y11 | away_player_Y1 | away_player_Y2 | away_player_Y3 | away_player_Y4 | away_player_Y5 | away_player_Y6 | away_player_Y7 | away_player_Y8 | away_player_Y9 | away_player_Y10 | away_player_Y11 | home_player_1 | home_player_2 | home_player_3 | home_player_4 | home_player_5 | home_player_6 | home_player_7 | home_player_8 | home_player_9 | home_player_10 | home_player_11 | away_player_1 | away_player_2 | away_player_3 | away_player_4 | away_player_5 | away_player_6 | away_player_7 | away_player_8 | away_player_9 | away_player_10 | away_player_11 | goal | shot on | shot off | foul commit | card | cross | corner | possession | B365H | B365D | B365A | BWH | BWD | BWA | IWH | IWD | IWA | LBH | LBD | LBA | PSH | PSD | PSA | WHH | WHD | WHA | SJH | SJD | SJA | VCH | VCD | VCA | GBH | GBD | GBA | BSH | BSD | BSA */
+/* 1 | 1 | 1 | '2008/2009' | 1 | '2008-08-17 00:00:00' | 492473 | 9987 | 9993 | 1 | 1 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | 1.73 | 3.4 | 5.0 | 1.75 | 3.35 | 4.2 | 1.85 | 3.2 | 3.5 | 1.8 | 3.3 | 3.75 | NULL | NULL | NULL | 1.7 | 3.3 | 4.33 | 1.9 | 3.3 | 4.0 | 1.65 | 3.4 | 4.5 | 1.78 | 3.25 | 4.0 | 1.73 | 3.4 | 4.2 */
+/* 2 | 1 | 1 | '2008/2009' | 1 | '2008-08-16 00:00:00' | 492474 | 10000 | 9994 | 0 | 0 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | 1.95 | 3.2 | 3.6 | 1.8 | 3.3 | 3.95 | 1.9 | 3.2 | 3.5 | 1.9 | 3.2 | 3.5 | NULL | NULL | NULL | 1.83 | 3.3 | 3.6 | 1.95 | 3.3 | 3.8 | 2.0 | 3.25 | 3.25 | 1.85 | 3.25 | 3.75 | 1.91 | 3.25 | 3.6 */
+/* 3 | 1 | 1 | '2008/2009' | 1 | '2008-08-16 00:00:00' | 492475 | 9984 | 8635 | 0 | 3 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | 2.38 | 3.3 | 2.75 | 2.4 | 3.3 | 2.55 | 2.6 | 3.1 | 2.3 | 2.5 | 3.2 | 2.5 | NULL | NULL | NULL | 2.5 | 3.25 | 2.4 | 2.63 | 3.3 | 2.5 | 2.35 | 3.25 | 2.65 | 2.5 | 3.2 | 2.5 | 2.3 | 3.2 | 2.75 */

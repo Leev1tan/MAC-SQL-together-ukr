@@ -1,0 +1,35 @@
+[
+  {
+    "id": "bd0b0990-c414-4b75-a65a-cd1e1b6a13a9",
+    "parent_id": null,
+    "session_id": "1e32a1bc-a42e-4958-bb8f-e7167c23736d",
+    "timestamp": "2025-03-25T14:37:31.624635",
+    "from_agent": "User",
+    "to_agent": "Selector",
+    "action": "submit_query",
+    "data": {
+      "query": {
+        "db_id": "tvshow",
+        "query": "List top 3 highest Rating  TV series. List the TV series's Episode and Rating.",
+        "ground_truth": "SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;",
+        "send_to": "Selector",
+        "trace_enabled": true,
+        "dataset_type": "spider",
+        "exec_trace": []
+      }
+    }
+  },
+  {
+    "id": "a3441dae-9937-4021-ae95-566784d34bda",
+    "parent_id": "bd0b0990-c414-4b75-a65a-cd1e1b6a13a9",
+    "session_id": "1e32a1bc-a42e-4958-bb8f-e7167c23736d",
+    "timestamp": "2025-03-25T14:37:31.625635",
+    "from_agent": "User",
+    "to_agent": "Selector",
+    "action": "process_query_text",
+    "data": {
+      "query": "List top 3 highest Rating  TV series. List the TV series's Episode and Rating.",
+      "db_id": "tvshow"
+    }
+  }
+]

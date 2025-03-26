@@ -1,0 +1,95 @@
+/* COLUMN AND TABLE NAME MAPPINGS:
+TABLE MAPPINGS:
+COLUMN MAPPINGS:
+  customers.client segment = Segment
+  gasstations.Gas Station ID = GasStationID
+  gasstations.Chain ID = ChainID
+  gasstations.chain segment = Segment
+  products.Product ID = ProductID
+  transactions_1k.Transaction ID = TransactionID
+  transactions_1k.Customer ID = CustomerID
+  transactions_1k.Card ID = CardID
+  transactions_1k.Gas Station ID = GasStationID
+  transactions_1k.Product ID = ProductID
+  yearmonth.Customer ID = CustomerID
+*/
+
+CREATE TABLE customers (
+  CustomerID INTEGER,
+  client segment TEXT,
+  Currency TEXT,
+  PRIMARY KEY (CustomerID)
+);
+
+
+/* Sample data for customers */
+/* CustomerID | client segment | Currency */
+/* 3 | 'SME' | 'EUR' */
+/* 5 | 'LAM' | 'EUR' */
+/* 6 | 'SME' | 'EUR' */
+
+
+CREATE TABLE gasstations (
+  Gas Station ID INTEGER,
+  Chain ID INTEGER,
+  Country TEXT,
+  chain segment TEXT,
+  PRIMARY KEY (Gas Station ID)
+);
+
+
+/* Sample data for gasstations */
+/* Gas Station ID | Chain ID | Country | chain segment */
+/* 44 | 13 | 'CZE' | 'Value for money' */
+/* 45 | 6 | 'CZE' | 'Premium' */
+/* 46 | 23 | 'CZE' | 'Other' */
+
+
+CREATE TABLE products (
+  Product ID INTEGER,
+  Description TEXT,
+  PRIMARY KEY (Product ID)
+);
+
+
+/* Sample data for products */
+/* Product ID | Description */
+/* 1 | 'Rucní zadání' */
+/* 2 | 'Nafta' */
+/* 3 | 'Special' */
+
+
+CREATE TABLE transactions_1k (
+  Transaction ID INTEGER,
+  Date DATE,
+  Time TEXT,
+  Customer ID INTEGER,
+  Card ID INTEGER,
+  Gas Station ID INTEGER,
+  Product ID INTEGER,
+  Amount INTEGER,
+  Price REAL,
+  PRIMARY KEY (Transaction ID)
+);
+
+
+/* Sample data for transactions_1k */
+/* Transaction ID | Date | Time | Customer ID | Card ID | Gas Station ID | Product ID | Amount | Price */
+/* 1 | '2012-08-24' | '09:41:00' | 31543 | 486621 | 3704 | 2 | 28 | 672.64 */
+/* 2 | '2012-08-24' | '10:03:00' | 46707 | 550134 | 3704 | 2 | 18 | 430.72 */
+/* 3 | '2012-08-24' | '10:03:00' | 46707 | 550134 | 3704 | 23 | 1 | 121.99 */
+
+
+CREATE TABLE yearmonth (
+  Customer ID INTEGER,
+  Date TEXT,
+  Consumption REAL,
+  FOREIGN KEY (Customer ID) REFERENCES customers(CustomerID)
+);
+
+
+/* Sample data for yearmonth */
+/* Customer ID | Date | Consumption */
+/* 5 | '201207' | 528.3 */
+/* 5 | '201302' | 1598.28 */
+/* 5 | '201303' | 1931.36 */

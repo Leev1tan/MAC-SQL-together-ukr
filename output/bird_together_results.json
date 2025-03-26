@@ -1,0 +1,11 @@
+[
+  {
+    "db_id": "codebase_community",
+    "question": "State all the tags used by Mark Meckes in his posts that doesn't have comments.",
+    "gold_sql": "SELECT T3.Tags FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T3.Id = T2.PostId WHERE T1.DisplayName = 'Mark Meckes' AND T3.CommentCount = 0",
+    "generated_sql": "SELECT DISTINCT T1.TagName \nFROM tags AS T1 \nINNER JOIN posts AS T2 ON T2.Tags LIKE '%' + T1.TagName + '%' \nINNER JOIN users AS T3 ON T2.OwnerUserId = T3.Id \nWHERE T3.DisplayName = 'Mark Meckes' AND T2.CommentCount = 0;",
+    "exact_match": false,
+    "semantic_match": false,
+    "semantic_match_type": "execution"
+  }
+]

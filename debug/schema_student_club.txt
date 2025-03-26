@@ -1,0 +1,186 @@
+/* COLUMN AND TABLE NAME MAPPINGS:
+TABLE MAPPINGS:
+  Event = event
+  Major = major
+  Zip_Code = zip_code
+  Attendance = attendance
+  Budget = budget
+  Expense = expense
+  Income = income
+  Member = member
+COLUMN MAPPINGS:
+  Event.event id = event_id
+  Event.event name = event_name
+  Event.event date = event_date
+  Major.major id = major_id
+  Major.major name = major_name
+  Zip_Code.zip code = zip_code
+  Zip_Code.short state = short_state
+  Attendance.link to event = link_to_event
+  Attendance.link to member = link_to_member
+  Budget.budget id = budget_id
+  Budget.event status = event_status
+  Budget.link to event = link_to_event
+  Expense.expense id = expense_id
+  Expense.expense description = expense_description
+  Expense.expense date = expense_date
+  Expense.link to member = link_to_member
+  Expense.link to budget = link_to_budget
+  Income.income id = income_id
+  Income.date received = date_received
+  Income.link to member = link_to_member
+  Member.member id = member_id
+  Member.first name = first_name
+  Member.last name = last_name
+  Member.link to major = link_to_major
+*/
+
+CREATE TABLE Event (
+  event id TEXT,
+  event name TEXT,
+  event date TEXT,
+  type TEXT,
+  notes TEXT,
+  location TEXT,
+  status TEXT,
+  PRIMARY KEY (event id)
+);
+
+
+/* Sample data for Event */
+/* event id | event name | event date | type | notes | location | status */
+/* 'rec0Si5cQ4rJRVzd6' | 'March Meeting' | '2020-03-10T12:00:00' | 'Meeting' | NULL | 'MU 215' | 'Open' */
+/* 'rec0akZnLLpGUloLH' | 'Officers meeting - January' | '2020-01-14T09:30:00' | 'Meeting' | NULL | NULL | 'Open' */
+/* 'rec0dZPcWXF0QjNnE' | 'Spring Elections' | '2019-11-24T09:00:00' | 'Election' | 'All active members can vote for new officers between 4pm-8pm.' | 'MU 215' | 'Open' */
+
+
+CREATE TABLE Major (
+  major id TEXT,
+  major name TEXT,
+  department TEXT,
+  college TEXT,
+  PRIMARY KEY (major id)
+);
+
+
+/* Sample data for Major */
+/* major id | major name | department | college */
+/* 'rec06DF6vZ1CyPKpc' | 'Outdoor Product Design and Development' | 'School of Applied Sciences, Technology and Education' | 'College of Agriculture and Applied Sciences' */
+/* 'rec09LedkREyskCNv' | 'Agricultural Communication' | 'School of Applied Sciences, Technology and Education' | 'College of Agriculture and Applied Sciences' */
+/* 'rec0Eanv576RhQllI' | 'Fisheries and Aquatic Sciences' | 'Watershed Sciences Department' | 'College of Natural Resources' */
+
+
+CREATE TABLE Zip_Code (
+  zip code INTEGER,
+  type TEXT,
+  city TEXT,
+  county TEXT,
+  state TEXT,
+  short state TEXT,
+  PRIMARY KEY (zip code)
+);
+
+
+/* Sample data for Zip_Code */
+/* zip code | type | city | county | state | short state */
+/* 501 | 'Unique' | 'Holtsville' | 'Suffolk County' | 'New York' | 'NY' */
+/* 544 | 'Unique' | 'Holtsville' | 'Suffolk County' | 'New York' | 'NY' */
+/* 601 | 'Standard' | 'Adjuntas' | 'Adjuntas Municipio' | 'Puerto Rico' | 'PR' */
+
+
+CREATE TABLE Attendance (
+  link to event TEXT,
+  link to member TEXT,
+  FOREIGN KEY (link to member) REFERENCES Member(member id),
+  FOREIGN KEY (link to event) REFERENCES Event(event id)
+);
+
+
+/* Sample data for Attendance */
+/* link to event | link to member */
+/* 'rec2N69DMcrqN9PJC' | 'recD078PnS3x2doBe' */
+/* 'rec2N69DMcrqN9PJC' | 'recP6DJPyi5donvXL' */
+/* 'rec2N69DMcrqN9PJC' | 'rec28ORZgcm1dtqBZ' */
+
+
+CREATE TABLE Budget (
+  budget id TEXT,
+  category TEXT,
+  spent REAL,
+  remaining REAL,
+  amount INTEGER,
+  event status TEXT,
+  link to event TEXT,
+  PRIMARY KEY (budget id),
+  FOREIGN KEY (link to event) REFERENCES Event(event id)
+);
+
+
+/* Sample data for Budget */
+/* budget id | category | spent | remaining | amount | event status | link to event */
+/* 'rec0QmEc3cSQFQ6V2' | 'Advertisement' | 67.81 | 7.19 | 75 | 'Closed' | 'recI43CzsZ0Q625ma' */
+/* 'rec1bG6HSft7XIvTP' | 'Food' | 121.14 | 28.86 | 150 | 'Closed' | 'recggMW2eyCYceNcy' */
+/* 'rec1z6ISJU2HdIsVm' | 'Food' | 20.2 | -0.199999999999999 | 20 | 'Closed' | 'recJ4Witp9tpjaugn' */
+
+
+CREATE TABLE Expense (
+  expense id TEXT,
+  expense description TEXT,
+  expense date TEXT,
+  cost REAL,
+  approved TEXT,
+  link to member TEXT,
+  link to budget TEXT,
+  PRIMARY KEY (expense id),
+  FOREIGN KEY (link to member) REFERENCES Member(member id),
+  FOREIGN KEY (link to budget) REFERENCES Budget(budget id)
+);
+
+
+/* Sample data for Expense */
+/* expense id | expense description | expense date | cost | approved | link to member | link to budget */
+/* 'rec017x6R3hQqkLAo' | 'Post Cards, Posters' | '2019-08-20' | 122.06 | 'true' | 'rec4BLdZHS2Blfp4v' | 'recvKTAWAFKkVNnXQ' */
+/* 'rec1nIjoZKTYayqZ6' | 'Water, Cookies' | '2019-10-08' | 20.2 | 'true' | 'recro8T1MPMwRadVH' | 'recy8KY5bUdzF81vv' */
+/* 'rec1oMgNFt7Y0G40x' | 'Pizza' | '2019-09-10' | 51.81 | 'true' | 'recD078PnS3x2doBe' | 'recwXIiKoBMjXJsGZ' */
+
+
+CREATE TABLE Income (
+  income id TEXT,
+  date received TEXT,
+  amount INTEGER,
+  source TEXT,
+  notes TEXT,
+  link to member TEXT,
+  PRIMARY KEY (income id),
+  FOREIGN KEY (link to member) REFERENCES Member(member id)
+);
+
+
+/* Sample data for Income */
+/* income id | date received | amount | source | notes | link to member */
+/* 'rec0s9ZrO15zhzUeE' | '2019-10-17' | 50 | 'Dues' | NULL | 'reccW7q1KkhSKZsea' */
+/* 'rec7f5XMQZexgtQJo' | '2019-09-04' | 50 | 'Dues' | NULL | 'recTjHY5xXhvkCdVT' */
+/* 'rec8BUJa8GXUjiglg' | '2019-10-08' | 50 | 'Dues' | NULL | 'recUdRhbhcEO1Hk5r' */
+
+
+CREATE TABLE Member (
+  member id TEXT,
+  first name TEXT,
+  last name TEXT,
+  email TEXT,
+  position TEXT,
+  t_shirt_size TEXT,
+  phone TEXT,
+  zip INTEGER,
+  link to major TEXT,
+  PRIMARY KEY (member id),
+  FOREIGN KEY (zip) REFERENCES Zip_Code(zip code),
+  FOREIGN KEY (link to major) REFERENCES Major(major id)
+);
+
+
+/* Sample data for Member */
+/* member id | first name | last name | email | position | t_shirt_size | phone | zip | link to major */
+/* 'rec1x5zBFIqoOuPW8' | 'Angela' | 'Sanders' | 'angela.sanders@lpu.edu' | 'Member' | 'Medium' | '(651) 928-4507' | 55108 | 'recxK3MHQFbR9J5uO' */
+/* 'rec280Sk7o31iG0Tx' | 'Grant' | 'Gilmour' | 'grant.gilmour@lpu.edu' | 'Member' | 'X-Large' | '403-555-1310' | 29440 | 'rec7BxKpjJ7bNph3O' */
+/* 'rec28ORZgcm1dtqBZ' | 'Luisa' | 'Guidi' | 'luisa.guidi@lpu.edu' | 'Member' | 'Medium' | '442-555-5882' | 10002 | 'recdIBgeU38UbV2sy' */

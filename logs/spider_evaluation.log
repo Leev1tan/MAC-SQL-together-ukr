@@ -1,0 +1,32 @@
+2025-03-25 16:56:01,288 - __main__ - INFO - Found Spider dataset at: MAC-SQL\data\spider
+2025-03-25 16:56:01,296 - __main__ - INFO - Database structure verified: 166 database files found
+2025-03-25 16:56:01,296 - __main__ - INFO - Running command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 5 --visualize
+2025-03-25 16:56:34,804 - __main__ - INFO - Evaluation completed successfully
+2025-03-25 17:00:28,077 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:00:28,078 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:00:28,078 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 3 --visualize
+2025-03-25 17:00:29,099 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_spider.py', '--samples', '3', '--visualize']' returned non-zero exit status 1.
+2025-03-25 17:01:02,375 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:01:02,375 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:01:02,375 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 3 --visualize
+2025-03-25 17:01:03,396 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_spider.py', '--samples', '3', '--visualize']' returned non-zero exit status 1.
+2025-03-25 17:02:14,054 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:02:14,054 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:02:14,054 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 3
+2025-03-25 17:02:15,109 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_spider.py', '--samples', '3']' returned non-zero exit status 1.
+2025-03-25 17:02:50,899 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:02:50,900 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:02:50,900 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 3
+2025-03-25 17:02:51,936 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_spider.py', '--samples', '3']' returned non-zero exit status 1.
+2025-03-25 17:04:35,409 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:04:35,409 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:04:35,409 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2
+2025-03-25 17:04:46,857 - __main__ - INFO - Evaluation completed successfully
+2025-03-25 17:05:14,370 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:05:14,370 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:05:14,370 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2
+2025-03-25 17:05:29,873 - __main__ - INFO - Evaluation completed successfully
+2025-03-25 17:18:54,181 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-03-25 17:18:54,181 - __main__ - INFO - Database structure verified successfully
+2025-03-25 17:18:54,181 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2
+2025-03-25 17:19:17,115 - __main__ - INFO - Evaluation completed successfully

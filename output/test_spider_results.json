@@ -1,0 +1,18 @@
+{
+  "results": [
+    {
+      "db_id": "pets_1",
+      "question": "Find the major and age of students who do not have a cat pet.",
+      "sql": "SELECT S.Major, S.Age\nFROM Student S\nWHERE S.StuID NOT IN (\n  SELECT S.StuID\n  FROM Student S\n  JOIN Has_Pet HP ON S.StuID = HP.StuID\n  JOIN Pets P ON HP.PetID = P.PetID\n  WHERE P.PetType = 'cat'\n);",
+      "ground_truth": "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+      "execution_match": false
+    },
+    {
+      "db_id": "network_1",
+      "question": "Show the names of high schoolers who have at least 3 friends.",
+      "sql": "SELECT H.name\nFROM Highschooler H\nWHERE H.ID IN (\n  SELECT id\n  FROM (\n    SELECT student_id AS id, friend_id AS friend\n    FROM Friend\n    UNION\n    SELECT friend_id AS id, student_id AS friend\n    FROM Friend\n  ) T\n  GROUP BY id\n  HAVING COUNT(DISTINCT friend) >= 3\n);",
+      "ground_truth": "SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  3",
+      "execution_match": false
+    }
+  ]
+}
