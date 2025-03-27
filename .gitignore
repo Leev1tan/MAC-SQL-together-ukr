@@ -1,3 +1,17 @@
 .env
 __pycache__/
 .cursor/
+
+# Ignore MAC-SQL folder except for bird-ukr
+MAC-SQL/**
+!MAC-SQL/data/
+!MAC-SQL/data/bird-ukr/
+!MAC-SQL/data/bird-ukr/**
+MAC-SQL/data/minidev/
+MAC-SQL/data/spider/
+
+# Ignore MAC-SQL folder except for our specific files
+!MAC-SQL/data/bird-ukr/database/
+!MAC-SQL/data/bird-ukr/database/спортивний_клуб/
+!MAC-SQL/data/bird-ukr/database/спортивний_клуб/*.sql
+
