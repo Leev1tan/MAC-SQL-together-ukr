@@ -822,7 +822,7 @@ def test_agent_subset(
     
     # Try to import evaluate_metrics if available
     try:
-        import evaluate_metrics
+        import evaluation.evaluate_metrics as evaluate_metrics
         has_metrics = True
         logger.info("Evaluation metrics module loaded successfully")
     except ImportError:
