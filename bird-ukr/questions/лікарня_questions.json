@@ -1,0 +1,327 @@
+[
+    {
+        "question_id": "лікарня_001",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі працюють в хірургічному відділенні?",
+        "gold_sql": "\n    SELECT л.прізвище, л.імя, л.спеціалізація \n    FROM лікарі л\n    JOIN відділення в ON л.відділення_id = в.id\n    WHERE в.назва = 'Хірургічне відділення'\n    ORDER BY л.прізвище\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_002",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Скільки пацієнтів зареєстровано в кожному відділенні?",
+        "gold_sql": "\n    SELECT в.назва AS відділення, COUNT(п.id) AS кількість_пацієнтів\n    FROM відділення в\n    LEFT JOIN пацієнти п ON в.id = п.відділення_id\n    GROUP BY в.id, в.назва\n    ORDER BY кількість_пацієнтів DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_003",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Хто з пацієнтів був госпіталізований за останній тиждень?",
+        "gold_sql": "\n    SELECT прізвище, імя, дата_надходження, діагноз\n    FROM пацієнти\n    WHERE дата_надходження >= CURRENT_DATE - INTERVAL '7 days'\n    ORDER BY дата_надходження DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_004",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти перебувають у критичному стані?",
+        "gold_sql": "\n    SELECT прізвище, імя, діагноз, дата_надходження\n    FROM пацієнти\n    WHERE стан = 'Критичний'\n    ORDER BY дата_надходження\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_005",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти мають діагноз, пов'язаний з серцем?",
+        "gold_sql": "\n    SELECT прізвище, імя, діагноз, стан\n    FROM пацієнти\n    WHERE діагноз ILIKE '%серц%' OR діагноз ILIKE '%кардіо%'\n    ORDER BY прізвище\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_006",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка найдорожча процедура в лікарні?",
+        "gold_sql": "\n    SELECT назва, вартість\n    FROM процедури\n    WHERE вартість = (SELECT MAX(вартість) FROM процедури)\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_007",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти були виписані протягом останнього місяця?",
+        "gold_sql": "\n    SELECT прізвище, імя, діагноз, дата_виписки\n    FROM пацієнти\n    WHERE дата_виписки IS NOT NULL \n    AND дата_виписки >= CURRENT_DATE - INTERVAL '1 month'\n    ORDER BY дата_виписки DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_008",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які медсестри працюють у педіатричному відділенні?",
+        "gold_sql": "\n    SELECT м.прізвище, м.імя, м.категорія, м.досвід_роботи\n    FROM медсестри м\n    JOIN відділення в ON м.відділення_id = в.id\n    WHERE в.назва = 'Педіатричне відділення'\n    ORDER BY м.досвід_роботи DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_009",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі провели найбільше відвідувань пацієнтів за останній тиждень?",
+        "gold_sql": "\n    SELECT л.прізвище, л.імя, COUNT(в.id) AS кількість_відвідувань\n    FROM лікарі л\n    JOIN відвідування в ON л.id = в.лікар_id\n    WHERE в.дата >= CURRENT_DATE - INTERVAL '7 days'\n    GROUP BY л.id, л.прізвище, л.імя\n    ORDER BY кількість_відвідувань DESC\n    LIMIT 5\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_010",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які ліки призначаються найчастіше?",
+        "gold_sql": "\n    SELECT л.назва, COUNT(п.id) AS кількість_призначень\n    FROM ліки л\n    JOIN призначення п ON л.id = п.ліки_id\n    GROUP BY л.id, л.назва\n    ORDER BY кількість_призначень DESC\n    LIMIT 5\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_011",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти отримали найдорожчі процедури?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        проц.назва AS процедура, \n        проц.вартість\n    FROM пацієнти п\n    JOIN проведені_процедури пп ON п.id = пп.пацієнт_id\n    JOIN процедури проц ON пп.процедура_id = проц.id\n    WHERE проц.вартість > (SELECT AVG(вартість) * 1.5 FROM процедури)\n    ORDER BY проц.вартість DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_012",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка середня тривалість перебування пацієнтів у лікарні за відділеннями?",
+        "gold_sql": "\n    SELECT \n        в.назва AS відділення,\n        ROUND(AVG(п.дата_виписки - п.дата_надходження)) AS середня_тривалість_днів\n    FROM відділення в\n    JOIN пацієнти п ON в.id = п.відділення_id\n    WHERE п.дата_виписки IS NOT NULL\n    GROUP BY в.id, в.назва\n    ORDER BY середня_тривалість_днів DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_013",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які відділення мають найвищий відсоток пацієнтів у критичному стані?",
+        "gold_sql": "\n    SELECT \n        в.назва AS відділення,\n        COUNT(п.id) AS всього_пацієнтів,\n        SUM(CASE WHEN п.стан = 'Критичний' THEN 1 ELSE 0 END) AS критичних_пацієнтів,\n        ROUND((SUM(CASE WHEN п.стан = 'Критичний' THEN 1 ELSE 0 END)::numeric / \n               COUNT(п.id)::numeric) * 100, 1) AS відсоток_критичних\n    FROM відділення в\n    JOIN пацієнти п ON в.id = п.відділення_id\n    GROUP BY в.id, в.назва\n    HAVING COUNT(п.id) > 0\n    ORDER BY відсоток_критичних DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_014",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "У які години доби найчастіше надходять пацієнти з невідкладними станами?",
+        "gold_sql": "\n    SELECT \n        EXTRACT(HOUR FROM дата_надходження) AS година,\n        COUNT(*) AS кількість_пацієнтів\n    FROM пацієнти\n    WHERE терміновість = 'Невідкладна'\n    GROUP BY EXTRACT(HOUR FROM дата_надходження)\n    ORDER BY година\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_015",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти перебувають у лікарні більше 10 днів і ще не виписані?",
+        "gold_sql": "\n    SELECT \n        прізвище, \n        імя, \n        діагноз, \n        дата_надходження,\n        CURRENT_DATE - дата_надходження AS днів_у_лікарні\n    FROM пацієнти\n    WHERE \n        дата_виписки IS NULL AND \n        CURRENT_DATE - дата_надходження > 10\n    ORDER BY днів_у_лікарні DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_016",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі мають найбільше пацієнтів з хронічними захворюваннями?",
+        "gold_sql": "\n    SELECT \n        л.прізвище, \n        л.імя, \n        л.спеціалізація,\n        COUNT(DISTINCT п.id) AS кількість_пацієнтів\n    FROM лікарі л\n    JOIN відвідування в ON л.id = в.лікар_id\n    JOIN пацієнти п ON в.пацієнт_id = п.id\n    WHERE п.тип_захворювання = 'Хронічне'\n    GROUP BY л.id, л.прізвище, л.імя, л.спеціалізація\n    ORDER BY кількість_пацієнтів DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_017",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які ліки найчастіше призначаються для пацієнтів із серцево-судинними захворюваннями?",
+        "gold_sql": "\n    SELECT \n        л.назва AS ліки,\n        л.виробник,\n        COUNT(п.id) AS кількість_призначень\n    FROM ліки л\n    JOIN призначення п ON л.id = п.ліки_id\n    JOIN пацієнти пц ON п.пацієнт_id = пц.id\n    WHERE \n        пц.діагноз ILIKE '%серц%' OR \n        пц.діагноз ILIKE '%кардіо%' OR \n        пц.діагноз ILIKE '%судин%'\n    GROUP BY л.id, л.назва, л.виробник\n    ORDER BY кількість_призначень DESC\n    LIMIT 10\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_018",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як розподіляються пацієнти за віком, статтю та типом захворювання?",
+        "gold_sql": "\n    SELECT \n        CASE \n            WHEN вік < 18 THEN 'До 18'\n            WHEN вік BETWEEN 18 AND 30 THEN '18-30'\n            WHEN вік BETWEEN 31 AND 45 THEN '31-45'\n            WHEN вік BETWEEN 46 AND 60 THEN '46-60'\n            ELSE 'Понад 60'\n        END AS вікова_група,\n        стать,\n        тип_захворювання,\n        COUNT(*) AS кількість_пацієнтів\n    FROM пацієнти\n    GROUP BY вікова_група, стать, тип_захворювання\n    ORDER BY вікова_група, стать, тип_захворювання\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_019",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як змінювалася кількість госпіталізацій за місяцями протягом останнього року?",
+        "gold_sql": "\n    SELECT \n        TO_CHAR(DATE_TRUNC('month', дата_надходження), 'YYYY-MM') AS місяць,\n        COUNT(*) AS кількість_госпіталізацій,\n        ROUND((COUNT(*) - LAG(COUNT(*), 1, NULL) OVER (ORDER BY DATE_TRUNC('month', дата_надходження)))::numeric / \n              NULLIF(LAG(COUNT(*), 1, NULL) OVER (ORDER BY DATE_TRUNC('month', дата_надходження)), 0)::numeric * 100, 1) \n              AS зміна_відсотків\n    FROM пацієнти\n    WHERE дата_надходження >= CURRENT_DATE - INTERVAL '1 year'\n    GROUP BY DATE_TRUNC('month', дата_надходження)\n    ORDER BY DATE_TRUNC('month', дата_надходження)\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_020",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка середня вартість лікування пацієнта за категоріями захворювань?",
+        "gold_sql": "\n    SELECT \n        п.тип_захворювання,\n        ROUND(AVG(проц.вартість)) AS середня_вартість_процедур,\n        ROUND(AVG(л.вартість * пр.кількість)) AS середня_вартість_ліків,\n        ROUND(AVG(проц.вартість) + AVG(л.вартість * пр.кількість)) AS загальна_середня_вартість\n    FROM пацієнти п\n    LEFT JOIN проведені_процедури пп ON п.id = пп.пацієнт_id\n    LEFT JOIN процедури проц ON пп.процедура_id = проц.id\n    LEFT JOIN призначення пр ON п.id = пр.пацієнт_id\n    LEFT JOIN ліки л ON пр.ліки_id = л.id\n    GROUP BY п.тип_захворювання\n    ORDER BY загальна_середня_вартість DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_021",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі мають найкращі показники успішності лікування за співвідношенням виписаних до загальної кількості пацієнтів?",
+        "gold_sql": "\n    WITH статистика_лікарів AS (\n        SELECT \n            л.id,\n            л.прізвище,\n            л.імя,\n            л.спеціалізація,\n            в.назва AS відділення,\n            COUNT(DISTINCT п.id) AS всього_пацієнтів,\n            COUNT(DISTINCT CASE WHEN п.дата_виписки IS NOT NULL THEN п.id END) AS виписано,\n            COUNT(DISTINCT CASE WHEN п.стан = 'Покращений' OR п.стан = 'Здоровий' THEN п.id END) AS успішно_вилікувано\n        FROM лікарі л\n        JOIN відділення в ON л.відділення_id = в.id\n        JOIN відвідування вд ON л.id = вд.лікар_id\n        JOIN пацієнти п ON вд.пацієнт_id = п.id\n        WHERE вд.дата >= CURRENT_DATE - INTERVAL '6 months'\n        GROUP BY л.id, л.прізвище, л.імя, л.спеціалізація, в.назва\n        HAVING COUNT(DISTINCT п.id) >= 5 -- Мінімально необхідна кількість пацієнтів\n    )\n    SELECT \n        прізвище,\n        імя,\n        спеціалізація,\n        відділення,\n        всього_пацієнтів,\n        виписано,\n        успішно_вилікувано,\n        ROUND((виписано::numeric / всього_пацієнтів::numeric) * 100, 1) AS відсоток_виписаних,\n        ROUND((успішно_вилікувано::numeric / NULLIF(виписано, 0)::numeric) * 100, 1) AS ефективність_лікування\n    FROM статистика_лікарів\n    ORDER BY ефективність_лікування DESC, відсоток_виписаних DESC\n    LIMIT 10\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_022",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які процедури найефективніші для лікування певних типів захворювань?",
+        "gold_sql": "\n    WITH ефективність_процедур AS (\n        SELECT \n            п.тип_захворювання,\n            проц.id AS процедура_id,\n            проц.назва AS процедура,\n            COUNT(DISTINCT п.id) AS кількість_пацієнтів,\n            SUM(CASE WHEN п.стан = 'Покращений' OR п.стан = 'Здоровий' THEN 1 ELSE 0 END) AS успішних_випадків,\n            ROUND(AVG(п.дата_виписки - п.дата_надходження)) AS середня_тривалість_лікування\n        FROM пацієнти п\n        JOIN проведені_процедури пп ON п.id = пп.пацієнт_id\n        JOIN процедури проц ON пп.процедура_id = проц.id\n        WHERE п.дата_виписки IS NOT NULL\n        GROUP BY п.тип_захворювання, проц.id, проц.назва\n        HAVING COUNT(DISTINCT п.id) >= 3 -- Мінімально необхідна кількість пацієнтів\n    )\n    SELECT \n        тип_захворювання,\n        процедура,\n        кількість_пацієнтів,\n        успішних_випадків,\n        ROUND((успішних_випадків::numeric / кількість_пацієнтів::numeric) * 100, 1) AS ефективність_відсоток,\n        середня_тривалість_лікування\n    FROM ефективність_процедур\n    WHERE (успішних_випадків::numeric / кількість_пацієнтів::numeric) > 0.5\n    ORDER BY тип_захворювання, ефективність_відсоток DESC\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_023",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які фактори найбільше впливають на тривалість перебування пацієнтів у лікарні?",
+        "gold_sql": "\n    WITH фактори_тривалості AS (\n        SELECT \n            CASE \n                WHEN вік < 18 THEN 'До 18'\n                WHEN вік BETWEEN 18 AND 40 THEN '18-40'\n                WHEN вік BETWEEN 41 AND 60 THEN '41-60'\n                ELSE 'Понад 60'\n            END AS вікова_група,\n            стать,\n            тип_захворювання,\n            терміновість,\n            відділення_id,\n            ROUND(AVG(дата_виписки - дата_надходження)) AS середня_тривалість,\n            COUNT(*) AS кількість_пацієнтів,\n            STDDEV(дата_виписки - дата_надходження) AS стандартне_відхилення\n        FROM пацієнти\n        WHERE дата_виписки IS NOT NULL\n        GROUP BY вікова_група, стать, тип_захворювання, терміновість, відділення_id\n        HAVING COUNT(*) >= 5 -- Мінімально необхідна кількість пацієнтів\n    )\n    SELECT \n        ф.вікова_група,\n        ф.стать,\n        ф.тип_захворювання,\n        ф.терміновість,\n        в.назва AS відділення,\n        ф.середня_тривалість AS середня_тривалість_днів,\n        ф.кількість_пацієнтів,\n        ROUND(ф.стандартне_відхилення, 1) AS стандартне_відхилення,\n        ROUND(ф.середня_тривалість / (SELECT AVG(дата_виписки - дата_надходження) FROM пацієнти WHERE дата_виписки IS NOT NULL), 2) AS відносна_тривалість\n    FROM фактори_тривалості ф\n    JOIN відділення в ON ф.відділення_id = в.id\n    ORDER BY ф.середня_тривалість DESC\n    LIMIT 15\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_024",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як змінювався середній час одужання пацієнтів різних вікових груп за останні роки?",
+        "gold_sql": "\n    WITH річна_статистика AS (\n        SELECT \n            EXTRACT(YEAR FROM дата_надходження) AS рік,\n            CASE \n                WHEN вік < 18 THEN 'До 18'\n                WHEN вік BETWEEN 18 AND 40 THEN '18-40'\n                WHEN вік BETWEEN 41 AND 60 THEN '41-60'\n                ELSE 'Понад 60'\n            END AS вікова_група,\n            AVG(дата_виписки - дата_надходження) AS середній_час_одужання,\n            COUNT(*) AS кількість_пацієнтів\n        FROM пацієнти\n        WHERE \n            дата_виписки IS NOT NULL AND\n            EXTRACT(YEAR FROM дата_надходження) >= EXTRACT(YEAR FROM CURRENT_DATE) - 5\n        GROUP BY рік, вікова_група\n    ),\n    з_динамікою AS (\n        SELECT \n            рік,\n            вікова_група,\n            ROUND(середній_час_одужання, 1) AS середній_час_одужання_днів,\n            кількість_пацієнтів,\n            ROUND(середній_час_одужання - LAG(середній_час_одужання, 1) OVER (PARTITION BY вікова_група ORDER BY рік), 1) AS зміна_від_попереднього_року,\n            ROUND((середній_час_одужання - LAG(середній_час_одужання, 1) OVER (PARTITION BY вікова_група ORDER BY рік)) / \n                 NULLIF(LAG(середній_час_одужання, 1) OVER (PARTITION BY вікова_група ORDER BY рік), 0) * 100, 1) AS відсоток_зміни\n        FROM річна_статистика\n    )\n    SELECT \n        рік,\n        вікова_група,\n        середній_час_одужання_днів,\n        кількість_пацієнтів,\n        зміна_від_попереднього_року,\n        відсоток_зміни || '%' AS відсоток_зміни\n    FROM з_динамікою\n    ORDER BY вікова_група, рік\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_025",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яку економічну ефективність мають різні відділення лікарні?",
+        "gold_sql": "\n    WITH витрати_відділень AS (\n        SELECT \n            в.id AS відділення_id,\n            в.назва AS відділення,\n            COUNT(DISTINCT п.id) AS кількість_пацієнтів,\n            SUM(проц.вартість) AS загальна_вартість_процедур,\n            SUM(л.вартість * пр.кількість) AS загальна_вартість_ліків,\n            (SUM(проц.вартість) + SUM(л.вартість * пр.кількість)) AS загальні_витрати,\n            AVG(п.дата_виписки - п.дата_надходження) AS середня_тривалість_перебування,\n            COUNT(DISTINCT CASE WHEN п.стан = 'Покращений' OR п.стан = 'Здоровий' THEN п.id END) AS успішно_вилікувано\n        FROM відділення в\n        LEFT JOIN пацієнти п ON в.id = п.відділення_id\n        LEFT JOIN проведені_процедури пп ON п.id = пп.пацієнт_id\n        LEFT JOIN процедури проц ON пп.процедура_id = проц.id\n        LEFT JOIN призначення пр ON п.id = пр.пацієнт_id\n        LEFT JOIN ліки л ON пр.ліки_id = л.id\n        WHERE п.дата_надходження >= CURRENT_DATE - INTERVAL '1 year'\n        GROUP BY в.id, в.назва\n    )\n    SELECT \n        відділення,\n        кількість_пацієнтів,\n        ROUND(загальна_вартість_процедур) AS загальна_вартість_процедур,\n        ROUND(загальна_вартість_ліків) AS загальна_вартість_ліків,\n        ROUND(загальні_витрати) AS загальні_витрати,\n        ROUND(загальні_витрати / NULLIF(кількість_пацієнтів, 0)) AS середні_витрати_на_пацієнта,\n        ROUND(середня_тривалість_перебування, 1) AS середня_тривалість_днів,\n        успішно_вилікувано AS успішно_вилікувано,\n        ROUND((успішно_вилікувано::numeric / NULLIF(кількість_пацієнтів, 0)::numeric) * 100, 1) AS ефективність_лікування_відсоток,\n        ROUND(загальні_витрати / NULLIF(успішно_вилікувано, 0)) AS вартість_успішного_лікування,\n        ROUND(успішно_вилікувано::numeric / (загальні_витрати / 10000), 2) AS індекс_ефективності\n    FROM витрати_відділень\n    ORDER BY індекс_ефективності DESC\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    }
+]
