@@ -1,0 +1,1727 @@
+[
+    {
+        "question_id": "інтернет_магазин_001",
+        "db_id": "інтернет_магазин",
+        "question": "Скільки всього активних товарів є в магазині?",
+        "gold_sql": "SELECT COUNT(*) FROM товари WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_002",
+        "db_id": "інтернет_магазин",
+        "question": "Які товари мають найвищий рейтинг?",
+        "gold_sql": "SELECT назва, рейтинг FROM товари ORDER BY рейтинг DESC LIMIT 5;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_003",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть середню ціну товарів у магазині.",
+        "gold_sql": "SELECT AVG(ціна) FROM товари WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_004",
+        "db_id": "інтернет_магазин",
+        "question": "Скільки клієнтів зареєструвалось у магазині?",
+        "gold_sql": "SELECT COUNT(*) FROM клієнти;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_005",
+        "db_id": "інтернет_магазин",
+        "question": "Які методи доставки доступні в магазині?",
+        "gold_sql": "SELECT назва, вартість FROM методи_доставки WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_006",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть товари, які закінчуються на складі (менше 10 штук).",
+        "gold_sql": "SELECT назва, кількість_на_складі FROM товари WHERE кількість_на_складі < 10 AND активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "інтернет_магазин_007",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть 5 найпопулярніших категорій за кількістю товарів.",
+        "gold_sql": "\n        SELECT к.назва, COUNT(т.ід) AS кількість_товарів\n        FROM категорії к\n        JOIN товари т ON к.ід = т.категорія_ід\n        WHERE т.активний = TRUE\n        GROUP BY к.назва\n        ORDER BY кількість_товарів DESC\n        LIMIT 5;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_008",
+        "db_id": "інтернет_магазин",
+        "question": "Обчисліть середню вартість замовлення для кожного методу доставки.",
+        "gold_sql": "\n        SELECT мд.назва, AVG(з.загальна_сума) AS середня_вартість\n        FROM замовлення з\n        JOIN методи_доставки мд ON з.метод_доставки = мд.код\n        GROUP BY мд.назва\n        ORDER BY середня_вартість DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_009",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть 10 клієнтів, які зробили найбільше замовлень.",
+        "gold_sql": "\n        SELECT к.прізвище, к.імя, COUNT(з.ід) AS кількість_замовлень\n        FROM клієнти к\n        JOIN замовлення з ON к.ід = з.клієнт_ід\n        GROUP BY к.ід, к.прізвище, к.імя\n        ORDER BY кількість_замовлень DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_010",
+        "db_id": "інтернет_магазин",
+        "question": "Для кожного товару знайдіть кількість залишених відгуків та середній рейтинг.",
+        "gold_sql": "\n        SELECT т.назва, \n               COUNT(в.ід) AS кількість_відгуків, \n               AVG(в.рейтинг) AS середній_рейтинг\n        FROM товари т\n        LEFT JOIN відгуки в ON т.ід = в.товар_ід\n        GROUP BY т.ід, т.назва\n        HAVING COUNT(в.ід) > 0\n        ORDER BY середній_рейтинг DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_011",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть кількість замовлень та загальну суму продажів по місяцях за останній рік.",
+        "gold_sql": "\n        SELECT \n            EXTRACT(YEAR FROM дата_замовлення) AS рік,\n            EXTRACT(MONTH FROM дата_замовлення) AS місяць,\n            COUNT(*) AS кількість_замовлень,\n            SUM(загальна_сума) AS загальна_сума_продажів\n        FROM замовлення\n        WHERE дата_замовлення >= CURRENT_DATE - INTERVAL '1 year'\n        GROUP BY рік, місяць\n        ORDER BY рік, місяць;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_012",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть товари, які ще ніхто не замовляв.",
+        "gold_sql": "\n        SELECT т.назва, т.ціна\n        FROM товари т\n        LEFT JOIN позиції_замовлення п ON т.ід = п.товар_ід\n        WHERE п.ід IS NULL AND т.активний = TRUE;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "інтернет_магазин_013",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть топ-5 клієнтів за загальною сумою всіх замовлень та кількість їхніх замовлень.",
+        "gold_sql": "\n        SELECT \n            к.прізвище,\n            к.імя,\n            COUNT(з.ід) AS кількість_замовлень,\n            SUM(з.загальна_сума) AS загальна_сума\n        FROM клієнти к\n        JOIN замовлення з ON к.ід = з.клієнт_ід\n        WHERE з.статус != 'скасовано'\n        GROUP BY к.ід, к.прізвище, к.імя\n        ORDER BY загальна_сума DESC\n        LIMIT 5;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_014",
+        "db_id": "інтернет_магазин",
+        "question": "Для кожного товару визначте його популярність (кількість продажів) та прибуток.",
+        "gold_sql": "\n        SELECT \n            т.назва,\n            SUM(п.кількість) AS кількість_продажів,\n            SUM(п.кількість * п.ціна_за_одиницю) AS загальний_прибуток\n        FROM товари т\n        JOIN позиції_замовлення п ON т.ід = п.товар_ід\n        JOIN замовлення з ON п.замовлення_ід = з.ід\n        WHERE з.статус IN ('виконано', 'доставлено')\n        GROUP BY т.ід, т.назва\n        ORDER BY загальний_прибуток DESC;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_015",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть міста, де проживає найбільша кількість наших клієнтів.",
+        "gold_sql": "\n        SELECT \n            а.місто,\n            COUNT(DISTINCT к.ід) AS кількість_клієнтів\n        FROM клієнти к\n        JOIN адреси а ON к.ід = а.клієнт_ід\n        GROUP BY а.місто\n        ORDER BY кількість_клієнтів DESC\n        LIMIT 10;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_016",
+        "db_id": "інтернет_магазин",
+        "question": "Порівняйте продажі товарів з різних категорій за останні 3 місяці та ранжуйте категорії за зростанням продажів.",
+        "gold_sql": "\n    WITH категорія_продажі AS (\n        SELECT \n            к.ід AS категорія_ід,\n            к.назва AS категорія,\n            SUM(CASE \n                WHEN з.дата_замовлення >= CURRENT_DATE - INTERVAL '1 month' \n                THEN п.кількість \n                ELSE 0 \n            END) AS продажі_останній_місяць,\n            SUM(CASE \n                WHEN з.дата_замовлення >= CURRENT_DATE - INTERVAL '3 month' \n                THEN п.кількість \n                ELSE 0 \n            END) AS продажі_останні_3_місяці,\n            SUM(п.кількість) AS загальні_продажі\n        FROM категорії к\n        JOIN товари т ON к.ід = т.категорія_ід\n        JOIN позиції_замовлення п ON т.ід = п.товар_ід\n        JOIN замовлення з ON п.замовлення_ід = з.ід\n        WHERE з.статус != 'скасовано'\n        GROUP BY к.ід, к.назва\n    )\n    SELECT\n        категорія,\n        продажі_останній_місяць,\n        продажі_останні_3_місяці,\n        загальні_продажі\n    FROM категорія_продажі\n    ORDER BY (продажі_останній_місяць - (продажі_останні_3_місяці - продажі_останній_місяць)/2.0) DESC;\n    ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_017",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть клієнтів, які зробили замовлення всіма доступними методами доставки.",
+        "gold_sql": "\n        SELECT \n            к.прізвище,\n            к.імя\n        FROM клієнти к\n        WHERE (\n            SELECT COUNT(DISTINCT мд.код)\n            FROM методи_доставки мд\n            WHERE мд.активний = TRUE\n        ) = (\n            SELECT COUNT(DISTINCT з.метод_доставки)\n            FROM замовлення з\n            WHERE з.клієнт_ід = к.ід\n        );\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_018",
+        "db_id": "інтернет_магазин",
+        "question": "Для кожного товару знайдіть співвідношення між кількістю позитивних (4-5 зірок) та негативних (1-2 зірки) відгуків.",
+        "gold_sql": "\n        SELECT \n            т.назва,\n            SUM(CASE WHEN в.рейтинг >= 4 THEN 1 ELSE 0 END) AS позитивні_відгуки,\n            SUM(CASE WHEN в.рейтинг <= 2 THEN 1 ELSE 0 END) AS негативні_відгуки,\n            CASE \n                WHEN SUM(CASE WHEN в.рейтинг <= 2 THEN 1 ELSE 0 END) = 0 THEN 'Тільки позитивні'\n                ELSE ROUND(SUM(CASE WHEN в.рейтинг >= 4 THEN 1 ELSE 0 END)::numeric / \n                      NULLIF(SUM(CASE WHEN в.рейтинг <= 2 THEN 1 ELSE 0 END), 0), 2)::text\n            END AS співвідношення\n        FROM товари т\n        JOIN відгуки в ON т.ід = в.товар_ід\n        GROUP BY т.ід, т.назва\n        HAVING COUNT(в.ід) >= 5\n        ORDER BY т.назва;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_019",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть середній час між датою замовлення та датою доставки для різних методів доставки.",
+        "gold_sql": "\n        SELECT \n            мд.назва AS метод_доставки,\n            AVG(EXTRACT(EPOCH FROM (з.дата_доставки - з.дата_замовлення))/86400)::numeric(10,2) AS середній_час_доставки_днів\n        FROM замовлення з\n        JOIN методи_доставки мд ON з.метод_доставки = мд.код\n        JOIN доставки д ON з.ід = д.замовлення_ід\n        WHERE з.дата_доставки IS NOT NULL -- Corrected alias based on hint\n        GROUP BY мд.назва\n        ORDER BY середній_час_доставки_днів;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "інтернет_магазин_020",
+        "db_id": "інтернет_магазин",
+        "question": "Знайдіть клієнтів, які зробили більше 5 замовлень за останні 6 місяців та обчисліть їхню загальну суму покупок за цей період.",
+        "gold_sql": "\n        SELECT \n            к.прізвище,\n            к.імя,\n            COUNT(з.ід) AS кількість_замовлень,\n            SUM(з.загальна_сума) AS загальна_сума_покупок\n        FROM клієнти к\n        JOIN замовлення з ON к.ід = з.клієнт_ід\n        WHERE з.дата_замовлення >= CURRENT_DATE - INTERVAL '6 month'\n        GROUP BY к.ід, к.прізвище, к.імя\n        HAVING COUNT(з.ід) > 5\n        ORDER BY загальна_сума_покупок DESC;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "авіакомпанія_001",
+        "db_id": "авіакомпанія",
+        "question": "Скільки літаків знаходиться в активному статусі?",
+        "gold_sql": "SELECT COUNT(*) FROM літаки WHERE статус = 'Активний';",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "авіакомпанія_002",
+        "db_id": "авіакомпанія",
+        "question": "Які посади мають найвищу базову зарплату?",
+        "gold_sql": "SELECT назва, базова_зарплата FROM посади ORDER BY базова_зарплата DESC LIMIT 5;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "авіакомпанія_003",
+        "db_id": "авіакомпанія",
+        "question": "Скільки пасажирів зареєстровано в системі?",
+        "gold_sql": "SELECT COUNT(*) FROM пасажири;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "авіакомпанія_004",
+        "db_id": "авіакомпанія",
+        "question": "Які типи літаків мають максимальну кількість пасажирів більше 200?",
+        "gold_sql": "SELECT назва, виробник, максимальна_кількість_пасажирів FROM типи_літаків WHERE максимальна_кількість_пасажирів > 200;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "авіакомпанія_005",
+        "db_id": "авіакомпанія",
+        "question": "Знайдіть всі аеропорти, що знаходяться в Україні.",
+        "gold_sql": "SELECT код_іата, назва, місто FROM аеропорти WHERE країна = 'Україна';",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "авіакомпанія_006",
+        "db_id": "авіакомпанія",
+        "question": "Скільки рейсів заплановано для кожного літака на наступний місяць?",
+        "gold_sql": "\n        SELECT л.реєстраційний_номер, т.назва AS тип_літака, COUNT(р.id) AS кількість_рейсів\n        FROM літаки л\n        JOIN типи_літаків т ON л.тип_літака_id = т.id\n        LEFT JOIN рейси р ON л.id = р.літак_id\n        WHERE р.дата_час_відправлення BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '1 month')\n        GROUP BY л.id, л.реєстраційний_номер, т.назва\n        ORDER BY кількість_рейсів DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "авіакомпанія_007",
+        "db_id": "авіакомпанія",
+        "question": "Для кожного маршруту знайдіть середню заповненість літаків (у відсотках від максимальної місткості).",
+        "gold_sql": "\n        SELECT \n            а1.місто AS місто_відправлення, \n            а2.місто AS місто_призначення,\n            AVG(\n                (р.кількість_місць_економ - р.доступно_місць_економ + \n                 р.кількість_місць_бізнес - р.доступно_місць_бізнес + \n                 р.кількість_місць_перший_клас - р.доступно_місць_перший_клас) * 100.0 / \n                (р.кількість_місць_економ + р.кількість_місць_бізнес + р.кількість_місць_перший_клас)\n            ) AS середня_заповненість_відсоток\n        FROM рейси р\n        JOIN маршрути м ON р.маршрут_id = м.id\n        JOIN аеропорти а1 ON м.аеропорт_відправлення_id = а1.id\n        JOIN аеропорти а2 ON м.аеропорт_призначення_id = а2.id\n        WHERE р.статус_id IN (\n            SELECT id FROM статуси_рейсів WHERE назва IN ('Виконано', 'В польоті')\n        )\n        GROUP BY м.id, а1.місто, а2.місто\n        ORDER BY середня_заповненість_відсоток DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "авіакомпанія_008",
+        "db_id": "авіакомпанія",
+        "question": "Знайдіть 10 найбільш прибуткових рейсів за останній місяць.",
+        "gold_sql": "\n        SELECT \n            р.номер_рейсу, \n            а1.місто AS місто_відправлення, \n            а2.місто AS місто_призначення,\n            р.дата_час_відправлення,\n            (\n                (р.кількість_місць_економ - р.доступно_місць_економ) * р.вартість_економ +\n                (р.кількість_місць_бізнес - р.доступно_місць_бізнес) * р.вартість_бізнес +\n                (р.кількість_місць_перший_клас - р.доступно_місць_перший_клас) * р.вартість_перший_клас\n            ) AS загальний_дохід\n        FROM рейси р\n        JOIN маршрути м ON р.маршрут_id = м.id\n        JOIN аеропорти а1 ON м.аеропорт_відправлення_id = а1.id\n        JOIN аеропорти а2 ON м.аеропорт_призначення_id = а2.id\n        WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 month'\n          AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано')\n        ORDER BY загальний_дохід DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "авіакомпанія_009",
+        "db_id": "авіакомпанія",
+        "question": "Які пілоти здійснили найбільшу кількість рейсів за останній рік?",
+        "gold_sql": "\n        SELECT \n            п.прізвище, \n            п.імя, \n            COUNT(рп.рейс_id) AS кількість_рейсів\n        FROM персонал п\n        JOIN рейси_персонал рп ON п.id = рп.персонал_id\n        JOIN рейси р ON рп.рейс_id = р.id\n        JOIN посади пос ON п.посада_id = пос.id\n        WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year'\n          AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано')\n          AND пос.назва LIKE '%пілот%'\n        GROUP BY п.id, п.прізвище, п.імя\n        ORDER BY кількість_рейсів DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "авіакомпанія_010",
+        "db_id": "авіакомпанія",
+        "question": "Для кожного класу обслуговування порахуйте середню вартість бронювання та кількість пасажирів.",
+        "gold_sql": "\n        SELECT \n            ко.назва AS клас_обслуговування, \n            COUNT(б.id) AS кількість_бронювань,\n            COUNT(бп.пасажир_id) AS кількість_пасажирів,\n            AVG(б.загальна_вартість) AS середня_вартість,\n            SUM(б.загальна_вартість) AS загальний_дохід\n        FROM бронювання б\n        JOIN класи_обслуговування ко ON б.клас_обслуговування_id = ко.id\n        JOIN бронювання_пасажири бп ON б.id = бп.бронювання_id\n        GROUP BY ко.id, ко.назва\n        ORDER BY загальний_дохід DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "авіакомпанія_011",
+        "db_id": "авіакомпанія",
+        "question": "Знайдіть маршрути, на яких за останні 3 місяці було найбільше затримок вильоту (більше 30 хвилин).",
+        "gold_sql": "\n        SELECT \n            а1.місто AS місто_відправлення, \n            а2.місто AS місто_призначення,\n            COUNT(р.id) AS загальна_кількість_рейсів,\n            SUM(CASE \n                WHEN EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 > 30 \n                THEN 1 ELSE 0 \n            END) AS кількість_затримок,\n            ROUND(SUM(CASE \n                WHEN EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 > 30 \n                THEN 1 ELSE 0 \n            END) * 100.0 / COUNT(р.id), 2) AS відсоток_затримок,\n            AVG(CASE \n                WHEN EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 > 30 \n                THEN EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 \n                ELSE NULL \n            END) AS середня_затримка_хвилин\n        FROM рейси р\n        JOIN маршрути м ON р.маршрут_id = м.id\n        JOIN аеропорти а1 ON м.аеропорт_відправлення_id = а1.id\n        JOIN аеропорти а2 ON м.аеропорт_призначення_id = а2.id\n        WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '3 month'\n          AND р.фактичний_час_відправлення IS NOT NULL\n        GROUP BY м.id, а1.місто, а2.місто\n        HAVING COUNT(р.id) >= 10\n          AND SUM(CASE \n                WHEN EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 > 30 \n                THEN 1 ELSE 0 \n            END) > 0\n        ORDER BY відсоток_затримок DESC, кількість_затримок DESC\n        LIMIT 10;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "авіакомпанія_012",
+        "db_id": "авіакомпанія",
+        "question": "Знайдіть пасажирів, які здійснили найбільше рейсів за останній рік та їхній загальний наліт годин.",
+        "gold_sql": "\n        WITH рейси_пасажирів AS (\n            SELECT \n                п.id AS пасажир_id,\n                п.прізвище,\n                п.імя,\n                р.id AS рейс_id,\n                EXTRACT(EPOCH FROM (р.фактичний_час_прибуття - р.фактичний_час_відправлення))/3600 AS тривалість_годин\n            FROM пасажири п\n            JOIN бронювання_пасажири бп ON п.id = бп.пасажир_id\n            JOIN бронювання б ON бп.бронювання_id = б.id\n            JOIN рейси р ON б.рейс_id = р.id\n            WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year'\n              AND р.фактичний_час_відправлення IS NOT NULL\n              AND р.фактичний_час_прибуття IS NOT NULL\n              AND б.статус_id IN (SELECT id FROM статуси_бронювань WHERE назва = 'Виконано')\n        )\n        SELECT \n            прізвище,\n            імя,\n            COUNT(DISTINCT рейс_id) AS кількість_рейсів,\n            ROUND(SUM(тривалість_годин)::numeric, 2) AS загальний_наліт_годин,\n            ROUND(AVG(тривалість_годин)::numeric, 2) AS середня_тривалість_рейсу\n        FROM рейси_пасажирів\n        GROUP BY пасажир_id, прізвище, імя\n        HAVING COUNT(DISTINCT рейс_id) >= 5\n        ORDER BY кількість_рейсів DESC, загальний_наліт_годин DESC\n        LIMIT 20;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "авіакомпанія_013",
+        "db_id": "авіакомпанія",
+        "question": "Проаналізуйте завантаженість різних типів літаків та їхню прибутковість за останні 6 місяців.",
+        "gold_sql": "\n        WITH рейси_статистика AS (\n            SELECT \n                р.id AS рейс_id,\n                л.id AS літак_id,\n                тл.id AS тип_літака_id,\n                тл.назва AS тип_літака,\n                (р.кількість_місць_економ - р.доступно_місць_економ) * р.вартість_економ +\n                (р.кількість_місць_бізнес - р.доступно_місць_бізнес) * р.вартість_бізнес +\n                (р.кількість_місць_перший_клас - р.доступно_місць_перший_клас) * р.вартість_перший_клас \n                    AS дохід_рейсу,\n                (р.кількість_місць_економ + р.кількість_місць_бізнес + р.кількість_місць_перший_клас - \n                 р.доступно_місць_економ - р.доступно_місць_бізнес - р.доступно_місць_перший_клас) \n                    AS кількість_пасажирів,\n                (р.кількість_місць_економ + р.кількість_місць_бізнес + р.кількість_місць_перший_клас) \n                    AS загальна_кількість_місць,\n                EXTRACT(EPOCH FROM (р.фактичний_час_прибуття - р.фактичний_час_відправлення))/3600 \n                    AS тривалість_годин,\n                м.відстань\n            FROM рейси р\n            JOIN літаки л ON р.літак_id = л.id\n            JOIN типи_літаків тл ON л.тип_літака_id = тл.id\n            JOIN маршрути м ON р.маршрут_id = м.id\n            WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '6 month'\n              AND р.фактичний_час_відправлення IS NOT NULL\n              AND р.фактичний_час_прибуття IS NOT NULL\n              AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано')\n        )\n        SELECT \n            тип_літака,\n            COUNT(DISTINCT рейс_id) AS кількість_рейсів,\n            ROUND(AVG(кількість_пасажирів * 100.0 / загальна_кількість_місць), 2) AS середня_заповненість_відсоток,\n            ROUND(AVG(дохід_рейсу), 2) AS середній_дохід_на_рейс,\n            ROUND(SUM(дохід_рейсу), 2) AS загальний_дохід,\n            ROUND(SUM(дохід_рейсу) / SUM(кількість_пасажирів), 2) AS середній_дохід_на_пасажира,\n            ROUND(SUM(дохід_рейсу) / SUM(тривалість_годин), 2) AS середній_дохід_на_годину_польоту,\n            ROUND(SUM(дохід_рейсу) / SUM(відстань), 2) AS середній_дохід_на_кілометр\n        FROM рейси_статистика\n        GROUP BY тип_літака_id, тип_літака\n        ORDER BY загальний_дохід DESC;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "авіакомпанія_014",
+        "db_id": "авіакомпанія",
+        "question": "Знайдіть 10 найбільш завантажених аеропортів за кількістю рейсів та пасажирів.",
+        "gold_sql": "\n        WITH статистика_аеропортів AS (\n            -- Вильоти\n            SELECT \n                а.id AS аеропорт_id,\n                а.код_іата,\n                а.назва,\n                а.місто,\n                а.країна,\n                р.id AS рейс_id,\n                'виліт' AS тип_операції,\n                (р.кількість_місць_економ - р.доступно_місць_економ +\n                 р.кількість_місць_бізнес - р.доступно_місць_бізнес +\n                 р.кількість_місць_перший_клас - р.доступно_місць_перший_клас) AS кількість_пасажирів\n            FROM аеропорти а\n            JOIN маршрути м ON а.id = м.аеропорт_відправлення_id\n            JOIN рейси р ON м.id = р.маршрут_id\n            WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year'\n              AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва IN ('Виконано', 'В польоті'))\n            \n            UNION ALL\n            \n            -- Прильоти\n            SELECT \n                а.id AS аеропорт_id,\n                а.код_іата,\n                а.назва,\n                а.місто,\n                а.країна,\n                р.id AS рейс_id,\n                'приліт' AS тип_операції,\n                (р.кількість_місць_економ - р.доступно_місць_економ +\n                 р.кількість_місць_бізнес - р.доступно_місць_бізнес +\n                 р.кількість_місць_перший_клас - р.доступно_місць_перший_клас) AS кількість_пасажирів\n            FROM аеропорти а\n            JOIN маршрути м ON а.id = м.аеропорт_призначення_id\n            JOIN рейси р ON м.id = р.маршрут_id\n            WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year'\n              AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва IN ('Виконано', 'В польоті'))\n        )\n        SELECT \n            код_іата,\n            назва,\n            місто,\n            країна,\n            COUNT(DISTINCT рейс_id) AS кількість_рейсів,\n            SUM(CASE WHEN тип_операції = 'виліт' THEN 1 ELSE 0 END) AS кількість_вильотів,\n            SUM(CASE WHEN тип_операції = 'приліт' THEN 1 ELSE 0 END) AS кількість_прильотів,\n            SUM(кількість_пасажирів) AS загальна_кількість_пасажирів,\n            SUM(CASE WHEN тип_операції = 'виліт' THEN кількість_пасажирів ELSE 0 END) AS пасажирів_відправлено,\n            SUM(CASE WHEN тип_операції = 'приліт' THEN кількість_пасажирів ELSE 0 END) AS пасажирів_прибуло\n        FROM статистика_аеропортів\n        GROUP BY аеропорт_id, код_іата, назва, місто, країна\n        ORDER BY кількість_рейсів DESC, загальна_кількість_пасажирів DESC\n        LIMIT 10;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "авіакомпанія_015",
+        "db_id": "авіакомпанія",
+        "question": "Для кожного місяця останнього року знайдіть середні показники пунктуальності рейсів.",
+        "gold_sql": "\n        WITH пунктуальність_рейсів AS (\n            SELECT \n                EXTRACT(YEAR FROM р.дата_час_відправлення) AS рік,\n                EXTRACT(MONTH FROM р.дата_час_відправлення) AS місяць,\n                р.id AS рейс_id,\n                CASE \n                    WHEN р.фактичний_час_відправлення IS NULL OR \n                         р.дата_час_відправлення IS NULL THEN NULL\n                    ELSE EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 \n                END AS затримка_вильоту_хвилин,\n                CASE \n                    WHEN р.фактичний_час_прибуття IS NULL OR \n                         р.дата_час_прибуття IS NULL THEN NULL\n                    ELSE EXTRACT(EPOCH FROM (р.фактичний_час_прибуття - р.дата_час_прибуття))/60 \n                END AS затримка_прибуття_хвилин,\n                CASE \n                    WHEN р.фактичний_час_відправлення IS NULL OR \n                         р.дата_час_відправлення IS NULL OR\n                         EXTRACT(EPOCH FROM (р.фактичний_час_відправлення - р.дата_час_відправлення))/60 <= 15 \n                    THEN 1 ELSE 0 \n                END AS вчасний_виліт,\n                CASE \n                    WHEN р.фактичний_час_прибуття IS NULL OR \n                         р.дата_час_прибуття IS NULL OR\n                         EXTRACT(EPOCH FROM (р.фактичний_час_прибуття - р.дата_час_прибуття))/60 <= 15 \n                    THEN 1 ELSE 0 \n                END AS вчасне_прибуття\n            FROM рейси р\n            WHERE р.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year'\n              AND р.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано')\n        )\n        SELECT \n            рік,\n            місяць,\n            COUNT(рейс_id) AS кількість_рейсів,\n            ROUND(AVG(CASE WHEN затримка_вильоту_хвилин > 0 THEN затримка_вильоту_хвилин ELSE 0 END), 2) AS середня_затримка_вильоту_хвилин,\n            ROUND(AVG(CASE WHEN затримка_прибуття_хвилин > 0 THEN затримка_прибуття_хвилин ELSE 0 END), 2) AS середня_затримка_прибуття_хвилин,\n            ROUND(SUM(вчасний_виліт) * 100.0 / COUNT(рейс_id), 2) AS відсоток_вчасних_вильотів,\n            ROUND(SUM(вчасне_прибуття) * 100.0 / COUNT(рейс_id), 2) AS відсоток_вчасних_прибуттів\n        FROM пунктуальність_рейсів\n        GROUP BY рік, місяць\n        ORDER BY рік, місяць;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "бібліотека_001",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги були видані після 2010 року?",
+        "gold_sql": "\n    SELECT к.назва, а.прізвище, а.імя, к.рік_видання\n    FROM книги к\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE к.рік_видання > 2010\n    ORDER BY к.рік_видання DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_002",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги написав Тарас Шевченко?",
+        "gold_sql": "\n    SELECT к.назва, к.рік_видання, к.кількість_сторінок\n    FROM книги к\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE а.прізвище ILIKE 'Шевченко' AND а.імя ILIKE 'Тарас'\n    ORDER BY к.назва\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_003",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Скільки книг є в жанрі фантастика?",
+                "gold_sql": "\n    SELECT COUNT(*) AS кількість_книг\n    FROM книги к\n    JOIN книга_жанр кж ON к.ід = кж.книга_ід\n    JOIN жанри ж ON кж.жанр_ід = ж.ід\n    WHERE ж.назва = 'Фантастика'\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT COUNT(*) AS кількість_книг\n    FROM книги k\n    JOIN жанри_книг жк ON k.id = жк.книга_id\n    JOIN жанри ж ON жк.жанр_id = ж.id\n    WHERE ж.назва = 'Фантастика'\n    "
+    },
+    {
+        "question_id": "бібліотека_004",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги наразі доступні для видачі?",
+        "gold_sql": "\n    SELECT DISTINCT к.назва, а.прізвище, а.імя, к.рік_видання\n    FROM книги к\n    JOIN примірники п ON к.ід = п.книга_ід\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE п.доступний = TRUE AND п.списаний = FALSE\n    ORDER BY к.назва\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT к.назва, к.автор, к.рік_видання\n    FROM книги к\n    JOIN екземпляри_книг ек ON к.id = ек.книга_id\n    WHERE ек.статус = 'Доступна'\n    GROUP BY к.id, к.назва, к.автор, к.рік_видання\n    ORDER BY к.назва\n    "
+    },
+    {
+        "question_id": "бібліотека_005",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги видані видавництвом 'А-БА-БА-ГА-ЛА-МА-ГА'?",
+        "gold_sql": "\n    SELECT к.назва, а.прізвище, а.імя, к.рік_видання\n    FROM книги к\n    JOIN видавництва в ON к.видавництво_ід = в.ід\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE в.назва = 'А-БА-БА-ГА-ЛА-МА-ГА'\n    ORDER BY к.рік_видання DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT назва, автор, рік_видання\n    FROM книги\n    WHERE видавництво = 'А-БА-БА-ГА-ЛА-МА-ГА'\n    ORDER BY рік_видання DESC\n    "
+    },
+    {
+        "question_id": "бібліотека_006",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які 5 книг користуються найбільшим попитом?",
+        "gold_sql": "\n    SELECT к.назва, а.прізвище, а.імя, COUNT(в.ід) AS кількість_видач\n    FROM книги к\n    JOIN примірники п ON к.ід = п.книга_ід\n    JOIN видачі в ON п.ід = в.примірник_ід\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    GROUP BY к.ід, к.назва, а.прізвище, а.імя\n    ORDER BY кількість_видач DESC\n    LIMIT 5\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT к.назва, к.автор, COUNT(в.id) AS кількість_видач\n    FROM книги к\n    JOIN екземпляри_книг ек ON к.id = ек.книга_id\n    JOIN видачі в ON ек.id = в.екземпляр_id\n    GROUP BY к.id, к.назва, к.автор\n    ORDER BY кількість_видач DESC\n    LIMIT 5\n    "
+    },
+    {
+        "question_id": "бібліотека_007",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги потрібно повернути протягом наступного тижня?",
+        "gold_sql": "\n    SELECT к.назва, ч.прізвище, ч.імя, в.очікувана_дата_повернення\n    FROM видачі в\n    JOIN примірники п ON в.примірник_ід = п.ід\n    JOIN книги к ON п.книга_ід = к.ід\n    JOIN читачі ч ON в.читач_ід = ч.ід\n    WHERE в.очікувана_дата_повернення BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days'\n    AND в.дата_повернення IS NULL\n    ORDER BY в.очікувана_дата_повернення\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT к.назва, ч.прізвище, ч.імя, в.дата_повернення\n    FROM видачі в\n    JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n    JOIN книги к ON ек.книга_id = к.id\n    JOIN читачі ч ON в.читач_id = ч.id\n    WHERE в.дата_повернення BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days'\n    AND в.фактична_дата_повернення IS NULL\n    ORDER BY в.дата_повернення\n    "
+    },
+    {
+        "question_id": "бібліотека_008",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Скільки книг є в кожному жанрі?",
+        "gold_sql": "\n    SELECT ж.назва AS жанр, COUNT(кж.книга_ід) AS кількість_книг\n    FROM жанри ж\n    LEFT JOIN книга_жанр кж ON ж.ід = кж.жанр_ід\n    GROUP BY ж.ід, ж.назва\n    ORDER BY кількість_книг DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT ж.назва AS жанр, COUNT(жк.книга_id) AS кількість_книг\n    FROM жанри ж\n    LEFT JOIN жанри_книг жк ON ж.id = жк.жанр_id\n    GROUP BY ж.id, ж.назва\n    ORDER BY кількість_книг DESC\n    "
+    },
+    {
+        "question_id": "бібліотека_009",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги містять у назві слово 'історія'?",
+        "gold_sql": "\n    SELECT к.назва, а.прізвище, а.імя, к.рік_видання\n    FROM книги к\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE к.назва ILIKE '%історія%'\n    ORDER BY к.назва\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT назва, автор, рік_видання\n    FROM книги\n    WHERE назва ILIKE '%історія%'\n    ORDER BY назва\n    "
+    },
+    {
+        "question_id": "бібліотека_010",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Хто з читачів має прострочені книги?",
+        "gold_sql": "\n    SELECT ч.прізвище, ч.імя, к.назва, в.очікувана_дата_повернення\n    FROM читачі ч\n    JOIN видачі в ON ч.ід = в.читач_ід\n    JOIN примірники п ON в.примірник_ід = п.ід\n    JOIN книги к ON п.книга_ід = к.ід\n    WHERE в.очікувана_дата_повернення < CURRENT_DATE\n    AND в.дата_повернення IS NULL\n    ORDER BY в.очікувана_дата_повернення\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT ч.прізвище, ч.імя, к.назва, в.дата_повернення\n    FROM читачі ч\n    JOIN видачі в ON ч.id = в.читач_id\n    JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n    JOIN книги к ON ек.книга_id = к.id\n    WHERE в.дата_повернення < CURRENT_DATE\n    AND в.фактична_дата_повернення IS NULL\n    ORDER BY в.дата_повернення\n    "
+    },
+    {
+        "question_id": "бібліотека_011",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Скільки книг було видано в кожному місяці поточного року?",
+        "gold_sql": "\n    SELECT \n        EXTRACT(MONTH FROM дата_видачі) AS місяць,\n        COUNT(*) AS кількість_видач\n    FROM видачі\n    WHERE EXTRACT(YEAR FROM дата_видачі) = EXTRACT(YEAR FROM CURRENT_DATE)\n    GROUP BY EXTRACT(MONTH FROM дата_видачі)\n    ORDER BY місяць\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_012",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Яка середня тривалість користування книгами за жанрами?",
+        "gold_sql": "\n    SELECT \n        ж.назва AS жанр,\n        ROUND(AVG(в.дата_повернення - в.дата_видачі)) AS середня_тривалість_днів\n    FROM жанри ж\n    JOIN книга_жанр кж ON ж.ід = кж.жанр_ід\n    JOIN книги к ON кж.книга_ід = к.ід\n    JOIN примірники п ON к.ід = п.книга_ід\n    JOIN видачі в ON п.ід = в.примірник_ід\n    WHERE в.дата_повернення IS NOT NULL\n    GROUP BY ж.ід, ж.назва\n    ORDER BY середня_тривалість_днів DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT \n        ж.назва AS жанр,\n        ROUND(AVG(в.фактична_дата_повернення - в.дата_видачі)) AS середня_тривалість_днів\n    FROM жанри ж\n    JOIN жанри_книг жк ON ж.id = жк.жанр_id\n    JOIN книги к ON жк.книга_id = к.id\n    JOIN екземпляри_книг ек ON к.id = ек.книга_id\n    JOIN видачі в ON ек.id = в.екземпляр_id\n    WHERE в.фактична_дата_повернення IS NOT NULL\n    GROUP BY ж.id, ж.назва\n    ORDER BY середня_тривалість_днів DESC\n    "
+    },
+    {
+        "question_id": "бібліотека_013",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Хто з читачів взяв найбільше книг за останні 3 місяці?",
+        "gold_sql": "\n    SELECT \n        ч.прізвище,\n        ч.імя,\n        COUNT(в.ід) AS кількість_книг\n    FROM читачі ч\n    JOIN видачі в ON ч.ід = в.читач_ід\n    WHERE в.дата_видачі >= CURRENT_DATE - INTERVAL '3 months'\n    GROUP BY ч.ід, ч.прізвище, ч.імя\n    ORDER BY кількість_книг DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT \n        ч.прізвище,\n        ч.імя,\n        COUNT(в.id) AS кількість_книг\n    FROM читачі ч\n    JOIN видачі в ON ч.id = в.читач_id\n    WHERE в.дата_видачі >= CURRENT_DATE - INTERVAL '3 months'\n    GROUP BY ч.id, ч.прізвище, ч.імя\n    ORDER BY кількість_книг DESC\n    LIMIT 5\n    "
+    },
+    {
+        "question_id": "бібліотека_014",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги мають менше 3 доступних екземплярів?",
+        "gold_sql": "\n    SELECT \n        к.назва,\n        а.прізвище,\n        а.імя,\n        COUNT(п.ід) AS всього_примірників,\n        SUM(CASE WHEN п.доступний = TRUE AND п.списаний = FALSE THEN 1 ELSE 0 END) AS доступно_примірників\n    FROM книги к\n    JOIN примірники п ON к.ід = п.книга_ід\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    GROUP BY к.ід, к.назва, а.прізвище, а.імя\n    HAVING SUM(CASE WHEN п.доступний = TRUE AND п.списаний = FALSE THEN 1 ELSE 0 END) < 3\n    ORDER BY доступно_примірників, всього_примірників DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT \n        к.назва,\n        к.автор,\n        COUNT(ек.id) AS всього_екземплярів,\n        SUM(CASE WHEN ек.статус = 'Доступна' THEN 1 ELSE 0 END) AS доступно_екземплярів\n    FROM книги к\n    JOIN екземпляри_книг ек ON к.id = ек.книга_id\n    GROUP BY к.id, к.назва, к.автор\n    HAVING SUM(CASE WHEN ек.статус = 'Доступна' THEN 1 ELSE 0 END) < 3\n    ORDER BY доступно_екземплярів, всього_екземплярів DESC\n    "
+    },
+    {
+        "question_id": "бібліотека_015",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які видавництва мають найбільше книг у бібліотеці?",
+        "gold_sql": "\n    SELECT \n        в.назва AS видавництво,\n        COUNT(к.ід) AS кількість_книг,\n        ROUND(AVG(к.рік_видання)) AS середній_рік_видання\n    FROM книги к\n    JOIN видавництва в ON к.видавництво_ід = в.ід\n    GROUP BY в.ід, в.назва\n    ORDER BY кількість_книг DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_016",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Скільки книг є в кожній віковій категорії?",
+        "gold_sql": "\n    SELECT \n        CASE \n            WHEN рік_видання > 2010 THEN 'Сучасні (після 2010)'\n            WHEN рік_видання > 1990 THEN 'Новітні (1991-2010)'\n            ELSE 'Старші (до 1990)'\n        END AS категорія_за_роком,\n        COUNT(*) AS кількість_книг,\n        ROUND(AVG(кількість_сторінок)) AS середня_кількість_сторінок\n    FROM книги\n    GROUP BY категорія_за_роком\n    ORDER BY категорія_за_роком\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_017",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Який відсоток книг повертається вчасно?",
+        "gold_sql": "\n    SELECT \n        ROUND(\n            (COUNT(CASE WHEN дата_повернення <= очікувана_дата_повернення THEN 1 END)::numeric / \n            NULLIF(COUNT(CASE WHEN дата_повернення IS NOT NULL THEN 1 END), 0)::numeric) * 100\n        ) AS відсоток_вчасних_повернень\n    FROM видачі\n    WHERE дата_повернення IS NOT NULL\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_018",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Як змінювалась популярність жанру фантастика протягом останніх 5 років?",
+        "gold_sql": "\n    SELECT \n        EXTRACT(YEAR FROM в.дата_видачі) AS рік,\n        COUNT(*) AS кількість_видач\n    FROM видачі в\n    JOIN примірники п ON в.примірник_ід = п.ід\n    JOIN книги к ON п.книга_ід = к.ід\n    JOIN книга_жанр кж ON к.ід = кж.книга_ід\n    JOIN жанри ж ON кж.жанр_ід = ж.ід\n    WHERE ж.назва = 'Фантастика'\n    AND EXTRACT(YEAR FROM в.дата_видачі) >= EXTRACT(YEAR FROM CURRENT_DATE) - 5\n    GROUP BY EXTRACT(YEAR FROM в.дата_видачі)\n    ORDER BY рік\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT \n        EXTRACT(YEAR FROM в.дата_видачі) AS рік,\n        COUNT(*) AS кількість_видач\n    FROM видачі в\n    JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n    JOIN книги к ON ек.книга_id = к.id\n    JOIN жанри_книг жк ON к.id = жк.книга_id\n    JOIN жанри ж ON жк.жанр_id = ж.id\n    WHERE ж.назва = 'Фантастика'\n    AND EXTRACT(YEAR FROM в.дата_видачі) >= EXTRACT(YEAR FROM CURRENT_DATE) - 5\n    GROUP BY EXTRACT(YEAR FROM в.дата_видачі)\n    ORDER BY рік\n    "
+    },
+    {
+        "question_id": "бібліотека_019",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які читачі мають схожі літературні вподобання з читачем Петренко Іваном?",
+        "gold_sql": "\n    WITH івана_жанри AS (\n        SELECT кж.жанр_ід, COUNT(*) AS кількість\n        FROM видачі в\n        JOIN примірники п ON в.примірник_ід = п.ід\n        JOIN книги к ON п.книга_ід = к.ід\n        JOIN книга_жанр кж ON к.ід = кж.книга_ід\n        JOIN читачі ч ON в.читач_ід = ч.ід\n        WHERE ч.прізвище = 'Петренко' AND ч.імя = 'Іван'\n        GROUP BY кж.жанр_ід\n    )\n    SELECT \n        ч.прізвище, \n        ч.імя,\n        COUNT(DISTINCT кж.жанр_ід) AS спільних_жанрів\n    FROM читачі ч\n    JOIN видачі в ON ч.ід = в.читач_ід\n    JOIN примірники п ON в.примірник_ід = п.ід\n    JOIN книги к ON п.книга_ід = к.ід\n    JOIN книга_жанр кж ON к.ід = кж.книга_ід\n    JOIN івана_жанри іж ON кж.жанр_ід = іж.жанр_ід\n    WHERE ч.прізвище <> 'Петренко' OR ч.імя <> 'Іван'\n    GROUP BY ч.ід, ч.прізвище, ч.імя\n    ORDER BY спільних_жанрів DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    WITH івана_жанри AS (\n        SELECT жк.жанр_id, COUNT(*) AS кількість\n        FROM видачі в\n        JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n        JOIN книги к ON ек.книга_id = к.id\n        JOIN жанри_книг жк ON к.id = жк.книга_id\n        JOIN читачі ч ON в.читач_id = ч.id\n        WHERE ч.прізвище = 'Петренко' AND ч.імя = 'Іван'\n        GROUP BY жк.жанр_id\n    )\n    SELECT \n        ч.прізвище, \n        ч.імя,\n        COUNT(DISTINCT жк.жанр_id) AS спільних_жанрів\n    FROM читачі ч\n    JOIN видачі в ON ч.id = в.читач_id\n    JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n    JOIN книги к ON ек.книга_id = к.id\n    JOIN жанри_книг жк ON к.id = жк.книга_id\n    JOIN івана_жанри іж ON жк.жанр_id = іж.жанр_id\n    WHERE ч.прізвище <> 'Петренко' OR ч.імя <> 'Іван'\n    GROUP BY ч.id, ч.прізвище, ч.імя\n    ORDER BY спільних_жанрів DESC\n    LIMIT 5\n    "
+    },
+    {
+        "question_id": "бібліотека_020",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Яка загальна сума штрафів, сплачених за останній рік?",
+        "gold_sql": "\n    SELECT \n        SUM(сума) AS загальна_сума_штрафів\n    FROM штрафи\n    WHERE дата_оплати >= CURRENT_DATE - INTERVAL '1 year'\n    AND статус = 'оплачено'\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "бібліотека_021",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які 5 книг мають найбільший середній час читання відносно їх обсягу (кількості сторінок)?",
+        "gold_sql": "\n    SELECT \n        к.назва,\n        а.прізвище,\n        а.імя,\n        к.кількість_сторінок,\n        ROUND(AVG(в.дата_повернення - в.дата_видачі)) AS днів_на_читання,\n        CASE WHEN к.кількість_сторінок > 0 THEN\n             ROUND(AVG(в.дата_повернення - в.дата_видачі)::numeric / к.кількість_сторінок * 100, 2)\n             ELSE NULL\n        END AS днів_на_100_сторінок\n    FROM книги к\n    JOIN примірники п ON к.ід = п.книга_ід\n    JOIN видачі в ON п.ід = в.примірник_ід\n    JOIN книга_автор ка ON к.ід = ка.книга_ід\n    JOIN автори а ON ка.автор_ід = а.ід\n    WHERE \n        в.дата_повернення IS NOT NULL\n    GROUP BY к.ід, к.назва, а.прізвище, а.імя, к.кількість_сторінок\n    HAVING COUNT(в.ід) >= 3 AND к.кількість_сторінок > 0\n    ORDER BY днів_на_100_сторінок DESC NULLS LAST\n    LIMIT 5\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    SELECT \n        к.назва,\n        к.автор,\n        к.кількість_сторінок,\n        ROUND(AVG(в.фактична_дата_повернення - в.дата_видачі)) AS днів_на_читання,\n        ROUND(AVG(в.фактична_дата_повернення - в.дата_видачі) / к.кількість_сторінок * 100, 2) AS днів_на_100_сторінок\n    FROM книги к\n    JOIN екземпляри_книг ек ON к.id = ек.книга_id\n    JOIN видачі в ON ек.id = в.екземпляр_id\n    WHERE \n        в.фактична_дата_повернення IS NOT NULL\n        AND к.кількість_сторінок > 0\n    GROUP BY к.id, к.назва, к.автор, к.кількість_сторінок\n    HAVING COUNT(в.id) >= 3 -- Щоб мати достатньо даних для статистики\n    ORDER BY днів_на_100_сторінок DESC\n    LIMIT 5\n    "
+    },
+    {
+        "question_id": "бібліотека_022",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які категорії читачів віддають перевагу яким жанрам книг?",
+        "gold_sql": "\n    WITH жанр_читач AS (\n        SELECT \n            кч.назва AS категорія,\n            кж.жанр_ід,\n            ж.назва AS жанр,\n            COUNT(*) AS кількість_видач\n        FROM видачі в\n        JOIN читачі ч ON в.читач_ід = ч.ід\n        JOIN категорії_читачів кч ON ч.категорія_ід = кч.ід\n        JOIN примірники п ON в.примірник_ід = п.ід\n        JOIN книги к ON п.книга_ід = к.ід\n        JOIN книга_жанр кж ON к.ід = кж.книга_ід\n        JOIN жанри ж ON кж.жанр_ід = ж.ід\n        GROUP BY кч.ід, кч.назва, кж.жанр_ід, ж.назва\n    ),\n    ранги_жанрів AS (\n        SELECT \n            категорія,\n            жанр,\n            кількість_видач,\n            RANK() OVER (PARTITION BY категорія ORDER BY кількість_видач DESC) AS ранг\n        FROM жанр_читач\n    )\n    SELECT \n        категорія,\n        STRING_AGG(жанр || ' (' || кількість_видач || ')', ', ' ORDER BY ранг) AS улюблені_жанри\n    FROM ранги_жанрів\n    WHERE ранг <= 3\n    GROUP BY категорія\n    ORDER BY категорія\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    WITH жанр_читач AS (\n        SELECT \n            ч.категорія,\n            жк.жанр_id,\n            ж.назва AS жанр,\n            COUNT(*) AS кількість_видач\n        FROM видачі в\n        JOIN читачі ч ON в.читач_id = ч.id\n        JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n        JOIN книги к ON ек.книга_id = к.id\n        JOIN жанри_книг жк ON к.id = жк.книга_id\n        JOIN жанри ж ON жк.жанр_id = ж.id\n        GROUP BY ч.категорія, жк.жанр_id, ж.назва\n    ),\n    ранги_жанрів AS (\n        SELECT \n            категорія,\n            жанр,\n            кількість_видач,\n            RANK() OVER (PARTITION BY категорія ORDER BY кількість_видач DESC) AS ранг\n        FROM жанр_читач\n    )\n    SELECT \n        категорія,\n        STRING_AGG(жанр || ' (' || кількість_видач || ')', ', ' ORDER BY ранг) AS улюблені_жанри\n    FROM ранги_жанрів\n    WHERE ранг <= 3 -- Топ-3 жанри для кожної категорії\n    GROUP BY категорія\n    ORDER BY категорія\n    "
+    },
+    {
+        "question_id": "бібліотека_023",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Як змінювався коефіцієнт оборотності книг (кількість видач / кількість екземплярів) за останні роки?",
+        "gold_sql": "\n    WITH річна_статистика AS (\n        SELECT \n            yr.рік,\n            COUNT(DISTINCT п.ід) AS кількість_примірників,\n            COUNT(в.ід) AS кількість_видач\n        FROM (SELECT DISTINCT EXTRACT(YEAR FROM дата_видачі) AS рік FROM видачі WHERE дата_видачі >= CURRENT_DATE - INTERVAL '5 years') yr\n        JOIN примірники п ON п.дата_придбання <= MAKE_DATE(yr.рік::integer, 12, 31) -- Cast yr.рік to integer\n        LEFT JOIN видачі в ON п.ід = в.примірник_ід AND EXTRACT(YEAR FROM в.дата_видачі) = yr.рік\n        GROUP BY yr.рік\n    )\n    SELECT \n        рік,\n        кількість_примірників,\n        кількість_видач,\n        CASE \n             WHEN кількість_примірників > 0 THEN ROUND((кількість_видач::numeric / кількість_примірників::numeric), 2)\n             ELSE 0\n        END AS коефіцієнт_оборотності\n    FROM річна_статистика\n    WHERE рік IS NOT NULL\n    ORDER BY рік\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    WITH річна_статистика AS (\n        SELECT \n            EXTRACT(YEAR FROM в.дата_видачі) AS рік,\n            COUNT(DISTINCT ек.id) AS кількість_екземплярів,\n            COUNT(в.id) AS кількість_видач\n        FROM екземпляри_книг ек\n        LEFT JOIN видачі в ON ек.id = в.екземпляр_id AND \n                              EXTRACT(YEAR FROM в.дата_видачі) >= EXTRACT(YEAR FROM CURRENT_DATE) - 5\n        WHERE \n            ек.дата_надходження <= MAKE_DATE(EXTRACT(YEAR FROM CURRENT_DATE)::integer, 12, 31)\n        GROUP BY EXTRACT(YEAR FROM в.дата_видачі)\n        HAVING EXTRACT(YEAR FROM в.дата_видачі) IS NOT NULL\n    )\n    SELECT \n        рік,\n        кількість_екземплярів,\n        кількість_видач,\n        ROUND((кількість_видач::numeric / кількість_екземплярів::numeric)::numeric, 2) AS коефіцієнт_оборотності\n    FROM річна_статистика\n    ORDER BY рік\n    "
+    },
+    {
+        "question_id": "бібліотека_024",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Які книги найчастіше затримують читачі різних вікових категорій?",
+        "gold_sql": "\n    WITH затримки AS (\n        SELECT \n            к.ід AS книга_ід,\n            к.назва,\n            а.прізвище,\n            а.імя,\n            CASE \n                WHEN EXTRACT(YEAR FROM AGE(ч.дата_народження)) < 18 THEN 'Діти'\n                WHEN EXTRACT(YEAR FROM AGE(ч.дата_народження)) BETWEEN 18 AND 25 THEN 'Молодь'\n                WHEN EXTRACT(YEAR FROM AGE(ч.дата_народження)) BETWEEN 26 AND 60 THEN 'Дорослі'\n                ELSE 'Пенсіонери'\n            END AS вікова_група,\n            COUNT(*) AS кількість_затримок,\n            AVG(в.дата_повернення - в.очікувана_дата_повернення) AS середня_затримка_днів\n        FROM видачі в\n        JOIN примірники п ON в.примірник_ід = п.ід\n        JOIN книги к ON п.книга_ід = к.ід\n        JOIN читачі ч ON в.читач_ід = ч.ід\n        JOIN книга_автор ка ON к.ід = ка.книга_ід\n        JOIN автори а ON ка.автор_ід = а.ід\n        WHERE \n            в.дата_повернення > в.очікувана_дата_повернення\n        GROUP BY к.ід, к.назва, а.прізвище, а.імя, вікова_група\n    ),\n    ранжування AS (\n        SELECT \n            назва,\n            прізвище,\n            імя,\n            вікова_група,\n            кількість_затримок,\n            середня_затримка_днів,\n            RANK() OVER (PARTITION BY вікова_група ORDER BY кількість_затримок DESC, середня_затримка_днів DESC) AS ранг\n        FROM затримки\n    )\n    SELECT \n        вікова_група,\n        назва,\n        прізвище,\n        імя,\n        кількість_затримок,\n        ROUND(середня_затримка_днів) AS середня_затримка_днів\n    FROM ранжування\n    WHERE ранг <= 3\n    ORDER BY вікова_група, ранг\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    WITH затримки AS (\n        SELECT \n            к.id AS книга_id,\n            к.назва,\n            к.автор,\n            CASE \n                WHEN ч.вік < 18 THEN 'Діти'\n                WHEN ч.вік BETWEEN 18 AND 25 THEN 'Молодь'\n                WHEN ч.вік BETWEEN 26 AND 60 THEN 'Дорослі'\n                ELSE 'Пенсіонери'\n            END AS вікова_група,\n            COUNT(*) AS кількість_затримок,\n            AVG(в.фактична_дата_повернення - в.дата_повернення) AS середня_затримка\n        FROM видачі в\n        JOIN екземпляри_книг ек ON в.екземпляр_id = ек.id\n        JOIN книги к ON ек.книга_id = к.id\n        JOIN читачі ч ON в.читач_id = ч.id\n        WHERE \n            в.фактична_дата_повернення > в.дата_повернення\n        GROUP BY к.id, к.назва, к.автор, вікова_група\n    ),\n    ранжування AS (\n        SELECT \n            назва,\n            автор,\n            вікова_група,\n            кількість_затримок,\n            середня_затримка,\n            RANK() OVER (PARTITION BY вікова_група ORDER BY кількість_затримок DESC, середня_затримка DESC) AS ранг\n        FROM затримки\n    )\n    SELECT \n        вікова_група,\n        назва,\n        автор,\n        кількість_затримок,\n        ROUND(середня_затримка) AS середня_затримка_днів\n    FROM ранжування\n    WHERE ранг <= 3\n    ORDER BY вікова_група, ранг\n    "
+    },
+    {
+        "question_id": "бібліотека_025",
+        "db_id": "бібліотека",
+        "db_path": "database/бібліотека",
+        "question": "Який вигляд має бібліотечний фонд з точки зору віку книг, стану та оборотності?",
+        "gold_sql": "\n    WITH статистика_книг AS (\n        SELECT \n            к.ід,       -- Renamed to 'книга_ід' for clarity below\n            к.назва,    -- Renamed to 'книга_назва' for clarity below\n            к.рік_видання, -- Renamed to 'книга_рік_видання' for clarity below\n            COUNT(п.ід) AS кількість_примірників,\n            SUM(CASE WHEN п.доступний = TRUE AND п.списаний = FALSE THEN 1 ELSE 0 END) AS доступно,\n            AVG(CASE UPPER(п.стан) \n                    WHEN 'НОВИЙ' THEN 1.0\n                    WHEN 'ГАРНИЙ' THEN 0.8\n                    WHEN 'ЗАДОВІЛЬНИЙ' THEN 0.5\n                    WHEN 'ПОГАНИЙ' THEN 0.2 \n                    ELSE 0.1 \n                 END) AS індекс_стану,\n            COUNT(DISTINCT в.ід) AS кількість_видач_останні_2_роки\n        FROM книги к\n        JOIN примірники п ON к.ід = п.книга_ід\n        LEFT JOIN видачі в ON п.ід = в.примірник_ід AND \n                            в.дата_видачі >= CURRENT_DATE - INTERVAL '2 years'\n        GROUP BY к.ід, к.назва, к.рік_видання\n    ),\n    класифікація AS (\n        SELECT \n            -- Select columns output by статистика_книг (using aliases for clarity)\n            ск.ід AS книга_ід, \n            ск.назва AS книга_назва, \n            ск.рік_видання AS книга_рік_видання, \n            ск.кількість_примірників, \n            ск.доступно,\n            ск.індекс_стану, -- Pass through the calculated index\n            ск.кількість_видач_останні_2_роки, -- Pass through the loan count\n            -- Calculate new columns based on статистика_книг outputs\n            CASE \n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - ск.рік_видання <= 5 THEN 'Нові'\n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - ск.рік_видання <= 20 THEN 'Сучасні'\n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - ск.рік_видання <= 50 THEN 'Класика'\n                ELSE 'Раритет'\n            END AS вікова_категорія,\n            COALESCE(ROUND(ск.індекс_стану::numeric, 2), 0) AS фінальний_індекс_стану, -- Use the passed-through value\n            CASE \n                 WHEN ск.кількість_примірників > 0 THEN ROUND((ск.кількість_видач_останні_2_роки::numeric / ск.кількість_примірників::numeric), 2)\n                 ELSE 0\n            END AS коефіцієнт_оборотності\n        FROM статистика_книг ск -- Use alias 'ск' for clarity\n    )\n    SELECT \n        к.вікова_категорія, -- Select from класифікація\n        COUNT(*) AS кількість_найменувань,\n        SUM(к.кількість_примірників) AS кількість_примірників,\n        ROUND(AVG(к.фінальний_індекс_стану)::numeric, 2) AS середній_індекс_стану,\n        ROUND(AVG(к.коефіцієнт_оборотності)::numeric, 2) AS середній_коефіцієнт_оборотності\n    FROM класифікація к -- Use alias 'к'\n    GROUP BY к.вікова_категорія\n    ORDER BY \n        CASE к.вікова_категорія \n            WHEN 'Нові' THEN 1\n            WHEN 'Сучасні' THEN 2\n            WHEN 'Класика' THEN 3\n            WHEN 'Раритет' THEN 4\n            ELSE 5\n        END\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        },
+        "original_gold_sql": "\n    WITH статистика_книг AS (\n        SELECT \n            к.id,\n            к.назва,\n            к.автор,\n            к.рік_видання,\n            COUNT(ек.id) AS кількість_екземплярів,\n            SUM(CASE WHEN ек.статус = 'Доступна' THEN 1 ELSE 0 END) AS доступно,\n            SUM(CASE WHEN ек.стан = 'Новий' THEN 1 \n                    WHEN ек.стан = 'Гарний' THEN 0.8\n                    WHEN ек.стан = 'Задовільний' THEN 0.5\n                    ELSE 0.2 END) / COUNT(ек.id) AS індекс_стану,\n            COUNT(в.id) AS кількість_видач\n        FROM книги к\n        JOIN екземпляри_книг ек ON к.id = ек.книга_id\n        LEFT JOIN видачі в ON ек.id = в.екземпляр_id AND \n                            в.дата_видачі >= CURRENT_DATE - INTERVAL '2 years'\n        GROUP BY к.id, к.назва, к.автор, к.рік_видання\n    ),\n    класифікація AS (\n        SELECT \n            id,\n            назва,\n            автор,\n            рік_видання,\n            кількість_екземплярів,\n            доступно,\n            CASE \n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - рік_видання <= 5 THEN 'Нові'\n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - рік_видання <= 20 THEN 'Сучасні'\n                WHEN EXTRACT(YEAR FROM CURRENT_DATE) - рік_видання <= 50 THEN 'Класика'\n                ELSE 'Раритет'\n            END AS вікова_категорія,\n            ROUND(індекс_стану::numeric, 2) AS індекс_стану,\n            ROUND((кількість_видач::numeric / кількість_екземплярів::numeric)::numeric, 2) AS коефіцієнт_оборотності\n        FROM статистика_книг\n    )\n    SELECT \n        вікова_категорія,\n        COUNT(*) AS кількість_найменувань,\n        SUM(кількість_екземплярів) AS кількість_екземплярів,\n        ROUND(AVG(індекс_стану)::numeric, 2) AS середній_індекс_стану,\n        ROUND(AVG(коефіцієнт_оборотності)::numeric, 2) AS середній_коефіцієнт_оборотності\n    FROM класифікація\n    GROUP BY вікова_категорія\n    ORDER BY вікова_категорія\n    "
+    },
+    {
+        "question_id": "лікарня_001",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі працюють в хірургічному відділенні?",
+        "gold_sql": "\n    SELECT л.прізвище, л.імя, л.спеціалізація \n    FROM лікарі л\n    JOIN відділення в ON л.відділення_ід = в.ід -- Corrected column name\n    WHERE в.назва = 'Хірургічне відділення'\n    ORDER BY л.прізвище\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_002",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Скільки пацієнтів зареєстровано в кожному відділенні?",
+            "gold_sql": "\n    SELECT в.назва AS відділення, COUNT(DISTINCT г.пацієнт_ід) AS кількість_пацієнтів\n    FROM відділення в\n    LEFT JOIN госпіталізації г ON в.ід = г.відділення_ід -- Join відділення with госпіталізації\n    GROUP BY в.ід, в.назва\n    ORDER BY кількість_пацієнтів DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_003",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Хто з пацієнтів був госпіталізований за останній тиждень?",
+            "gold_sql": "\n    SELECT п.прізвище, п.імя, г.дата_надходження\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід -- Join пацієнти with госпіталізації\n    WHERE г.дата_надходження >= CURRENT_DATE - INTERVAL '7 days'\n    ORDER BY г.дата_надходження DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_004",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти перебувають у критичному стані?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        х.назва AS діагноз_назва, \n        г.дата_надходження\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    LEFT JOIN діагнози д ON г.діагноз_ід = д.ід\n    LEFT JOIN хвороби х ON д.хвороба_ід = х.ід\n    WHERE г.стан_при_надходженні ILIKE 'критичний'\n      AND г.дата_виписки IS NULL\n    ORDER BY г.дата_надходження\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_005",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти мають діагноз, пов'язаний з серцем?",
+        "gold_sql": "\n    SELECT DISTINCT\n        п.прізвище, \n        п.імя, \n        х.назва AS діагноз_назва\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    JOIN діагнози д ON г.діагноз_ід = д.ід\n    JOIN хвороби х ON д.хвороба_ід = х.ід\n    WHERE х.назва ILIKE '%серц%' \n       OR х.назва ILIKE '%кардіо%'\n       OR х.назва ILIKE '%судин%'\n    ORDER BY п.прізвище\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_006",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка найдорожча процедура в лікарні?",
+        "gold_sql": "\n    SELECT назва, ціна\n    FROM послуги\n    WHERE ціна = (SELECT MAX(ціна) FROM послуги)\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_007",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти були виписані протягом останнього місяця?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        х.назва AS діагноз_назва, \n        г.дата_виписки\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    LEFT JOIN діагнози д ON г.діагноз_ід = д.ід\n    LEFT JOIN хвороби х ON д.хвороба_ід = х.ід\n    WHERE г.дата_виписки IS NOT NULL \n      AND г.дата_виписки >= CURRENT_DATE - INTERVAL '1 month'\n    ORDER BY г.дата_виписки DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_008",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які медсестри працюють у педіатричному відділенні?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        п.категорія,\n        EXTRACT(YEAR FROM AGE(CURRENT_DATE, п.дата_прийняття)) AS досвід_роботи_роки\n    FROM персонал п\n    JOIN відділення в ON п.відділення_ід = в.ід\n    JOIN посади_персоналу пп ON п.посада_ід = пп.ід\n    WHERE в.назва = 'Педіатричне відділення'\n      AND пп.назва ILIKE '%медсестра%'\n      AND п.активний = TRUE\n    ORDER BY досвід_роботи_роки DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_009",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі провели найбільше відвідувань пацієнтів за останній тиждень?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        COUNT(в.ід) AS кількість_візитів\n    FROM персонал п\n    JOIN візити в ON п.ід = в.лікар_ід\n    JOIN посади_персоналу пп ON п.посада_ід = пп.ід\n    WHERE пп.категорія = 'лікар'\n      AND в.дата_час >= CURRENT_DATE - INTERVAL '7 days'\n      AND п.активний = TRUE\n    GROUP BY п.ід, п.прізвище, п.імя\n    ORDER BY кількість_візитів DESC\n    LIMIT 5\n    ", 
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_010",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які ліки призначаються найчастіше?",
+        "gold_sql": "\n    SELECT \n        м.назва, \n        COUNT(пр.ід) AS кількість_призначень\n    FROM медикаменти м\n    JOIN позиції_рецепту пр ON м.ід = пр.медикамент_ід\n    GROUP BY м.ід, м.назва\n    ORDER BY кількість_призначень DESC\n    LIMIT 5\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_011",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти отримали найдорожчі процедури?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        посл.назва AS послуга, \n        посл.ціна\n    FROM пацієнти п\n    JOIN надані_послуги нп ON п.ід = нп.пацієнт_ід\n    JOIN послуги посл ON нп.послуга_ід = посл.ід\n    WHERE посл.ціна > (SELECT AVG(ціна) * 1.5 FROM послуги WHERE ціна IS NOT NULL)\n    ORDER BY посл.ціна DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_012",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка середня тривалість перебування пацієнтів у лікарні за відділеннями?",
+        "gold_sql": "\n    SELECT \n        в.назва AS відділення,\n        -- Calculate difference in days, then average, then round\n        ROUND(AVG(EXTRACT(EPOCH FROM (г.дата_виписки - г.дата_надходження))/86400)) AS середня_тривалість_днів\n    FROM відділення в\n    JOIN госпіталізації г ON в.ід = г.відділення_ід\n    WHERE г.дата_виписки IS NOT NULL AND г.дата_надходження IS NOT NULL -- Ensure both dates exist\n    GROUP BY в.ід, в.назва\n    ORDER BY середня_тривалість_днів DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_013",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які відділення мають найвищий відсоток пацієнтів у критичному стані?",
+        "gold_sql": "\n    SELECT \n        в.назва AS відділення,\n        COUNT(DISTINCT г.пацієнт_ід) AS всього_пацієнтів,\n        SUM(CASE WHEN г.стан_при_надходженні ILIKE 'критичний' THEN 1 ELSE 0 END) AS критичних_пацієнтів,\n        ROUND((SUM(CASE WHEN г.стан_при_надходженні ILIKE 'критичний' THEN 1 ELSE 0 END)::numeric / \n               NULLIF(COUNT(DISTINCT г.пацієнт_ід), 0)::numeric) * 100, 1) AS відсоток_критичних\n    FROM відділення в\n    JOIN госпіталізації г ON в.ід = г.відділення_ід\n    GROUP BY в.ід, в.назва\n    HAVING COUNT(DISTINCT г.пацієнт_ід) > 0\n    ORDER BY відсоток_критичних DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_014",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "У які години доби найчастіше надходять пацієнти з невідкладними станами?",
+        "gold_sql": "\n    SELECT \n        EXTRACT(HOUR FROM дата_надходження) AS година,\n        COUNT(*) AS кількість_пацієнтів\n    FROM госпіталізації\n    WHERE тип_госпіталізації ILIKE 'екстрена' -- Filter by emergency hospitalization type\n    GROUP BY EXTRACT(HOUR FROM дата_надходження)\n    ORDER BY година\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_015",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які пацієнти перебувають у лікарні більше 10 днів і ще не виписані?",
+        "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        х.назва AS діагноз_назва,\n        г.дата_надходження,\n        EXTRACT(DAY FROM (CURRENT_DATE - г.дата_надходження)) AS днів_у_лікарні -- Extract days from interval\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    LEFT JOIN діагнози д ON г.діагноз_ід = д.ід\n    LEFT JOIN хвороби х ON д.хвороба_ід = х.ід\n    WHERE \n        г.дата_виписки IS NULL AND \n        EXTRACT(DAY FROM (CURRENT_DATE - г.дата_надходження)) > 10 -- Compare extracted days\n    ORDER BY днів_у_лікарні DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_016",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі мають найбільше пацієнтів з хронічними захворюваннями?",
+        "gold_sql": "\n    SELECT \n        перс.прізвище, \n        перс.імя, \n        перс.спеціалізація,\n        COUNT(DISTINCT віз.пацієнт_ід) AS кількість_пацієнтів_з_хрон_захв\n    FROM персонал перс\n    JOIN посади_персоналу пп ON перс.посада_ід = пп.ід AND пп.категорія = 'лікар'\n    JOIN візити віз ON перс.ід = віз.лікар_ід\n    JOIN діагнози д ON віз.ід = д.візит_ід -- Link visit to diagnosis\n    JOIN хвороби х ON д.хвороба_ід = х.ід   -- Link diagnosis to disease details\n    WHERE х.хронічна = TRUE -- Filter for chronic diseases in the 'хвороби' table\n      AND перс.активний = TRUE\n    GROUP BY перс.ід, перс.прізвище, перс.імя, перс.спеціалізація\n    ORDER BY кількість_пацієнтів_з_хрон_захв DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_017",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які ліки найчастіше призначаються для пацієнтів із серцево-судинними захворюваннями?",
+        "gold_sql": "\n    SELECT \n        м.назва AS ліки,\n        м.виробник,\n        COUNT(пр.ід) AS кількість_призначень\n    FROM медикаменти м\n    JOIN позиції_рецепту пр ON м.ід = пр.медикамент_ід\n    JOIN рецепти р ON пр.рецепт_ід = р.ід\n    JOIN пацієнти пц ON р.пацієнт_ід = пц.ід\n    JOIN діагнози д ON р.діагноз_ід = д.ід -- Assumes prescription is linked to a specific diagnosis\n    JOIN хвороби х ON д.хвороба_ід = х.ід\n    WHERE \n        х.назва ILIKE '%серц%' OR \n        х.назва ILIKE '%кардіо%' OR \n        х.назва ILIKE '%судин%'\n    GROUP BY м.ід, м.назва, м.виробник\n    ORDER BY кількість_призначень DESC\n    LIMIT 10\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_018",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як розподіляються пацієнти за віком, статтю та типом захворювання?",
+        "gold_sql": "\n    SELECT \n        CASE \n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) < 18 THEN 'До 18'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 18 AND 30 THEN '18-30'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 31 AND 45 THEN '31-45'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 46 AND 60 THEN '46-60'\n            ELSE 'Понад 60'\n        END AS вікова_група,\n        п.стать,\n        тх.назва AS тип_захворювання,\n        COUNT(DISTINCT п.ід) AS кількість_пацієнтів -- Count distinct patients\n    FROM пацієнти п\n    LEFT JOIN госпіталізації г ON п.ід = г.пацієнт_ід -- Use LEFT JOINs if patient might not have hospitalization/diagnosis\n    LEFT JOIN діагнози д ON г.діагноз_ід = д.ід\n    LEFT JOIN хвороби х ON д.хвороба_ід = х.ід\n    LEFT JOIN типи_хвороб тх ON х.тип_ід = тх.ід\n    GROUP BY вікова_група, п.стать, тх.назва\n    ORDER BY вікова_група, п.стать, тх.назва\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_019",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як змінювалася кількість госпіталізацій за місяцями протягом останнього року?",
+        "gold_sql": "\n    SELECT \n        TO_CHAR(DATE_TRUNC('month', дата_надходження), 'YYYY-MM') AS місяць,\n        COUNT(*) AS кількість_госпіталізацій,\n        ROUND((COUNT(*) - LAG(COUNT(*), 1, 0) OVER (ORDER BY DATE_TRUNC('month', дата_надходження)))::numeric / -- Use 0 default for LAG\n              NULLIF(LAG(COUNT(*), 1, 0) OVER (ORDER BY DATE_TRUNC('month', дата_надходження)), 0)::numeric * 100, 1) \n              AS зміна_відсотків\n    FROM госпіталізації -- Select from correct table\n    WHERE дата_надходження >= CURRENT_DATE - INTERVAL '1 year'\n    GROUP BY DATE_TRUNC('month', дата_надходження)\n    ORDER BY DATE_TRUNC('month', дата_надходження)\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_020",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яка середня вартість лікування пацієнта за категоріями захворювань?",
+        "gold_sql": "WITH PatientMedicationCost AS (\n    SELECT\n        р.пацієнт_ід,\n        SUM(пр.кількість * м.ціна) AS вартість_медикаментів\n    FROM рецепти р\n    JOIN позиції_рецепту пр ON р.ід = пр.рецепт_ід\n    JOIN медикаменти м ON пр.медикамент_ід = м.ід\n    GROUP BY р.пацієнт_ід\n), PatientTreatmentCost AS (\n    SELECT\n        пл.пацієнт_ід,\n        SUM(пл.ціна) AS вартість_лікування\n    FROM надані_послуги пл\n    GROUP BY пл.пацієнт_ід\n)\nSELECT \n    х.назва AS категорія_захворювання,\n    AVG(COALESCE(pmc.вартість_медикаментів, 0) + COALESCE(ptc.вартість_лікування, 0)) AS середня_загальна_вартість\nFROM пацієнти п\nJOIN діагнози д ON п.ід = д.пацієнт_ід \nJOIN хвороби х ON д.хвороба_ід = х.ід\nLEFT JOIN PatientMedicationCost pmc ON п.ід = pmc.пацієнт_ід\nLEFT JOIN PatientTreatmentCost ptc ON п.ід = ptc.пацієнт_ід\nGROUP BY х.назва\nORDER BY середня_загальна_вартість DESC",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_021",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які лікарі мають найкращі показники успішності лікування за співвідношенням виписаних до загальної кількості пацієнтів?",
+        "gold_sql": "\n    SELECT \n        л.прізвище, \n        л.імя, \n        л.спеціалізація\n    FROM лікарі л\n    JOIN відділення в ON л.відділення_ід = в.ід -- Fixed column name\n    WHERE \n        в.назва = 'Кардіологія'\n    ORDER BY л.прізвище, л.імя\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_022",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які процедури найефективніші для лікування певних типів захворювань?",
+        "gold_sql": "SELECT \n    пос.назва AS назва_процедури,\n    COUNT(нп.ід) AS кількість_проведень\nFROM пацієнти п\nJOIN надані_послуги нп ON п.ід = нп.пацієнт_ід\nJOIN послуги пос ON нп.послуга_ід = пос.ід\nWHERE \n    EXTRACT(YEAR FROM AGE(п.дата_народження)) > 50\nGROUP BY пос.назва\nORDER BY кількість_проведень DESC\nLIMIT 10",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_023",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Які фактори найбільше впливають на тривалість перебування пацієнтів у лікарні?",
+        "gold_sql": "WITH фактори_тривалості AS (\n    SELECT \n        CASE \n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) < 18 THEN 'До 18'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 18 AND 40 THEN '18-40'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 41 AND 60 THEN '41-60'\n            ELSE 'Понад 60'\n        END AS вікова_група,\n        п.стать,\n        тх.назва AS тип_захворювання,\n        г.тип_госпіталізації AS терміновість,\n        г.відділення_ід,\n        AVG(EXTRACT(EPOCH FROM (г.дата_виписки - г.дата_надходження)) / 86400) AS середня_тривалість_днів,\n        COUNT(*) AS кількість_пацієнтів,\n        STDDEV(EXTRACT(EPOCH FROM (г.дата_виписки - г.дата_надходження)) / 86400) AS стандартне_відхилення_днів\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    LEFT JOIN діагнози д ON г.діагноз_ід = д.ід\n    LEFT JOIN хвороби х ON д.хвороба_ід = х.ід\n    LEFT JOIN типи_хвороб тх ON х.тип_ід = тх.ід\n    WHERE г.дата_виписки IS NOT NULL\n    GROUP BY вікова_група, п.стать, тх.назва, г.тип_госпіталізації, г.відділення_ід\n    HAVING COUNT(*) >= 5\n)\nSELECT \n    ф.вікова_група,\n    ф.стать,\n    ф.тип_захворювання,\n    ф.терміновість,\n    в.назва AS відділення,\n    ROUND(ф.середня_тривалість_днів) AS середня_тривалість_днів,\n    ф.кількість_пацієнтів,\n    ROUND(ф.стандартне_відхилення_днів, 1) AS стандартне_відхилення,\n    ROUND(ф.середня_тривалість_днів / NULLIF((SELECT AVG(EXTRACT(EPOCH FROM (г_inner.дата_виписки - г_inner.дата_надходження)) / 86400) FROM госпіталізації г_inner WHERE г_inner.дата_виписки IS NOT NULL), 0), 2) AS відносна_тривалість\nFROM фактори_тривалості ф\nJOIN відділення в ON ф.відділення_ід = в.ід\nORDER BY ф.середня_тривалість_днів DESC\nLIMIT 15",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_024",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Як змінювався середній час одужання пацієнтів різних вікових груп за останні роки?",
+        "gold_sql": "WITH річна_статистика AS (\n    SELECT \n        EXTRACT(YEAR FROM г.дата_надходження) AS рік,\n        CASE \n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) < 18 THEN 'До 18'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 18 AND 40 THEN '18-40'\n            WHEN EXTRACT(YEAR FROM AGE(п.дата_народження)) BETWEEN 41 AND 60 THEN '41-60'\n            ELSE 'Понад 60'\n        END AS вікова_група,\n        AVG(EXTRACT(EPOCH FROM (г.дата_виписки - г.дата_надходження)) / 86400) AS середній_час_одужання_днів,\n        COUNT(*) AS кількість_пацієнтів\n    FROM пацієнти п\n    JOIN госпіталізації г ON п.ід = г.пацієнт_ід\n    WHERE \n        г.дата_виписки IS NOT NULL AND\n        EXTRACT(YEAR FROM г.дата_надходження) >= EXTRACT(YEAR FROM CURRENT_DATE) - 5\n    GROUP BY рік, вікова_група\n),\nз_динамікою AS (\n    SELECT \n        рік,\n        вікова_група,\n        середній_час_одужання_днів,\n        кількість_пацієнтів,\n        середній_час_одужання_днів - LAG(середній_час_одужання_днів, 1) OVER (PARTITION BY вікова_група ORDER BY рік) AS зміна_від_попереднього_року_днів,\n        (середній_час_одужання_днів - LAG(середній_час_одужання_днів, 1) OVER (PARTITION BY вікова_група ORDER BY рік)) / \n             NULLIF(LAG(середній_час_одужання_днів, 1) OVER (PARTITION BY вікова_група ORDER BY рік), 0) * 100 AS відсоток_зміни_сирий\n    FROM річна_статистика\n)\nSELECT \n    рік,\n    вікова_група,\n    ROUND(середній_час_одужання_днів, 1) AS середній_час_одужання_днів,\n    кількість_пацієнтів,\n    ROUND(зміна_від_попереднього_року_днів, 1) AS зміна_від_попереднього_року_днів,\n    ROUND(відсоток_зміни_сирий, 1) || '%' AS відсоток_зміни\nFROM з_динамікою\nORDER BY вікова_група, рік",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "лікарня_025",
+        "db_id": "лікарня",
+        "db_path": "database/лікарня",
+        "question": "Яку економічну ефективність мають різні відділення лікарні?",
+        "gold_sql": "WITH HospitalizationCosts AS (\n    SELECT \n        г.відділення_ід,\n        г.ід AS госпіталізація_ід,\n        г.пацієнт_ід, \n        г.дата_надходження,\n        г.дата_виписки,\n        г.стан_при_виписці,\n        EXTRACT(EPOCH FROM (г.дата_виписки - г.дата_надходження)) / 86400 AS тривалість_перебування_днів,\n        COALESCE(SUM(DISTINCT нп.ціна), 0) AS вартість_послуг,\n        COALESCE(SUM(пр.кількість * м.ціна), 0) AS вартість_ліків\n    FROM госпіталізації г\n    LEFT JOIN надані_послуги нп ON г.ід = нп.госпіталізація_ід\n    LEFT JOIN рецепти р ON г.ід = р.госпіталізація_ід\n    LEFT JOIN позиції_рецепту пр ON р.ід = пр.рецепт_ід\n    LEFT JOIN медикаменти м ON пр.медикамент_ід = м.ід\n    WHERE г.дата_надходження >= CURRENT_DATE - INTERVAL '1 year'\n    GROUP BY г.ід\n), витрати_відділень AS (\n    SELECT \n        в.ід AS відділення_id,\n        в.назва AS відділення,\n        COUNT(DISTINCT hc.пацієнт_ід) AS кількість_пацієнтів,\n        SUM(hc.вартість_послуг) AS загальна_вартість_процедур,\n        SUM(hc.вартість_ліків) AS загальна_вартість_ліків,\n        (SUM(hc.вартість_послуг) + SUM(hc.вартість_ліків)) AS загальні_витрати,\n        AVG(hc.тривалість_перебування_днів) AS середня_тривалість_днів,\n        COUNT(DISTINCT CASE WHEN hc.стан_при_виписці IN ('одужання', 'покращення') THEN hc.пацієнт_ід END) AS успішно_вилікувано\n    FROM відділення в\n    JOIN HospitalizationCosts hc ON в.ід = hc.відділення_ід\n    GROUP BY в.ід, в.назва\n)\nSELECT \n    відділення,\n    кількість_пацієнтів,\n    ROUND(загальна_вартість_процедур) AS загальна_вартість_процедур,\n    ROUND(загальна_вартість_ліків) AS загальна_вартість_ліків,\n    ROUND(загальні_витрати) AS загальні_витрати,\n    ROUND(загальні_витрати / NULLIF(кількість_пацієнтів, 0)) AS середні_витрати_на_пацієнта,\n    ROUND(середня_тривалість_днів, 1) AS середня_тривалість_днів,\n    успішно_вилікувано AS успішно_вилікувано,\n    ROUND((успішно_вилікувано::numeric / NULLIF(кількість_пацієнтів, 0)::numeric) * 100, 1) AS ефективність_лікування_відсоток,\n    ROUND(загальні_витрати / NULLIF(успішно_вилікувано, 0)) AS вартість_успішного_лікування,\n    ROUND(CASE WHEN загальні_витрати = 0 THEN 0 ELSE успішно_вилікувано::numeric / (загальні_витрати / 10000) END, 2) AS індекс_ефективності\nFROM витрати_відділень\nORDER BY індекс_ефективності DESC",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "ресторан_001",
+        "db_id": "ресторан",
+        "question": "Скільки столиків є в ресторані?",
+        "gold_sql": "SELECT COUNT(*) FROM столики WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_002",
+        "db_id": "ресторан",
+        "question": "Які категорії страв представлені в меню?",
+        "gold_sql": "SELECT назва FROM категорії WHERE активна = TRUE ORDER BY порядок_сортування;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_003",
+        "db_id": "ресторан",
+        "question": "Які страви в меню вегетаріанські?",
+        "gold_sql": "SELECT назва, ціна, калорійність FROM страви WHERE вегетаріанська = TRUE AND активна = TRUE ORDER BY ціна;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_004",
+        "db_id": "ресторан",
+        "question": "Скільки працівників працює на кожній посаді?",
+        "gold_sql": "SELECT п.назва AS посада, COUNT(пер.ід) AS кількість_працівників FROM посади п LEFT JOIN персонал пер ON п.ід = пер.посада_ід WHERE пер.активний = TRUE GROUP BY п.назва ORDER BY кількість_працівників DESC;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_005",
+        "db_id": "ресторан",
+        "question": "Які безглютенові страви є в меню?",
+        "gold_sql": "SELECT назва, ціна FROM страви WHERE безглютенова = TRUE AND активна = TRUE ORDER BY ціна;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_006",
+        "db_id": "ресторан",
+        "question": "Які методи оплати доступні в ресторані?",
+        "gold_sql": "SELECT назва, комісія_відсоток FROM методи_оплати WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "ресторан_007",
+        "db_id": "ресторан",
+        "question": "Які найпопулярніші страви за останній місяць?",
+        "gold_sql": "\n        SELECT с.назва AS страва, \n               COUNT(п.ід) AS кількість_замовлень, \n               SUM(п.кількість) AS загальна_кількість\n        FROM позиції_замовлення п\n        JOIN страви с ON п.страва_ід = с.ід\n        JOIN замовлення з ON п.замовлення_ід = з.ід\n        WHERE з.дата_час >= CURRENT_DATE - INTERVAL '1 month'\n        GROUP BY с.назва\n        ORDER BY загальна_кількість DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_008",
+        "db_id": "ресторан",
+        "question": "Який середній чайові отримує кожен офіціант?",
+        "gold_sql": "\n        SELECT \n            пер.прізвище, \n            пер.імя, \n            ROUND(AVG(з.чайові), 2) AS середні_чайові,\n            COUNT(з.ід) AS кількість_замовлень\n        FROM персонал пер\n        JOIN замовлення з ON пер.ід = з.офіціант_ід\n        WHERE з.чайові > 0\n        GROUP BY пер.ід, пер.прізвище, пер.імя\n        ORDER BY середні_чайові DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_009",
+        "db_id": "ресторан",
+        "question": "Яка середня завантаженість столиків за днями тижня?",
+        "gold_sql": "\n        SELECT \n            TO_CHAR(р.дата, 'Day') AS день_тижня,\n            COUNT(р.ід) AS кількість_резервацій,\n            ROUND(AVG(р.кількість_гостей), 2) AS середня_кількість_гостей\n        FROM резервації р\n        WHERE р.відмітка_про_відвідування = TRUE\n        GROUP BY TO_CHAR(р.дата, 'Day'), EXTRACT(DOW FROM р.дата)\n        ORDER BY EXTRACT(DOW FROM р.дата);\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_010",
+        "db_id": "ресторан",
+        "question": "Які категорії страв приносять найбільший прибуток?",
+        "gold_sql": "\n        SELECT \n            к.назва AS категорія,\n            COUNT(DISTINCT с.ід) AS кількість_страв,\n            COUNT(п.ід) AS кількість_замовлень,\n            SUM(п.загальна_ціна) AS загальний_дохід\n        FROM категорії к\n        JOIN страви с ON к.ід = с.категорія_ід\n        JOIN позиції_замовлення п ON с.ід = п.страва_ід\n        JOIN замовлення з ON п.замовлення_ід = з.ід\n        WHERE з.дата_час >= CURRENT_DATE - INTERVAL '6 months'\n        GROUP BY к.назва\n        ORDER BY загальний_дохід DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_011",
+        "db_id": "ресторан",
+        "question": "Які інгредієнти закінчуються та потребують термінового замовлення?",
+        "gold_sql": "\n        SELECT \n            і.назва AS інгредієнт,\n            і.кількість_на_складі,\n            і.мінімальна_кількість,\n            п.назва AS постачальник,\n            п.телефон AS контакт_постачальника\n        FROM інгредієнти і\n        JOIN постачальники п ON і.постачальник_ід = п.ід\n        WHERE і.кількість_на_складі <= і.мінімальна_кількість\n        AND п.активний = TRUE\n        ORDER BY (і.кількість_на_складі / NULLIF(і.мінімальна_кількість, 0)) ASC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_012",
+        "db_id": "ресторан",
+        "question": "Яка ефективність роботи офіціантів (кількість обслугованих клієнтів за годину)?",
+        "gold_sql": "\n        WITH робочі_години AS (\n            SELECT \n                з.персонал_ід,\n                SUM(EXTRACT(EPOCH FROM (з.фактичний_час_кінця - з.фактичний_час_початку))/3600 - з.перерва_хвилин/60.0) AS години\n            FROM зміни_персоналу з\n            WHERE з.фактичний_час_початку IS NOT NULL \n            AND з.фактичний_час_кінця IS NOT NULL\n            AND з.дата >= CURRENT_DATE - INTERVAL '3 months'\n            GROUP BY з.персонал_ід\n        ),\n        обслуговані_клієнти AS (\n            SELECT \n                з.офіціант_ід,\n                SUM(з.кількість_клієнтів) AS клієнтів\n            FROM замовлення з\n            WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months'\n            GROUP BY з.офіціант_ід\n        )\n        SELECT \n            п.прізвище,\n            п.імя,\n            о.клієнтів AS загальна_кількість_клієнтів,\n            р.години AS відпрацьовано_годин,\n            ROUND(о.клієнтів / NULLIF(р.години, 0), 2) AS клієнтів_на_годину\n        FROM персонал п\n        JOIN робочі_години р ON п.ід = р.персонал_ід\n        JOIN обслуговані_клієнти о ON п.ід = о.офіціант_ід\n        JOIN посади пос ON п.посада_ід = пос.ід\n        WHERE пос.назва = 'Офіціант'\n        ORDER BY клієнтів_на_годину DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "ресторан_013",
+        "db_id": "ресторан",
+        "question": "Який прибуток ресторану за кожним днем тижня протягом останнього кварталу?",
+        "gold_sql": "\n        WITH щоденні_доходи AS (\n            SELECT \n                з.дата_час::date AS дата,\n                EXTRACT(DOW FROM з.дата_час) AS день_тижня_номер,\n                TO_CHAR(з.дата_час, 'Day') AS день_тижня,\n                SUM(з.фінальна_сума) AS дохід,\n                COUNT(DISTINCT з.ід) AS кількість_замовлень,\n                SUM(з.кількість_клієнтів) AS кількість_клієнтів\n            FROM замовлення з\n            WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months'\n            AND з.статус_ід = (SELECT ід FROM статуси_замовлень WHERE назва = 'Оплачено')\n            GROUP BY з.дата_час::date, EXTRACT(DOW FROM з.дата_час), TO_CHAR(з.дата_час, 'Day')\n        )\n        SELECT \n            день_тижня,\n            COUNT(*) AS кількість_днів,\n            ROUND(AVG(дохід), 2) AS середній_дохід,\n            ROUND(AVG(кількість_замовлень), 1) AS середня_кількість_замовлень,\n            ROUND(AVG(кількість_клієнтів), 1) AS середня_кількість_клієнтів,\n            ROUND(SUM(дохід), 2) AS загальний_дохід,\n            ROUND(SUM(дохід) / SUM(кількість_клієнтів), 2) AS середній_чек\n        FROM щоденні_доходи\n        GROUP BY день_тижня, день_тижня_номер\n        ORDER BY день_тижня_номер;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "ресторан_014",
+        "db_id": "ресторан",
+        "question": "Які страви мають найкраще співвідношення прибутку до використання інгредієнтів?",
+        "gold_sql": "WITH вартість_інгредієнтів AS (\n    SELECT \n        с.ід AS страва_ід,\n        с.назва AS страва,\n        с.ціна AS ціна_продажу,\n        SUM(ві.кількість * ing.середня_ціна) AS собівартість -- Corrected column name to 'середня_ціна'\n    FROM страви с\n    JOIN використання_інгредієнтів ві ON с.ід = ві.страва_ід\n    JOIN інгредієнти ing ON ві.інгредієнт_ід = ing.ід\n    GROUP BY с.ід, с.назва, с.ціна\n),\nпродажі AS (\n    SELECT \n        пз.страва_ід AS страва_ід,\n        COUNT(пз.ід) AS кількість_продажів,\n        SUM(пз.загальна_ціна) AS загальний_дохід\n    FROM позиції_замовлення пз\n    JOIN замовлення з ON пз.замовлення_ід = з.ід\n    WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months'\n    GROUP BY пз.страва_ід\n)\nSELECT \n    ві.страва,\n    ві.ціна_продажу,\n    ROUND(ві.собівартість, 2) AS собівартість,\n    ROUND(ві.ціна_продажу - ві.собівартість, 2) AS прибуток_на_одиницю,\n    ROUND((ві.ціна_продажу - ві.собівартість) / NULLIF(ві.собівартість, 0) * 100, 2) AS відсоток_прибутку,\n    п.кількість_продажів,\n    ROUND(п.загальний_дохід, 2) AS загальний_дохід,\n    ROUND(п.загальний_дохід - (п.кількість_продажів * ві.собівартість), 2) AS загальний_прибуток\nFROM вартість_інгредієнтів ві\nJOIN продажі п ON ві.страва_ід = п.страва_ід\nWHERE п.кількість_продажів > 0\nORDER BY відсоток_прибутку DESC;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "ресторан_015",
+        "db_id": "ресторан",
+        "question": "Які часи протягом дня і тижня є найбільш завантаженими для ресторану?",
+    "gold_sql": "WITH годинні_дані AS (\n    SELECT \n        EXTRACT(ISODOW FROM з.дата_час) AS день_тижня_номер, -- ISO day of week (1=Monday, 7=Sunday)\n        TO_CHAR(з.дата_час, 'Day') AS назва_дня,\n        EXTRACT(HOUR FROM з.дата_час) AS година,\n        TO_CHAR(з.дата_час, 'HH24:00') AS час,\n        COUNT(з.ід) AS кількість_замовлень,\n        SUM(з.кількість_клієнтів) AS кількість_клієнтів,\n        SUM(з.фінальна_сума) AS дохід\n    FROM замовлення з\n    WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months'\n    GROUP BY день_тижня_номер, назва_дня, година, час\n)\nSELECT аналіз, день_тижня, період, загальна_кількість_замовлень, загальна_кількість_клієнтів, середня_кількість_замовлень, середня_кількість_клієнтів\nFROM (\n    -- Subquery for hourly ranking\n    SELECT \n        'Найзавантаженіші години дня' AS аналіз,\n        NULL AS день_тижня,\n        рг.година || ':00-' || рг.година || ':59' AS період,\n        рг.загальна_кількість_замовлень,\n        рг.загальна_кількість_клієнтів,\n        рг.середня_кількість_замовлень,\n        рг.середня_кількість_клієнтів,\n        1 AS sort_order, -- For overall sorting\n        рг.година AS sub_sort\n    FROM (\n        SELECT \n            година,\n            SUM(кількість_замовлень) AS загальна_кількість_замовлень,\n            SUM(кількість_клієнтів) AS загальна_кількість_клієнтів,\n            ROUND(AVG(кількість_замовлень), 2) AS середня_кількість_замовлень,\n            ROUND(AVG(кількість_клієнтів), 2) AS середня_кількість_клієнтів\n        FROM годинні_дані\n        WHERE година BETWEEN 10 AND 23 -- Assuming relevant hours\n        GROUP BY година\n        ORDER BY середня_кількість_клієнтів DESC\n        LIMIT 5\n    ) рг\n\n    UNION ALL\n\n    -- Subquery for daily ranking\n    SELECT \n        'Найзавантаженіші дні тижня' AS аналіз,\n        зд.назва_дня AS день_тижня,\n        NULL AS період,\n        зд.загальна_кількість_замовлень,\n        зд.загальна_кількість_клієнтів,\n        зд.середня_кількість_замовлень_на_годину,\n        зд.середня_кількість_клієнтів_на_годину,\n        2 AS sort_order,\n        зд.день_тижня_номер AS sub_sort\n    FROM (\n        SELECT \n            день_тижня_номер,\n            назва_дня,\n            SUM(кількість_замовлень) AS загальна_кількість_замовлень,\n            SUM(кількість_клієнтів) AS загальна_кількість_клієнтів,\n            ROUND(AVG(кількість_замовлень), 2) AS середня_кількість_замовлень_на_годину,\n            ROUND(AVG(кількість_клієнтів), 2) AS середня_кількість_клієнтів_на_годину\n        FROM годинні_дані\n        GROUP BY день_тижня_номер, назва_дня\n        ORDER BY загальна_кількість_клієнтів DESC\n        LIMIT 5\n    ) зд\n\n    UNION ALL\n\n    -- Subquery for peak hours per day\n    SELECT \n        'Пікові години для кожного дня' AS аналіз,\n        пд.назва_дня AS день_тижня,\n        пд.час AS період,\n        NULL AS загальна_кількість_замовлень,\n        пд.кількість_клієнтів AS загальна_кількість_клієнтів,\n        NULL AS середня_кількість_замовлень,\n        NULL AS середня_кількість_клієнтів,\n        3 AS sort_order,\n        пд.день_тижня_номер AS sub_sort\n    FROM (\n        SELECT \n            гд.день_тижня_номер,\n            гд.назва_дня,\n            гд.година,\n            гд.час,\n            гд.кількість_клієнтів,\n            RANK() OVER (PARTITION BY гд.день_тижня_номер ORDER BY гд.кількість_клієнтів DESC, гд.година ASC) AS ранг\n        FROM годинні_дані гд\n    ) пд\n    WHERE пд.ранг = 1\n) AS combined_results\nORDER BY sort_order, sub_sort;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "ресторан_016",
+        "db_id": "ресторан",
+        "question": "Яка ефективність персоналу, зокрема кухарів, за швидкістю приготування страв?",
+        "gold_sql": "\n        WITH приготування_страв AS (\n            SELECT \n                з.ід AS зміна_ід,\n                п.ід AS персонал_ід,\n                п.прізвище,\n                п.імя,\n                з.дата,\n                пос.назва AS посада,\n                COUNT(DISTINCT по.ід) AS кількість_приготованих_позицій,\n                SUM(с.час_приготування_хвилин) AS загальний_час_приготування,\n                AVG(EXTRACT(EPOCH FROM (по.час_приготування - по.час_замовлення))/60) AS фактичний_середній_час_хвилин\n            FROM персонал п\n            JOIN посади пос ON п.посада_ід = пос.ід\n            JOIN зміни_персоналу з ON п.ід = з.персонал_ід\n            JOIN позиції_замовлення по ON \n                по.час_замовлення BETWEEN з.дата::timestamp + з.фактичний_час_початку AND з.дата::timestamp + з.фактичний_час_кінця\n            JOIN страви с ON по.страва_ід = с.ід\n            WHERE пос.назва LIKE '%кухар%'\n            AND з.дата >= CURRENT_DATE - INTERVAL '1 month'\n            AND по.час_приготування IS NOT NULL\n            GROUP BY з.ід, п.ід, п.прізвище, п.імя, з.дата, пос.назва\n        )\n        SELECT \n            прізвище,\n            імя,\n            посада,\n            COUNT(зміна_ід) AS кількість_змін,\n            SUM(кількість_приготованих_позицій) AS загальна_кількість_страв,\n            ROUND(AVG(кількість_приготованих_позицій), 2) AS середня_кількість_страв_за_зміну,\n            ROUND(AVG(фактичний_середній_час_хвилин), 2) AS середній_час_приготування,\n            ROUND(AVG(загальний_час_приготування / NULLIF(кількість_приготованих_позицій, 0)), 2) AS очікуваний_середній_час,\n            ROUND(AVG(загальний_час_приготування / NULLIF(фактичний_середній_час_хвилин, 0) * 100), 2) AS ефективність_відсоток\n        FROM приготування_страв\n        GROUP BY персонал_ід, прізвище, імя, посада\n        HAVING SUM(кількість_приготованих_позицій) > 10\n        ORDER BY середня_кількість_страв_за_зміну DESC, ефективність_відсоток DESC;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "ресторан_017",
+        "db_id": "ресторан",
+        "question": "Як змінювався дохід ресторану за місяцями, порівняно з минулим роком?",
+        "gold_sql": "\n        WITH місячні_доходи AS (\n            SELECT \n                EXTRACT(YEAR FROM з.дата_час) AS рік,\n                EXTRACT(MONTH FROM з.дата_час) AS місяць,\n                TO_CHAR(з.дата_час, 'Month') AS назва_місяця,\n                COUNT(DISTINCT з.ід) AS кількість_замовлень,\n                SUM(з.кількість_клієнтів) AS кількість_клієнтів,\n                SUM(з.фінальна_сума) AS загальний_дохід\n            FROM замовлення з\n            WHERE з.дата_час >= (CURRENT_DATE - INTERVAL '2 years')\n            AND з.статус_ід = (SELECT ід FROM статуси_замовлень WHERE назва = 'Оплачено')\n            GROUP BY EXTRACT(YEAR FROM з.дата_час), EXTRACT(MONTH FROM з.дата_час), TO_CHAR(з.дата_час, 'Month')\n        ),\n        порівняння_років AS (\n            SELECT \n                т.рік,\n                т.місяць,\n                т.назва_місяця,\n                т.кількість_замовлень,\n                т.кількість_клієнтів,\n                т.загальний_дохід,\n                LAG(т.кількість_замовлень, 12) OVER (ORDER BY т.рік, т.місяць) AS минулорічна_кількість_замовлень,\n                LAG(т.кількість_клієнтів, 12) OVER (ORDER BY т.рік, т.місяць) AS минулорічна_кількість_клієнтів,\n                LAG(т.загальний_дохід, 12) OVER (ORDER BY т.рік, т.місяць) AS минулорічний_дохід\n            FROM місячні_доходи т\n        )\n        SELECT \n            рік,\n            місяць,\n            назва_місяця,\n            кількість_замовлень,\n            ROUND(загальний_дохід, 2) AS загальний_дохід,\n            ROUND(загальний_дохід / NULLIF(кількість_замовлень, 0), 2) AS середній_чек,\n            минулорічна_кількість_замовлень,\n            ROUND(минулорічний_дохід, 2) AS минулорічний_дохід,\n            CASE \n                WHEN минулорічний_дохід IS NOT NULL AND минулорічний_дохід > 0 \n                THEN ROUND(((загальний_дохід - минулорічний_дохід) / минулорічний_дохід * 100), 2)\n                ELSE NULL \n            END AS відсоток_зміни\n        FROM порівняння_років\n        WHERE рік = EXTRACT(YEAR FROM CURRENT_DATE) OR рік = EXTRACT(YEAR FROM CURRENT_DATE) - 1\n        ORDER BY рік DESC, місяць;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "спортивний_клуб_001",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти всіх тренерів, які працюють в клубі більше 5 років",
+        "gold_sql": "\n    SELECT прізвище, імя, досвід_роботи \n    FROM тренери \n    WHERE досвід_роботи > 5 AND активний = TRUE\n    ORDER BY досвід_роботи DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_002",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Показати всі групові заняття, відсортовані за тривалістю (від найдовших до найкоротших)",
+        "gold_sql": "\n    SELECT назва, тривалість, опис \n    FROM групові_заняття \n    ORDER BY тривалість DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_003",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які групові заняття мають максимальну кількість учасників більше 15 осіб?",
+        "gold_sql": "\n    SELECT назва, максимальна_кількість_учасників, опис \n    FROM групові_заняття \n    WHERE максимальна_кількість_учасників > 15\n    ORDER BY максимальна_кількість_учасників DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_004",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які типи абонементів включають доступ до сауни?",
+        "gold_sql": "\n    SELECT назва, вартість, тривалість, опис \n    FROM типи_абонементів \n    WHERE сауна = TRUE AND активний = TRUE\n    ORDER BY вартість\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_005",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Показати всі заняття, що проводяться в понеділок",
+        "gold_sql": "\n    SELECT з.назва, р.час_початку, р.час_закінчення, т.прізвище, т.імя\n    FROM розклад_занять р\n    JOIN групові_заняття з ON р.заняття_id = з.id\n    JOIN тренери т ON р.тренер_id = т.id\n    WHERE р.день_тижня = 'Понеділок' AND р.активний = TRUE\n    ORDER BY р.час_початку\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_006",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Скільки активних тренерів працює в клубі?",
+        "gold_sql": "\n    SELECT COUNT(*) AS кількість_тренерів\n    FROM тренери\n    WHERE активний = TRUE\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_007",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які типи абонементів мають вартість менше 1000 гривень?",
+        "gold_sql": "\n    SELECT назва, вартість, тривалість, опис\n    FROM типи_абонементів\n    WHERE вартість < 1000 AND активний = TRUE\n    ORDER BY вартість\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_008",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти всі групові заняття, в назві яких є слово 'фітнес'",
+        "gold_sql": "\n    SELECT назва, тривалість, опис\n    FROM групові_заняття\n    WHERE назва ILIKE '%фітнес%'\n    ORDER BY назва\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_009",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які спеціалізації представлені серед тренерів клубу?",
+        "gold_sql": "\n    SELECT DISTINCT с.назва\n    FROM спеціалізації_тренерів с\n    JOIN тренери т ON с.id = т.спеціалізація_id\n    WHERE т.активний = TRUE\n    ORDER BY с.назва\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_010",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти всіх членів клубу, які зареєструвалися в цьому році",
+        "gold_sql": "\n    SELECT прізвище, імя, дата_реєстрації\n    FROM члени_клубу\n    WHERE EXTRACT(YEAR FROM дата_реєстрації) = EXTRACT(YEAR FROM CURRENT_DATE)\n    ORDER BY дата_реєстрації DESC\n    ",
+        "difficulty": "simple",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_011",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Скільки членів клубу має кожен тип абонементу?",
+        "gold_sql": "\n    SELECT та.назва AS тип_абонементу, COUNT(чк.id) AS кількість_членів\n    FROM типи_абонементів та\n    JOIN членства ч ON та.id = ч.тип_абонементу_id\n    JOIN члени_клубу чк ON ч.id = чк.членство_id\n    WHERE чк.активний = TRUE\n    GROUP BY та.назва\n    ORDER BY кількість_членів DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_012",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які тренери проводять заняття в залі для групових тренувань?",
+        "gold_sql": "\n    SELECT DISTINCT т.прізвище, т.імя, т.email, т.телефон\n    FROM тренери т\n    JOIN розклад_занять рз ON т.id = рз.тренер_id\n    JOIN приміщення п ON рз.приміщення_id = п.id\n    JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id\n    WHERE тп.назва = 'Зал для групових тренувань' AND т.активний = TRUE\n    ORDER BY т.прізвище, т.імя\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_013",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Хто з членів клубу має абонемент з найбільшою вартістю?",
+        "gold_sql": "\n    SELECT чк.прізвище, чк.імя, чк.телефон, ч.вартість_фактична\n    FROM члени_клубу чк\n    JOIN членства ч ON чк.членство_id = ч.id\n    WHERE ч.вартість_фактична = (\n        SELECT MAX(вартість_фактична)\n        FROM членства\n    )\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_014",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які приміщення використовуються для більш ніж 5 різних групових занять?",
+        "gold_sql": "\n    SELECT п.назва, COUNT(DISTINCT рз.заняття_id) AS кількість_занять\n    FROM приміщення п\n    JOIN розклад_занять рз ON п.id = рз.приміщення_id\n    WHERE рз.активний = TRUE\n    GROUP BY п.id, п.назва\n    HAVING COUNT(DISTINCT рз.заняття_id) > 5\n    ORDER BY кількість_занять DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_015",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти всіх тренерів-жінок, які мають спеціалізацію в йозі або пілатесі",
+        "gold_sql": "\n    SELECT т.прізвище, т.імя, ст.назва AS спеціалізація\n    FROM тренери т\n    JOIN спеціалізації_тренерів ст ON т.спеціалізація_id = ст.id\n    WHERE т.стать = 'Жіноча'\n    AND т.активний = TRUE\n    AND ст.назва IN ('Йога', 'Пілатес')\n    ORDER BY т.прізвище, т.імя\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_016",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які дні тижня мають найбільшу кількість відвідувань?",
+        "gold_sql": "\n    SELECT рз.день_тижня, COUNT(в.id) AS кількість_відвідувань\n    FROM відвідування в\n    JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id\n    JOIN розклад_занять рз ON зз.розклад_заняття_id = рз.id\n    GROUP BY рз.день_тижня\n    ORDER BY кількість_відвідувань DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_017",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Розподілити групові заняття за категоріями тривалості (короткі, середні, довгі)",
+        "gold_sql": "\n    SELECT \n        назва,\n        тривалість,\n        CASE \n            WHEN тривалість <= 30 THEN 'Коротке'\n            WHEN тривалість > 30 AND тривалість <= 60 THEN 'Середнє'\n            ELSE 'Довге'\n        END AS категорія_тривалості\n    FROM групові_заняття\n    ORDER BY тривалість\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_018",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Яка загальна сума платежів за кожен місяць поточного року?",
+        "gold_sql": "\n    SELECT \n        EXTRACT(MONTH FROM дата_платежу) AS місяць,\n        SUM(сума) AS загальна_сума\n    FROM платежі\n    WHERE EXTRACT(YEAR FROM дата_платежу) = EXTRACT(YEAR FROM CURRENT_DATE)\n    GROUP BY EXTRACT(MONTH FROM дата_платежу)\n    ORDER BY місяць\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_019",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Яка середня оцінка кожного тренера від членів клубу?",
+        "gold_sql": "\n    SELECT \n        т.прізвище,\n        т.імя,\n        ROUND(AVG(о.оцінка), 2) AS середня_оцінка,\n        COUNT(о.id) AS кількість_відгуків\n    FROM тренери т\n    LEFT JOIN оцінки_тренерів о ON т.id = о.тренер_id\n    WHERE т.активний = TRUE\n    GROUP BY т.id, т.прізвище, т.імя\n    ORDER BY середня_оцінка DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_020",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які члени клубу мають абонементи, що закінчуються протягом наступних 30 днів?",
+        "gold_sql": "\n    SELECT \n        чк.прізвище,\n        чк.імя,\n        чк.телефон,\n        ч.дата_завершення,\n        та.назва AS тип_абонементу\n    FROM члени_клубу чк\n    JOIN членства ч ON чк.членство_id = ч.id\n    JOIN типи_абонементів та ON ч.тип_абонементу_id = та.id\n    WHERE ч.дата_завершення BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '30 days')\n    ORDER BY ч.дата_завершення\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_021",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які члени клубу відвідали більше 10 групових занять за останній місяць?",
+        "gold_sql": "\n    SELECT \n        чк.прізвище,\n        чк.імя,\n        COUNT(в.id) AS кількість_відвідувань\n    FROM члени_клубу чк\n    JOIN відвідування в ON чк.id = в.член_клубу_id\n    JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id\n    WHERE в.дата_відвідування >= (CURRENT_DATE - INTERVAL '1 month')\n    GROUP BY чк.id, чк.прізвище, чк.імя\n    HAVING COUNT(в.id) > 10\n    ORDER BY кількість_відвідувань DESC\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_022",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які тренери проводять заняття, що мають вищу за середню відвідуваність?",
+        "gold_sql": "\n    SELECT DISTINCT \n        т.прізвище,\n        т.імя,\n        гз.назва AS назва_заняття\n    FROM тренери т\n    JOIN розклад_занять рз ON т.id = рз.тренер_id\n    JOIN групові_заняття гз ON рз.заняття_id = гз.id\n    WHERE рз.id IN (\n        SELECT рз.id\n        FROM розклад_занять рз\n        JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id\n        JOIN відвідування в ON зз.id = в.запис_на_заняття_id\n        GROUP BY рз.id\n        HAVING COUNT(в.id) > (\n            SELECT AVG(відвідування_заняття)\n            FROM (\n                SELECT COUNT(в.id) AS відвідування_заняття\n                FROM розклад_занять рз\n                JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id\n                JOIN відвідування в ON зз.id = в.запис_на_заняття_id\n                GROUP BY рз.id\n            ) AS підрахунок_відвідувань\n        )\n    )\n    ORDER BY т.прізвище, т.імя\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_023",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які групові заняття є найпопулярнішими серед жінок?",
+        "gold_sql": "\n    SELECT \n        гз.назва,\n        COUNT(зз.id) AS кількість_записів\n    FROM групові_заняття гз\n    JOIN розклад_занять рз ON гз.id = рз.заняття_id\n    JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id\n    JOIN члени_клубу чк ON зз.член_клубу_id = чк.id\n    WHERE чк.стать = 'Жіноча'\n    GROUP BY гз.id, гз.назва\n    ORDER BY кількість_записів DESC\n    LIMIT 5\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_024",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Як змінилася кількість відвідувань за останні три місяці порівняно з попередніми трьома?",
+        "gold_sql": "\n    SELECT \n        'Останні 3 місяці' AS період,\n        COUNT(id) AS кількість_відвідувань\n    FROM відвідування\n    WHERE дата_відвідування BETWEEN (CURRENT_DATE - INTERVAL '3 months') AND CURRENT_DATE\n    \n    UNION ALL\n    \n    SELECT \n        'Попередні 3 місяці' AS період,\n        COUNT(id) AS кількість_відвідувань\n    FROM відвідування\n    WHERE дата_відвідування BETWEEN (CURRENT_DATE - INTERVAL '6 months') AND (CURRENT_DATE - INTERVAL '3 months')\n    ",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_025",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Яка середня тривалість візиту членів клубу в різні дні тижня?",
+        "gold_sql": "SELECT \n    TO_CHAR(дата_відвідування, 'Day') AS день_тижня,\n    ROUND(AVG(EXTRACT(EPOCH FROM (час_виходу - час_приходу)) / 60), 2) AS середня_тривалість_хвилин\nFROM відвідування\nWHERE час_виходу IS NOT NULL\nGROUP BY день_тижня, EXTRACT(ISODOW FROM дата_відвідування) -- Include numeric day for sorting\nORDER BY EXTRACT(ISODOW FROM дата_відвідування);",
+        "difficulty": "medium",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_026",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Показати топ-3 найбільш відвідуваних групових занять для кожного місяця цього року",
+        "gold_sql": "\n    WITH рейтинг_занять AS (\n        SELECT \n            гз.назва, \n            EXTRACT(MONTH FROM в.дата_відвідування) AS місяць,\n            COUNT(*) AS кількість,\n            ROW_NUMBER() OVER (PARTITION BY EXTRACT(MONTH FROM в.дата_відвідування) ORDER BY COUNT(*) DESC) AS рейтинг\n        FROM групові_заняття гз\n        JOIN розклад_занять рз ON гз.id = рз.заняття_id\n        JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id\n        JOIN відвідування в ON зз.id = в.запис_на_заняття_id\n        WHERE EXTRACT(YEAR FROM в.дата_відвідування) = EXTRACT(YEAR FROM CURRENT_DATE)\n        GROUP BY гз.id, гз.назва, EXTRACT(MONTH FROM в.дата_відвідування)\n    )\n    SELECT \n        TO_CHAR(TO_DATE(місяць::TEXT, 'MM'), 'Month') AS місяць,\n        назва,\n        кількість,\n        рейтинг\n    FROM рейтинг_занять\n    WHERE рейтинг <= 3\n    ORDER BY місяць, рейтинг\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_027",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти всіх членів клубу, які відвідували групові заняття протягом кожного місяця за останній рік (постійні відвідувачі)",
+        "gold_sql": "\n    WITH RECURSIVE місяці AS (\n        SELECT CAST(DATE_TRUNC('month', CURRENT_DATE - INTERVAL '11 months') AS DATE) AS місяць\n        UNION ALL\n        SELECT CAST(DATE_TRUNC('month', місяць + INTERVAL '1 month') AS DATE)\n        FROM місяці\n        WHERE місяць < DATE_TRUNC('month', CURRENT_DATE)\n    ),\n    відвідування_по_місяцях AS (\n        SELECT \n            чк.id AS член_id,\n            чк.прізвище,\n            чк.імя,\n            DATE_TRUNC('month', в.дата_відвідування) AS місяць\n        FROM члени_клубу чк\n        JOIN відвідування в ON чк.id = в.член_клубу_id\n        JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id\n        WHERE в.дата_відвідування >= (CURRENT_DATE - INTERVAL '1 year')\n        GROUP BY чк.id, чк.прізвище, чк.імя, DATE_TRUNC('month', в.дата_відвідування)\n    ),\n    кількість_місяців AS (\n        SELECT \n            член_id,\n            прізвище,\n            імя,\n            COUNT(DISTINCT місяць) AS відвідані_місяці\n        FROM відвідування_по_місяцях\n        GROUP BY член_id, прізвище, імя\n    )\n    SELECT \n        прізвище,\n        імя,\n        відвідані_місяці\n    FROM кількість_місяців\n    WHERE відвідані_місяці = 12\n    ORDER BY прізвище, імя\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_028",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Знайти членів клубу, які відвідували всі типи групових занять",
+        "gold_sql": "\n    SELECT \n        чк.прізвище,\n        чк.імя\n    FROM члени_клубу чк\n    WHERE NOT EXISTS (\n        SELECT гз.id\n        FROM групові_заняття гз\n        WHERE NOT EXISTS (\n            SELECT 1\n            FROM відвідування в\n            JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id\n            JOIN розклад_занять рз ON зз.розклад_заняття_id = рз.id\n            WHERE в.член_клубу_id = чк.id\n            AND рз.заняття_id = гз.id\n        )\n    )\n    ORDER BY чк.прізвище, чк.імя\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_029",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Для кожного тренера показати зростання кількості проведених занять за останні 6 місяців",
+        "gold_sql": "\n    WITH місячні_заняття AS (\n        SELECT \n            т.id AS тренер_id,\n            т.прізвище,\n            т.імя,\n            DATE_TRUNC('month', в.дата_відвідування) AS місяць,\n            COUNT(DISTINCT рз.id) AS кількість_занять\n        FROM тренери т\n        JOIN розклад_занять рз ON т.id = рз.тренер_id\n        JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id\n        JOIN відвідування в ON зз.id = в.запис_на_заняття_id\n        WHERE в.дата_відвідування >= (CURRENT_DATE - INTERVAL '6 months')\n        GROUP BY т.id, т.прізвище, т.імя, DATE_TRUNC('month', в.дата_відвідування)\n    )\n    SELECT \n        прізвище,\n        імя,\n        TO_CHAR(місяць, 'Month YYYY') AS місяць,\n        кількість_занять,\n        кількість_занять - LAG(кількість_занять, 1, 0) OVER (PARTITION BY тренер_id ORDER BY місяць) AS зміна_від_попереднього,\n        ROUND(((кількість_занять * 100.0) / NULLIF(LAG(кількість_занять, 1) OVER (PARTITION BY тренер_id ORDER BY місяць), 0)) - 100, 2) AS відсоток_росту\n    FROM місячні_заняття\n    ORDER BY тренер_id, місяць\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_030",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Показати 7-денну ковзну середню кількість відвідувань клубу за останні 30 днів",
+        "gold_sql": "\n    WITH щоденні_відвідування AS (\n        SELECT \n            дата_відвідування,\n            COUNT(*) AS кількість\n        FROM відвідування\n        WHERE дата_відвідування >= (CURRENT_DATE - INTERVAL '30 days')\n        GROUP BY дата_відвідування\n    )\n    SELECT \n        дата_відвідування,\n        кількість AS денні_відвідування,\n        ROUND(AVG(кількість) OVER (ORDER BY дата_відвідування ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS ковзна_середня_7_днів\n    FROM щоденні_відвідування\n    ORDER BY дата_відвідування\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_031",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Які члени клубу записувалися на групові заняття, але жодного разу не відвідали їх?",
+        "gold_sql": "\n    SELECT \n        чк.прізвище,\n        чк.імя,\n        COUNT(зз.id) AS кількість_невідвіданих_занять\n    FROM члени_клубу чк\n    JOIN записи_на_заняття зз ON чк.id = зз.член_клубу_id\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM відвідування в\n        WHERE в.запис_на_заняття_id = зз.id\n    )\n    GROUP BY чк.id, чк.прізвище, чк.імя\n    ORDER BY кількість_невідвіданих_занять DESC\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_032",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Розділити всіх членів клубу на 3 категорії за частотою відвідувань (низька, середня, висока)",
+        "gold_sql": "\n    WITH статистика_відвідувань AS (\n        SELECT \n            чк.id AS член_id,\n            чк.прізвище,\n            чк.імя,\n            COUNT(в.id) AS кількість_відвідувань,\n            NTILE(3) OVER (ORDER BY COUNT(в.id)) AS категорія\n        FROM члени_клубу чк\n        LEFT JOIN відвідування в ON чк.id = в.член_клубу_id\n        WHERE в.дата_відвідування >= (CURRENT_DATE - INTERVAL '3 months')\n        GROUP BY чк.id, чк.прізвище, чк.імя\n    )\n    SELECT \n        прізвище,\n        імя,\n        кількість_відвідувань,\n        CASE \n            WHEN категорія = 1 THEN 'Низька'\n            WHEN категорія = 2 THEN 'Середня'\n            WHEN категорія = 3 THEN 'Висока'\n        END AS частота_відвідувань\n    FROM статистика_відвідувань\n    ORDER BY кількість_відвідувань DESC\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_033",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Виявити тенденції відвідуваності за годинами дня протягом тижня",
+        "gold_sql": "\n    WITH погодинні_відвідування AS (\n        SELECT \n            TO_CHAR(дата_відвідування, 'Day') AS день_тижня,\n            EXTRACT(HOUR FROM час_приходу) AS година,\n            COUNT(*) AS кількість\n        FROM відвідування\n        WHERE дата_відвідування >= (CURRENT_DATE - INTERVAL '1 month')\n        GROUP BY день_тижня, година\n    )\n    SELECT \n        день_тижня,\n        година,\n        кількість,\n        ROUND(кількість * 100.0 / SUM(кількість) OVER (PARTITION BY день_тижня), 2) AS відсоток_від_денних,\n        ROUND(кількість * 100.0 / SUM(кількість) OVER (PARTITION BY година), 2) AS відсоток_від_годинних\n    FROM погодинні_відвідування\n    ORDER BY \n        CASE \n            WHEN день_тижня = 'Monday' THEN 1\n            WHEN день_тижня = 'Tuesday' THEN 2\n            WHEN день_тижня = 'Wednesday' THEN 3\n            WHEN день_тижня = 'Thursday' THEN 4\n            WHEN день_тижня = 'Friday' THEN 5\n            WHEN день_тижня = 'Saturday' THEN 6\n            WHEN день_тижня = 'Sunday' THEN 7\n        END,\n        година\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_034",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Яке обладнання є в кожному приміщенні і скільки занять проводиться з його використанням?",
+        "gold_sql": "\n    WITH використання_обладнання AS (\n        SELECT \n            п.id AS приміщення_id,\n            п.назва AS приміщення,\n            о.id AS обладнання_id,\n            о.назва AS обладнання,\n            оп.кількість,\n            COUNT(DISTINCT рз.id) AS кількість_занять\n        FROM приміщення п\n        JOIN обладнання_приміщень оп ON п.id = оп.приміщення_id\n        JOIN обладнання о ON оп.обладнання_id = о.id\n        LEFT JOIN розклад_занять рз ON п.id = рз.приміщення_id\n        GROUP BY п.id, п.назва, о.id, о.назва, оп.кількість\n    )\n    SELECT \n        приміщення,\n        обладнання,\n        кількість,\n        кількість_занять,\n        ROUND(кількість_занять * 1.0 / кількість, 2) AS занять_на_одиницю\n    FROM використання_обладнання\n    ORDER BY приміщення, занять_на_одиницю DESC\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "спортивний_клуб_035",
+        "db_id": "спортивний_клуб",
+        "db_path": "database/спортивний_клуб",
+        "question": "Показати кумулятивний дохід за типами абонементів помісячно за поточний рік",
+        "gold_sql": "\n    WITH місячні_доходи AS (\n        SELECT \n            DATE_TRUNC('month', п.дата_платежу) AS місяць,\n            та.назва AS тип_абонементу,\n            SUM(п.сума) AS сума\n        FROM платежі п\n        JOIN членства ч ON п.членство_id = ч.id\n        JOIN типи_абонементів та ON ч.тип_абонементу_id = та.id\n        WHERE EXTRACT(YEAR FROM п.дата_платежу) = EXTRACT(YEAR FROM CURRENT_DATE)\n        GROUP BY DATE_TRUNC('month', п.дата_платежу), та.назва\n    )\n    SELECT \n        TO_CHAR(місяць, 'Month YYYY') AS місяць,\n        тип_абонементу,\n        сума AS місячний_дохід,\n        SUM(сума) OVER (PARTITION BY тип_абонементу ORDER BY місяць) AS кумулятивний_дохід,\n        ROUND(SUM(сума) OVER (PARTITION BY тип_абонементу ORDER BY місяць) * 100.0 / \n               SUM(сума) OVER (PARTITION BY тип_абонементу), 2) AS відсоток_від_річного\n    FROM місячні_доходи\n    ORDER BY місяць, тип_абонементу\n    ",
+        "difficulty": "complex",
+        "evidence": null,
+        "execution_details": {
+            "execution_time": null,
+            "result_size": null
+        }
+    },
+    {
+        "question_id": "туристичне_агентство_001",
+        "db_id": "туристичне_агентство",
+        "question": "Скільки активних турів пропонує агентство?",
+        "gold_sql": "SELECT COUNT(*) FROM тури WHERE активний = true;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_002",
+        "db_id": "туристичне_агентство",
+        "question": "Які готелі з 5 зірками є в базі даних?",
+        "gold_sql": "SELECT назва, адреса FROM готелі WHERE зірок = 5;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_003",
+        "db_id": "туристичне_агентство",
+        "question": "Які країни представлені в агентстві?",
+        "gold_sql": "SELECT назва, континент FROM країни ORDER BY назва;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_004",
+        "db_id": "туристичне_агентство",
+        "question": "Скільки клієнтів зареєстровано в агентстві за останній рік?",
+        "gold_sql": "SELECT COUNT(*) FROM клієнти WHERE дата_реєстрації >= CURRENT_DATE - INTERVAL '1 year';",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_005",
+        "db_id": "туристичне_агентство",
+        "question": "Які працівники мають найвищу зарплату?",
+        "gold_sql": "SELECT прізвище, імя, зарплата FROM працівники ORDER BY зарплата DESC LIMIT 5;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_006",
+        "db_id": "туристичне_агентство",
+        "question": "Які методи оплати доступні клієнтам?",
+        "gold_sql": "SELECT назва, опис FROM методи_оплати;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "туристичне_агентство_007",
+        "db_id": "туристичне_агентство",
+        "question": "Які тури доступні для бронювання в Італії на наступний місяць?",
+        "gold_sql": "\n        SELECT т.назва, т.дата_початку, т.дата_закінчення, т.ціна, г.назва AS готель\n        FROM тури т\n        JOIN країни к ON т.країна_id = к.id\n        LEFT JOIN готелі г ON т.готель_id = г.id\n        WHERE к.назва = 'Італія'\n        AND т.дата_початку BETWEEN CURRENT_DATE AND (CURRENT_DATE + INTERVAL '1 month')\n        AND т.активний = true;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_008",
+        "db_id": "туристичне_агентство",
+        "question": "Скільки бронювань оформив кожен працівник за останній квартал?",
+        "gold_sql": "\n        SELECT \n            п.прізвище, \n            п.імя, \n            COUNT(б.id) AS кількість_бронювань\n        FROM працівники п\n        LEFT JOIN бронювання_турів б ON п.id = б.працівник_id\n        WHERE б.дата_бронювання >= CURRENT_DATE - INTERVAL '3 months'\n        GROUP BY п.id, п.прізвище, п.імя\n        ORDER BY кількість_бронювань DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_009",
+        "db_id": "туристичне_агентство",
+        "question": "Які готелі найпопулярніші серед клієнтів (за кількістю бронювань)?",
+        "gold_sql": "\n        SELECT \n            г.назва AS готель, \n            м.назва AS місто, \n            к.назва AS країна,\n            г.зірок,\n            COUNT(бг.id) AS кількість_бронювань\n        FROM готелі г\n        JOIN міста м ON г.місто_id = м.id\n        JOIN країни к ON м.країна_id = к.id\n        LEFT JOIN бронювання_готелів бг ON г.id = бг.готель_id\n        GROUP BY г.id, г.назва, м.назва, к.назва, г.зірок\n        ORDER BY кількість_бронювань DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_010",
+        "db_id": "туристичне_агентство",
+        "question": "Яка середня вартість бронювання туру по країнах?",
+        "gold_sql": "\n        SELECT \n            к.назва AS країна, \n            ROUND(AVG(бт.загальна_вартість), 2) AS середня_вартість,\n            COUNT(бт.id) AS кількість_бронювань\n        FROM бронювання_турів бт\n        JOIN тури т ON бт.тур_id = т.id\n        JOIN країни к ON т.країна_id = к.id\n        GROUP BY к.id, к.назва\n        HAVING COUNT(бт.id) > 0\n        ORDER BY середня_вартість DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_011",
+        "db_id": "туристичне_агентство",
+        "question": "Які клієнти здійснили найбільше бронювань за останній рік?",
+        "gold_sql": "\n        SELECT \n            к.прізвище, \n            к.імя, \n            COUNT(DISTINCT бт.id) AS бронювань_турів,\n            COUNT(DISTINCT бг.id) AS бронювань_готелів,\n            COUNT(DISTINCT бтр.id) AS бронювань_транспорту,\n            (COUNT(DISTINCT бт.id) + COUNT(DISTINCT бг.id) + COUNT(DISTINCT бтр.id)) AS всього_бронювань\n        FROM клієнти к\n        LEFT JOIN бронювання_турів бт ON к.id = бт.клієнт_id AND бт.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n        LEFT JOIN бронювання_готелів бг ON к.id = бг.клієнт_id AND бг.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n        LEFT JOIN бронювання_транспорту бтр ON к.id = бтр.клієнт_id AND бтр.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n        GROUP BY к.id, к.прізвище, к.імя\n        HAVING (COUNT(DISTINCT бт.id) + COUNT(DISTINCT бг.id) + COUNT(DISTINCT бтр.id)) > 0\n        ORDER BY всього_бронювань DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_012",
+        "db_id": "туристичне_агентство",
+        "question": "Які типи кімнат найчастіше бронюють у готелях?",
+        "gold_sql": "\n        SELECT \n            тк.назва AS тип_кімнати, \n            COUNT(бг.id) AS кількість_бронювань\n        FROM типи_кімнат тк\n        JOIN бронювання_готелів бг ON тк.id = бг.тип_кімнати_id\n        GROUP BY тк.id, тк.назва\n        ORDER BY кількість_бронювань DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "туристичне_агентство_013",
+        "db_id": "туристичне_агентство",
+        "question": "Які місяці є найпопулярнішими для подорожей до різних країн?",
+        "gold_sql": "\n        WITH місячні_тури AS (\n            SELECT \n                к.назва AS країна,\n                EXTRACT(MONTH FROM т.дата_початку) AS місяць,\n                COUNT(*) AS кількість_турів,\n                COUNT(DISTINCT бт.id) AS кількість_бронювань\n            FROM тури т\n            JOIN країни к ON т.країна_id = к.id\n            LEFT JOIN бронювання_турів бт ON т.id = бт.тур_id\n            WHERE т.дата_початку >= CURRENT_DATE - INTERVAL '1 year'\n            GROUP BY к.назва, EXTRACT(MONTH FROM т.дата_початку)\n        ),\n        рейтинг_місяців AS (\n            SELECT \n                країна,\n                місяць,\n                кількість_турів,\n                кількість_бронювань,\n                RANK() OVER (PARTITION BY країна ORDER BY кількість_бронювань DESC) AS ранг\n            FROM місячні_тури\n        )\n        SELECT \n            країна,\n            місяць,\n            TO_CHAR(TO_DATE(місяць::text, 'MM'), 'Month') AS назва_місяця,\n            кількість_турів,\n            кількість_бронювань\n        FROM рейтинг_місяців\n        WHERE ранг = 1\n        ORDER BY країна;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "туристичне_агентство_014",
+        "db_id": "туристичне_агентство",
+        "question": "Які країни мають найкраще співвідношення позитивних відгуків до загальної кількості відгуків?",
+        "gold_sql": "WITH відгуки_країн AS (\n    SELECT \n        к.id AS країна_id,\n        к.назва AS країна,\n        в.оцінка,\n        CASE WHEN в.оцінка >= 4 THEN 1 ELSE 0 END AS позитивний_відгук\n    FROM відгуки в\n    JOIN готелі г ON в.готель_id = г.id\n    JOIN міста м ON г.місто_id = м.id\n    JOIN країни к ON м.країна_id = к.id\n    WHERE в.готель_id IS NOT NULL -- Ensure it's a hotel review\n    UNION ALL\n    SELECT \n        к.id AS країна_id,\n        к.назва AS країна,\n        в.оцінка,\n        CASE WHEN в.оцінка >= 4 THEN 1 ELSE 0 END AS позитивний_відгук\n    FROM відгуки в\n    JOIN тури т ON в.тур_id = т.id\n    JOIN країни к ON т.країна_id = к.id\n    WHERE в.тур_id IS NOT NULL -- Ensure it's a tour review\n)\nSELECT \n    країна,\n    COUNT(*) AS всього_відгуків,\n    SUM(позитивний_відгук) AS позитивних_відгуків,\n    ROUND(AVG(оцінка), 2) AS середня_оцінка,\n    ROUND((SUM(позитивний_відгук)::numeric / COUNT(*)) * 100, 2) AS відсоток_позитивних\nFROM відгуки_країн\nGROUP BY країна_id, країна\nHAVING COUNT(*) >= 10\nORDER BY відсоток_позитивних DESC, середня_оцінка DESC\nLIMIT 10;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "туристичне_агентство_015",
+        "db_id": "туристичне_агентство",
+        "question": "Які працівники принесли найбільший прибуток агентству за останній рік?",
+        "gold_sql": "\n        WITH доходи_працівників AS (\n            -- Доходи від бронювання турів\n            SELECT \n                п.id AS працівник_id,\n                п.прізвище,\n                п.імя,\n                SUM(бт.загальна_вартість) AS дохід_від_турів,\n                COUNT(DISTINCT бт.id) AS кількість_турів\n            FROM працівники п\n            JOIN бронювання_турів бт ON п.id = бт.працівник_id\n            WHERE бт.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n            GROUP BY п.id, п.прізвище, п.імя\n        ),\n        доходи_від_готелів AS (\n            -- Доходи від бронювання готелів\n            SELECT \n                п.id AS працівник_id,\n                SUM(бг.вартість) AS дохід_від_готелів,\n                COUNT(DISTINCT бг.id) AS кількість_готелів\n            FROM працівники п\n            JOIN бронювання_готелів бг ON п.id = бг.працівник_id\n            WHERE бг.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n            GROUP BY п.id\n        ),\n        доходи_від_транспорту AS (\n            -- Доходи від бронювання транспорту\n            SELECT \n                п.id AS працівник_id,\n                SUM(бт.вартість) AS дохід_від_транспорту,\n                COUNT(DISTINCT бт.id) AS кількість_транспорту\n            FROM працівники п\n            JOIN бронювання_транспорту бт ON п.id = бт.працівник_id\n            WHERE бт.дата_бронювання >= CURRENT_DATE - INTERVAL '1 year'\n            GROUP BY п.id\n        )\n        SELECT \n            дп.прізвище,\n            дп.імя,\n            пос.назва AS посада,\n            COALESCE(дп.дохід_від_турів, 0) AS дохід_від_турів,\n            COALESCE(дг.дохід_від_готелів, 0) AS дохід_від_готелів,\n            COALESCE(дт.дохід_від_транспорту, 0) AS дохід_від_транспорту,\n            COALESCE(дп.дохід_від_турів, 0) + COALESCE(дг.дохід_від_готелів, 0) + COALESCE(дт.дохід_від_транспорту, 0) AS загальний_дохід,\n            COALESCE(дп.кількість_турів, 0) AS кількість_турів,\n            COALESCE(дг.кількість_готелів, 0) AS кількість_готелів,\n            COALESCE(дт.кількість_транспорту, 0) AS кількість_транспорту\n        FROM доходи_працівників дп\n        LEFT JOIN доходи_від_готелів дг ON дп.працівник_id = дг.працівник_id\n        LEFT JOIN доходи_від_транспорту дт ON дп.працівник_id = дт.працівник_id\n        JOIN посади пос ON (SELECT посада_id FROM працівники WHERE id = дп.працівник_id) = пос.id\n        ORDER BY загальний_дохід DESC\n        LIMIT 10;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "туристичне_агентство_016",
+        "db_id": "туристичне_агентство",
+        "question": "Проаналізуйте прибутковість турів за тривалістю та типом харчування.",
+        "gold_sql": "\n        WITH статистика_турів AS (\n            SELECT \n                т.id AS тур_id,\n                т.тривалість,\n                т.тип_харчування,\n                CASE \n                    WHEN т.тривалість <= 3 THEN 'Короткий (до 3 днів)'\n                    WHEN т.тривалість <= 7 THEN 'Середній (4-7 днів)'\n                    WHEN т.тривалість <= 14 THEN 'Довгий (8-14 днів)'\n                    ELSE 'Дуже довгий (більше 14 днів)'\n                END AS категорія_тривалості,\n                COALESCE(т.тип_харчування, 'Без харчування') AS категорія_харчування,\n                COUNT(DISTINCT бт.id) AS кількість_бронювань,\n                SUM(бт.загальна_вартість) AS загальний_дохід,\n                CASE WHEN COUNT(DISTINCT бт.id) > 0 \n                    THEN SUM(бт.загальна_вартість) / COUNT(DISTINCT бт.id) \n                    ELSE 0 \n                END AS середня_вартість_бронювання\n            FROM тури т\n            LEFT JOIN бронювання_турів бт ON т.id = бт.тур_id\n            WHERE т.дата_початку >= CURRENT_DATE - INTERVAL '1 year'\n            GROUP BY т.id, т.тривалість, т.тип_харчування\n        )\n        SELECT \n            категорія_тривалості,\n            категорія_харчування,\n            COUNT(DISTINCT тур_id) AS кількість_турів,\n            SUM(кількість_бронювань) AS загальна_кількість_бронювань,\n            ROUND(SUM(загальний_дохід), 2) AS загальний_дохід,\n            ROUND(AVG(CASE WHEN кількість_бронювань > 0 THEN кількість_бронювань ELSE NULL END), 2) AS середня_кількість_бронювань_на_тур,\n            ROUND(AVG(CASE WHEN середня_вартість_бронювання > 0 THEN середня_вартість_бронювання ELSE NULL END), 2) AS середня_вартість_бронювання\n        FROM статистика_турів\n        GROUP BY категорія_тривалості, категорія_харчування\n        ORDER BY категорія_тривалості, категорія_харчування;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "туристичне_агентство_017",
+        "db_id": "туристичне_агентство",
+        "question": "Які туристичні напрямки демонструють найбільший ріст популярності за останній рік?",
+        "gold_sql": "WITH квартальні_бронювання AS (\n    SELECT \n        к.назва AS країна,\n        м.назва AS місто,\n        EXTRACT(YEAR FROM бт.дата_бронювання) AS рік,\n        EXTRACT(QUARTER FROM бт.дата_бронювання) AS квартал,\n        COUNT(DISTINCT бт.id) AS кількість_бронювань\n    FROM бронювання_турів бт\n    JOIN тури т ON бт.тур_id = т.id\n    JOIN країни к ON т.країна_id = к.id\n    JOIN міста м ON т.місто_id = м.id\n    WHERE бт.дата_бронювання >= date_trunc('quarter', CURRENT_DATE) - INTERVAL '1 year' -- Align with quarter starts\n    GROUP BY к.назва, м.назва, рік, квартал\n),\nзведені_дані AS (\n    SELECT \n        країна,\n        місто,\n        SUM(CASE WHEN рік = EXTRACT(YEAR FROM CURRENT_DATE) AND квартал = EXTRACT(QUARTER FROM CURRENT_DATE) THEN кількість_бронювань ELSE 0 END) AS останній_квартал_поточний_рік,\n        SUM(CASE WHEN рік = EXTRACT(YEAR FROM CURRENT_DATE - INTERVAL '3 months') AND квартал = EXTRACT(QUARTER FROM CURRENT_DATE - INTERVAL '3 months') THEN кількість_бронювань ELSE 0 END) AS попередній_квартал_різні_роки,\n        SUM(CASE WHEN рік = EXTRACT(YEAR FROM CURRENT_DATE - INTERVAL '1 year') AND квартал = EXTRACT(QUARTER FROM CURRENT_DATE) THEN кількість_бронювань ELSE 0 END) AS той_самий_квартал_минулий_рік,\n        SUM(кількість_бронювань) AS загальна_кількість_бронювань_рік\n    FROM квартальні_бронювання\n    GROUP BY країна, місто\n    HAVING SUM(кількість_бронювань) >= 10\n)\nSELECT \n    країна,\n    місто,\n    -- Беремо останній заповнений квартал як поточний\n    COALESCE(останній_квартал_поточний_рік, попередній_квартал_різні_роки) AS поточний_період_бронювання,\n    -- Беремо той самий квартал минулого року для порівняння\n    той_самий_квартал_минулий_рік AS минулий_період_бронювання,\n    CASE \n        WHEN той_самий_квартал_минулий_рік = 0 THEN NULL -- Неможливо розрахувати ріст якщо база 0\n        ELSE ROUND(((COALESCE(останній_квартал_поточний_рік, попередній_квартал_різні_роки) - той_самий_квартал_минулий_рік)::numeric / той_самий_квартал_минулий_рік) * 100, 2)\n    END AS відсоток_росту_рік_до_року,\n    загальна_кількість_бронювань_рік\nFROM зведені_дані\nWHERE COALESCE(останній_квартал_поточний_рік, попередній_квартал_різні_роки) > той_самий_квартал_минулий_рік\nORDER BY відсоток_росту_рік_до_року DESC NULLS LAST\nLIMIT 10;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "університет_001",
+        "db_id": "університет",
+        "question": "Скільки викладачів працює в університеті?",
+        "gold_sql": "SELECT COUNT(*) FROM викладачі WHERE активний = TRUE;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_002",
+        "db_id": "університет",
+        "question": "Які факультети є в університеті?",
+        "gold_sql": "SELECT назва, скорочення FROM факультети WHERE активний = TRUE ORDER BY назва;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_003",
+        "db_id": "університет",
+        "question": "Скільки студентів навчається в кожній групі?",
+        "gold_sql": "SELECT назва, кількість_студентів FROM групи WHERE активна = TRUE ORDER BY кількість_студентів DESC;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_004",
+        "db_id": "університет",
+        "question": "Які курси мають найбільшу кількість кредитів?",
+        "gold_sql": "SELECT назва, кількість_кредитів FROM курси WHERE активний = TRUE ORDER BY кількість_кредитів DESC LIMIT 5;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_005",
+        "db_id": "університет",
+        "question": "Скільки студентів навчається на бюджеті?",
+        "gold_sql": "SELECT COUNT(*) FROM студенти WHERE фінансування = 'бюджет';",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_006",
+        "db_id": "університет",
+        "question": "Які аудиторії мають найбільшу місткість?",
+        "gold_sql": "SELECT номер, місткість, тип FROM аудиторії ORDER BY місткість DESC LIMIT 10;",
+        "difficulty": "simple"
+    },
+    {
+        "question_id": "університет_007",
+        "db_id": "університет",
+        "question": "Скільки студентів навчається на кожному факультеті?",
+        "gold_sql": "\n        SELECT \n            ф.назва AS факультет, \n            COUNT(с.ід) AS кількість_студентів\n        FROM факультети ф\n        JOIN кафедри к ON ф.ід = к.факультет_ід\n        JOIN напрями н ON к.ід = н.кафедра_ід\n        JOIN групи г ON н.ід = г.напрям_ід\n        JOIN студенти с ON г.ід = с.група_ід\n        WHERE с.статус_ід = (SELECT ід FROM статуси_студентів WHERE назва = 'Активний')\n        GROUP BY ф.ід, ф.назва\n        ORDER BY кількість_студентів DESC;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_008",
+        "db_id": "університет",
+        "question": "Які викладачі ведуть найбільше курсів?",
+        "gold_sql": "\n        SELECT \n            в.прізвище, \n            в.імя,\n            COUNT(DISTINCT з.курс_ід) AS кількість_курсів\n        FROM викладачі в\n        JOIN заняття з ON в.ід = з.викладач_ід\n        WHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE)\n        GROUP BY в.ід, в.прізвище, в.імя\n        ORDER BY кількість_курсів DESC\n        LIMIT 10;\n        ",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_009",
+        "db_id": "університет",
+        "question": "Яка середня успішність студентів за факультетами?",
+        "gold_sql": "SELECT \n    ф.назва AS факультет,\n    ROUND(AVG(CASE WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+(\\.[0-9]+)?$' THEN CAST(о.оцінка AS NUMERIC) ELSE NULL END), 2) AS середній_бал, -- Apply regex to text, cast inside AVG\n    COUNT(DISTINCT с.ід) AS кількість_студентів\nFROM факультети ф\nJOIN кафедри к ON ф.ід = к.факультет_ід\nJOIN напрями н ON к.ід = н.кафедра_ід\nJOIN групи г ON н.ід = г.напрям_ід\nJOIN студенти с ON г.ід = с.група_ід\nJOIN записи_на_курси зк ON с.ід = зк.студент_ід\nJOIN оцінки о ON зк.ід = о.запис_на_курс_ід\nGROUP BY ф.ід, ф.назва\nORDER BY середній_бал DESC NULLS LAST;",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_010",
+        "db_id": "університет",
+        "question": "Яке навантаження у кожного викладача в поточному семестрі?",
+        "gold_sql": "SELECT \n    в.прізвище,\n    в.імя,\n    COUNT(DISTINCT з.ід) AS кількість_унікальних_занять,\n    COUNT(рз.ід) AS кількість_проведених_занять, -- Counts scheduled instances\n    SUM(CASE WHEN тз.назва = 'Лекція' THEN 1 ELSE 0 END) AS лекції_проведено,\n    SUM(CASE WHEN тз.назва = 'Практичне' THEN 1 ELSE 0 END) AS практичні_проведено,\n    SUM(CASE WHEN тз.назва = 'Лабораторна' THEN 1 ELSE 0 END) AS лабораторні_проведено,\n    ROUND(SUM(EXTRACT(EPOCH FROM (рз.час_кінця - рз.час_початку))/3600), 2) AS загальні_години\nFROM викладачі в\nJOIN заняття з ON в.ід = з.викладач_ід\nJOIN типи_занять тз ON з.тип_заняття_ід = тз.ід\nJOIN розклад_занять рз ON з.ід = рз.заняття_ід\nWHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE)\nGROUP BY в.ід, в.прізвище, в.імя\nORDER BY загальні_години DESC;",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_011",
+        "db_id": "університет",
+        "question": "Які курси мають найнижчу успішність студентів?",
+        "gold_sql": "SELECT \n    к.назва AS курс,\n    к.код,\n    ROUND(AVG(CASE WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' THEN CAST(о.оцінка AS INTEGER) ELSE NULL END), 2) AS середній_бал,\n    COUNT(DISTINCT зк.студент_ід) AS кількість_студентів,\n    COUNT(CASE WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) < 60 THEN 1 ELSE NULL END) AS кількість_незадовільних\nFROM курси к\nJOIN заняття з ON к.ід = з.курс_ід \nJOIN записи_на_курси зк ON з.ід = зк.заняття_ід \nJOIN оцінки о ON зк.ід = о.запис_на_курс_ід \nWHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE) \nGROUP BY к.ід, к.назва, к.код\nHAVING COUNT(DISTINCT зк.студент_ід) >= 5\nORDER BY середній_бал ASC NULLS LAST \nLIMIT 10;",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_012",
+        "db_id": "університет",
+        "question": "Як розподілені аудиторії між факультетами?",
+        "gold_sql": "-- Note: Indirectly linking buildings/auditoriums to faculties via schedules.\nSELECT \n    ф.назва AS факультет,\n    б.назва AS будівля,\n    COUNT(DISTINCT а.ід) AS кількість_аудиторій,\n    COALESCE(SUM(а.місткість), 0) AS загальна_місткість, -- Use COALESCE for sum\n    ROUND(AVG(а.місткість), 2) AS середня_місткість,\n    STRING_AGG(DISTINCT а.тип, ', ' ORDER BY а.тип) AS типи_аудиторій\nFROM факультети ф\nJOIN кафедри каф ON ф.ід = каф.факультет_ід\nJOIN курси к ON каф.ід = к.кафедра_ід -- Link faculty->dept->course\nJOIN заняття з ON к.ід = з.курс_ід -- Link course->class\nJOIN розклад_занять рз ON з.ід = рз.заняття_ід -- Link class->schedule\nJOIN аудиторії а ON рз.аудиторія_ід = а.ід -- Link schedule->auditorium\nJOIN будівлі б ON а.будівля_ід = б.ід -- Link auditorium->building\n-- Optional: Filter for active semester if needed\n-- WHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE)\nGROUP BY ф.ід, ф.назва, б.ід, б.назва\nORDER BY ф.назва, б.назва, кількість_аудиторій DESC;",
+        "difficulty": "medium"
+    },
+    {
+        "question_id": "університет_013",
+        "db_id": "університет",
+        "question": "Які студенти мають найвищу успішність на кожному факультеті?",
+        "gold_sql": "WITH студенти_успішність AS (\n    SELECT \n        с.ід AS студент_ід,\n        с.прізвище,\n        с.імя,\n        г.назва AS група,\n        н.назва AS напрям,\n        ф.ід AS факультет_ід,\n        ф.назва AS факультет,\n        AVG(CASE WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' THEN CAST(о.оцінка AS INTEGER) ELSE NULL END) AS середній_бал_raw,\n        COUNT(DISTINCT зк.заняття_ід) AS кількість_занять_оцінено \n    FROM студенти с\n    JOIN групи г ON с.група_ід = г.ід\n    JOIN напрями н ON г.напрям_ід = н.ід\n    JOIN кафедри к ON н.кафедра_ід = к.ід\n    JOIN факультети ф ON к.факультет_ід = ф.ід\n    JOIN записи_на_курси зк ON с.ід = зк.студент_ід\n    JOIN оцінки о ON зк.ід = о.запис_на_курс_ід\n    WHERE с.статус_ід = (SELECT ід FROM статуси_студентів WHERE назва = 'Активний')\n    GROUP BY с.ід, с.прізвище, с.імя, г.назва, н.назва, ф.ід, ф.назва\n    HAVING COUNT(DISTINCT зк.заняття_ід) >= 5 AND COUNT(CASE WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' THEN 1 END) > 0\n),\nранжування AS (\n    SELECT \n        студент_ід,\n        прізвище,\n        імя,\n        група,\n        напрям,\n        факультет_ід,\n        факультет,\n        ROUND(середній_бал_raw, 2) AS середній_бал, \n        кількість_занять_оцінено AS кількість_курсів_оцінено,\n        RANK() OVER (PARTITION BY факультет_ід ORDER BY середній_бал_raw DESC NULLS LAST) AS ранг\n    FROM студенти_успішність\n    WHERE середній_бал_raw IS NOT NULL \n)\nSELECT \n    факультет,\n    прізвище,\n    імя,\n    група,\n    напрям,\n    середній_бал,\n    кількість_курсів_оцінено\nFROM ранжування\nWHERE ранг <= 3\nORDER BY факультет, ранг;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "університет_014",
+        "db_id": "університет",
+        "question": "Яке навантаження аудиторій в різні дні тижня?",
+        "gold_sql": "WITH завантаження_аудиторій AS (\n    SELECT \n        а.ід AS аудиторія_ід,\n        а.номер,\n        а.тип,\n        б.назва AS будівля,\n        рз.день_тижня AS назва_дня,\n        CAST(рз.день_тижня AS INTEGER) AS день_тижня_номер,\n        COUNT(рз.ід) AS кількість_занять,\n        COALESCE(SUM(EXTRACT(EPOCH FROM (рз.час_кінця - рз.час_початку))/3600), 0) AS загальні_години_день,\n        COUNT(DISTINCT рз.заняття_ід) AS кількість_курсів_день\n    FROM аудиторії а\n    JOIN будівлі б ON а.будівля_ід = б.ід\n    JOIN розклад_занять рз ON а.ід = рз.аудиторія_ід\n    JOIN заняття з ON рз.заняття_ід = з.ід \n    WHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE)\n    GROUP BY а.ід, а.номер, а.тип, б.назва, рз.день_тижня\n),\nзагальне_навантаження AS (\n    SELECT\n        аудиторія_ід,\n        SUM(загальні_години_день) AS загальні_години_за_тиждень\n    FROM завантаження_аудиторій\n    GROUP BY аудиторія_ід\n)\nSELECT \n    за.номер AS аудиторія,\n    за.тип,\n    за.будівля,\n    за.назва_дня AS день_тижня,\n    за.кількість_занять,\n    ROUND(за.загальні_години_день, 2) AS годин_на_день,\n    ROUND(COALESCE(зн.загальні_години_за_тиждень, 0), 2) AS годин_на_тиждень,\n    ROUND(за.загальні_години_день / NULLIF(зн.загальні_години_за_тиждень, 0) * 100, 2) AS відсоток_навантаження_від_тижневого\nFROM завантаження_аудиторій за\nLEFT JOIN загальне_навантаження зн ON за.аудиторія_ід = зн.аудиторія_ід\nORDER BY COALESCE(зн.загальні_години_за_тиждень, 0) DESC, за.аудиторія_ід, за.день_тижня_номер;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "університет_015",
+        "db_id": "університет",
+        "question": "Які кафедри найбільш ефективні за співвідношенням кількості студентів до кількості викладачів?",
+        "gold_sql": "\n        WITH студенти_кафедр AS (\n            SELECT \n                к.ід AS кафедра_ід,\n                COUNT(DISTINCT с.ід) AS кількість_студентів\n            FROM кафедри к\n            JOIN напрями н ON к.ід = н.кафедра_ід\n            JOIN групи г ON н.ід = г.напрям_ід\n            JOIN студенти с ON г.ід = с.група_ід\n            WHERE с.статус_ід = (SELECT ід FROM статуси_студентів WHERE назва = 'Активний')\n            GROUP BY к.ід\n        ),\n        викладачі_кафедр AS (\n            SELECT \n                к.ід AS кафедра_ід,\n                COUNT(DISTINCT в.ід) AS кількість_викладачів\n            FROM кафедри к\n            JOIN викладачі в ON к.ід = в.кафедра_ід\n            WHERE в.активний = TRUE\n            GROUP BY к.ід\n        ),\n        курси_кафедр AS (\n            SELECT \n                к.ід AS кафедра_ід,\n                COUNT(DISTINCT кур.ід) AS кількість_курсів,\n                SUM(кур.кількість_кредитів) AS загальна_кількість_кредитів\n            FROM кафедри к\n            JOIN курси кур ON к.ід = кур.кафедра_ід\n            WHERE кур.активний = TRUE\n            GROUP BY к.ід\n        )\n        SELECT \n            ф.назва AS факультет,\n            к.назва AS кафедра,\n            COALESCE(ск.кількість_студентів, 0) AS студентів,\n            COALESCE(вк.кількість_викладачів, 0) AS викладачів,\n            COALESCE(кк.кількість_курсів, 0) AS курсів,\n            CASE \n                WHEN COALESCE(вк.кількість_викладачів, 0) = 0 THEN NULL\n                ELSE ROUND(COALESCE(ск.кількість_студентів, 0)::numeric / COALESCE(вк.кількість_викладачів, 1), 2)\n            END AS студентів_на_викладача,\n            CASE \n                WHEN COALESCE(вк.кількість_викладачів, 0) = 0 THEN NULL\n                ELSE ROUND(COALESCE(кк.кількість_курсів, 0)::numeric / COALESCE(вк.кількість_викладачів, 1), 2)\n            END AS курсів_на_викладача,\n            CASE \n                WHEN COALESCE(ск.кількість_студентів, 0) = 0 THEN NULL\n                ELSE ROUND(COALESCE(кк.загальна_кількість_кредитів, 0)::numeric / COALESCE(ск.кількість_студентів, 1), 2)\n            END AS кредитів_на_студента\n        FROM кафедри к\n        JOIN факультети ф ON к.факультет_ід = ф.ід\n        LEFT JOIN студенти_кафедр ск ON к.ід = ск.кафедра_ід\n        LEFT JOIN викладачі_кафедр вк ON к.ід = вк.кафедра_ід\n        LEFT JOIN курси_кафедр кк ON к.ід = кк.кафедра_ід\n        WHERE к.активна = TRUE\n        ORDER BY студентів_на_викладача DESC NULLS LAST;\n        ",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "університет_016",
+        "db_id": "університет",
+        "question": "Як розподілені оцінки студентів за різними типами занять?",
+        "gold_sql": "WITH розподіл_оцінок AS (\n    SELECT \n        тз.назва AS тип_заняття,\n        CASE \n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) >= 90 THEN 'A (90-100)'\n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) >= 82 THEN 'B (82-89)'\n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) >= 74 THEN 'C (74-81)'\n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) >= 64 THEN 'D (64-73)'\n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) >= 60 THEN 'E (60-63)'\n            WHEN CAST(о.оцінка AS TEXT) ~ '^[0-9]+$' AND CAST(о.оцінка AS INTEGER) < 60 THEN 'F (<60)'\n            ELSE 'Інше'\n        END AS оцінка_група,\n        COUNT(о.ід) AS кількість\n    FROM типи_занять тз\n    JOIN заняття з ON тз.ід = з.тип_заняття_ід\n    JOIN записи_на_курси зк ON з.ід = зк.заняття_ід \n    JOIN оцінки о ON зк.ід = о.запис_на_курс_ід \n    WHERE з.семестр_ід = (SELECT ід FROM семестри WHERE є_активним = TRUE)\n    GROUP BY тз.назва, оцінка_група\n),\nзагальна_кількість AS (\n    SELECT \n        тип_заняття,\n        SUM(кількість) AS загальна_кількість\n    FROM розподіл_оцінок\n    GROUP BY тип_заняття\n)\nSELECT \n    ро.тип_заняття,\n    ро.оцінка_група,\n    ро.кількість,\n    ROUND(CAST(ро.кількість AS numeric) / NULLIF(зк.загальна_кількість, 0) * 100, 2) AS відсоток\nFROM розподіл_оцінок ро\nJOIN загальна_кількість зк ON ро.тип_заняття = зк.тип_заняття\nORDER BY ро.тип_заняття, \n    CASE ро.оцінка_група\n        WHEN 'A (90-100)' THEN 1\n        WHEN 'B (82-89)' THEN 2\n        WHEN 'C (74-81)' THEN 3\n        WHEN 'D (64-73)' THEN 4\n        WHEN 'E (60-63)' THEN 5\n        WHEN 'F (<60)' THEN 6\n        ELSE 7\n    END;",
+        "difficulty": "complex"
+    },
+    {
+        "question_id": "університет_017",
+        "db_id": "університет",
+        "question": "Який відсоток відвідуваності занять за різними курсами та групами?",
+        "gold_sql": "-- Note: Cannot calculate attendance percentage as 'відвідування' column does not exist in 'оцінки'.\n-- This query counts the number of recorded grades per course and group in the active semester.\n\nWITH Активний_Семестр AS (\n    SELECT ід FROM семестри WHERE є_активним = TRUE LIMIT 1\n),\nЗаняття_Активного_Семестру AS (\n    -- Get classes (заняття) for the active semester\n    SELECT з.ід AS заняття_ід, з.курс_ід, з.група_ід\n    FROM заняття з\n    WHERE з.семестр_ід = (SELECT ід FROM Активний_Семестр)\n),\nЗаписи_На_Заняття_Семестру AS (\n    -- Get enrollments (записи_на_курси) for these classes\n    SELECT зк.ід AS запис_ід, зк.студент_ід, зк.заняття_ід\n    FROM записи_на_курси зк\n    WHERE зк.заняття_ід IN (SELECT заняття_ід FROM Заняття_Активного_Семестру)\n),\nКількість_Оцінок AS (\n    -- Count grades recorded for these enrollments\n    SELECT \n        зас.курс_ід,\n        зас.група_ід,\n        COUNT(о.ід) AS кількість_записаних_оцінок\n    FROM оцінки о\n    JOIN Записи_На_Заняття_Семестру знзс ON о.запис_на_курс_ід = знзс.запис_ід\n    JOIN Заняття_Активного_Семестру зас ON знзс.заняття_ід = зас.заняття_ід\n    -- We are counting grades, assuming a grade implies some form of participation/attendance\n    GROUP BY зас.курс_ід, зас.група_ід\n)\nSELECT \n    к.назва AS курс,\n    г.назва AS група,\n    -- We can also count total enrollments for context\n    (SELECT COUNT(DISTINCT знзс.студент_ід) \n     FROM Записи_На_Заняття_Семестру знзс \n     JOIN Заняття_Активного_Семестру зас ON знзс.заняття_ід = зас.заняття_ід \n     WHERE зас.курс_ід = ко.курс_ід AND зас.група_ід = ко.група_ід) AS кількість_студентів_у_групі_курсу,\n    COALESCE(ко.кількість_записаних_оцінок, 0) AS кількість_записаних_оцінок\nFROM Кількість_Оцінок ко\nJOIN курси к ON ко.курс_ід = к.ід\nJOIN групи г ON ко.група_ід = г.ід\nORDER BY к.назва, г.назва;",
+        "difficulty": "complex"
+    }
+]
