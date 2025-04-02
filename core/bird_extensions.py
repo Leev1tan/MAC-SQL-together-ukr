@@ -25,6 +25,32 @@ class EnhancedBirdSelector(Selector):
     and pruning for BIRD databases.
     """
     
+    def call_llm(self, prompt, temperature=None):
+        """
+        Call the Language Model with the given prompt.
+        
+        Args:
+            prompt: The prompt to send to the LLM
+            temperature: Optional temperature parameter for the LLM
+            
+        Returns:
+            The LLM's response as a string
+        """
+        from core import llm
+        from core.utils import extract_world_info
+        
+        # Extract any required info from the message context
+        word_info = extract_world_info(getattr(self, '_message', {}))
+        
+        # Set temperature if provided, otherwise use the default
+        if temperature is not None:
+            word_info['temperature'] = temperature
+            
+        # Call the LLM and return the response
+        logger.info("Calling LLM with BIRD-specific selector prompt")
+        response = llm.safe_call_llm(prompt, **word_info)
+        return response
+    
     def _format_bird_schema(self, db_id: str, schema_info: dict) -> str:
         """
         Format BIRD schema in a way that's optimized for the LLM.
@@ -182,6 +208,32 @@ class EnhancedBirdRefiner(Refiner):
     and error correction for BIRD queries.
     """
     
+    def call_llm(self, prompt, temperature=None):
+        """
+        Call the Language Model with the given prompt.
+        
+        Args:
+            prompt: The prompt to send to the LLM
+            temperature: Optional temperature parameter for the LLM
+            
+        Returns:
+            The LLM's response as a string
+        """
+        from core import llm
+        from core.utils import extract_world_info
+        
+        # Extract any required info from the message context
+        word_info = extract_world_info(getattr(self, '_message', {}))
+        
+        # Set temperature if provided, otherwise use the default
+        if temperature is not None:
+            word_info['temperature'] = temperature
+            
+        # Call the LLM and return the response
+        logger.info("Calling LLM with BIRD-specific prompt")
+        response = llm.safe_call_llm(prompt, **word_info)
+        return response
+    
     def _fix_bird_column_names(self, sql: str, db_id: str) -> str:
         """
         Fix common column name issues in BIRD-generated SQL.
@@ -193,16 +245,17 @@ class EnhancedBirdRefiner(Refiner):
         Returns:
             Fixed SQL query
         """
-        # Common BIRD dataset fixes
-        # These are simplified examples - real implementation would be more comprehensive
+        # Strip any extra double quotes that might be causing issues
+        sql = sql.replace('"', '')
         
-        # Fix missing quotes around column names with spaces
-        import re
-        sql = re.sub(r'([a-zA-Z_][a-zA-Z0-9_]*\s+[a-zA-Z_][a-zA-Z0-9_]*)', r'"\1"', sql)
+        # Remove any backtick quotes that might be causing issues
+        sql = sql.replace('`', '')
         
-        # Fix table aliases in BIRD format
-        sql = re.sub(r'(\b[Tt]\d+\.[a-zA-Z_][a-zA-Z0-9_]*\b)', r'"\1"', sql)
-        
+        # Make sure it's a string
+        if isinstance(sql, dict) and 'refined_sql' in sql:
+            sql = sql['refined_sql']
+            
+        # Return the simplified SQL without extra quotes
         return sql
     
     def _execute_sql(self, sql: str, db_id: str) -> Dict:
@@ -226,8 +279,11 @@ class EnhancedBirdRefiner(Refiner):
             db_file = os.path.join(self.data_path, "dev_databases", db_id, f"{db_id}.sqlite")
             
             if not os.path.exists(db_file):
-                logger.error(f"BIRD database file not found: {db_file}")
-                return {"error": True, "error_msg": f"Database file not found: {db_file}"}
+                # Try alternative path without the extra 'dev_databases' directory
+                db_file = os.path.join(self.data_path, db_id, f"{db_id}.sqlite")
+                if not os.path.exists(db_file):
+                    logger.error(f"BIRD database file not found: {db_file}")
+                    return {"error": True, "error_msg": f"Database file not found: {db_file}"}
             
             # Connect to database
             conn = sqlite3.connect(db_file)
@@ -327,18 +383,22 @@ Provide a refined SQL query that correctly answers the question:"""
             import re
             sql_match = re.search(r'```sql\s*(.*?)\s*```', response, re.DOTALL)
             if sql_match:
-                return {"refined_sql": sql_match.group(1).strip()}
+                return sql_match.group(1).strip()
             
             # If no SQL code block, try to extract any SQL-like content
             sql_match = re.search(r'SELECT\s+.*?(?:;|$)', response, re.DOTALL | re.IGNORECASE)
             if sql_match:
-                return {"refined_sql": sql_match.group(0).strip()}
+                return sql_match.group(0).strip()
             
             # Return the whole response as a fallback
-            return {"refined_sql": response.strip()}
+            return response.strip()
         else:
             # Use original method for other cases
-            return super()._refine(query, evidence, schema_info, fk_info, error_info)
+            result = super()._refine(query, evidence, schema_info, fk_info, error_info)
+            # If the original returns a dict, extract the 'refined_sql' value
+            if isinstance(result, dict) and 'refined_sql' in result:
+                return result['refined_sql']
+            return result
     
     def talk(self, message: Dict):
         """Enhanced talk method with BIRD dataset validation"""

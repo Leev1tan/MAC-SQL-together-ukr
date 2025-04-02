@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "timestamp": "2025-04-02T15:49:17.603296",
+    "num_samples": 3,
+    "execution_accuracy": 0.3333333333333333,
+    "avg_gold_time": 0.15564179420471191,
+    "avg_pred_time": 0,
+    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+    "dataset": "BIRD",
+    "metrics": {
+      "exact_match": 0.0
+    }
+  },
+  "results": [
+    {
+      "db_id": "card_games",
+      "question": "For the set of cards with \"Ancestor's Chosen\" in it, is there a Korean version of it?",
+      "evidence": "set of cards with \"Ancestor''s Chosen\" in it refers to name = 'Ancestor''s Chosen'; Korean version refers to language = 'Korean'",
+      "gold_sql": "SELECT IIF(SUM(CASE WHEN T2.language = 'Korean' AND T2.translation IS NOT NULL THEN 1 ELSE 0 END) > 0, 'YES', 'NO') FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Ancestor''s Chosen'",
+      "pred_sql": "SELECT CASE\n  WHEN EXISTS (\n    SELECT 1\n    FROM cards AS T1\n    INNER JOIN sets AS T2\n    ON T1.setCode = T2.code\n    INNER JOIN set_translations AS T3\n    ON T2.code = T3.setCode\n    WHERE T1.name = 'Ancestor''s Chosen'\n    AND T3.language = 'Korean'\n  ) THEN 'yes'\n  ELSE 'no'\nEND AS answer",
+      "execution_time": 21.711119,
+      "execution_match": false,
+      "gold_time": 0.04904341697692871,
+      "pred_time": 0.0
+    },
+    {
+      "db_id": "codebase_community",
+      "question": "Based on posts posted by Community, calculate the percentage of posts that use the R language.",
+      "evidence": "DIVIDE(COUNT(PostId WHERE TagName = 'r')), (COUNT(PostId WHERE DisplayName = 'Community')) as percentage; R language refers to tagname = 'r'",
+      "gold_sql": "SELECT CAST(SUM(IIF(T3.TagName = 'r', 1, 0)) AS REAL) * 100 / COUNT(T1.Id) FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN tags AS T3 ON T3.ExcerptPostId = T2.PostId WHERE T1.DisplayName = 'Community'",
+      "pred_sql": "SELECT \n  (SELECT COUNT(T1.Id)\n   FROM posts AS T1\n   JOIN postTags AS T2 ON T1.Id = T2.PostId\n   JOIN tags AS T3 ON T2.TagId = T3.Id\n   WHERE T3.TagName = 'r'\n   AND T1.CommunityOwnedDate IS NOT NULL) \n  * 100.0 / \n  (SELECT COUNT(T1.Id)\n   FROM posts AS T1\n   WHERE T1.CommunityOwnedDate IS NOT NULL)\nAS percentage",
+      "execution_time": 83.513591,
+      "execution_match": false,
+      "gold_time": 0.2622401714324951,
+      "pred_time": 0
+    },
+    {
+      "db_id": "thrombosis_prediction",
+      "question": "What percentage of patients who were born in 1980 and were diagnosed with RA are women?",
+      "evidence": "born in 1980 refers to YEAR(BIRTHDAY) = '1980'; 'RA' refers to Diagnosis='RA' ; women refers to SEX = 'F'; calculation = DIVIDE(SUM(SEX = 'F'), COUNT(SEX)) * 100",
+      "gold_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(ID) FROM Patient WHERE Diagnosis = 'RA' AND STRFTIME('%Y', Birthday) = '1980'",
+      "pred_sql": "SELECT CAST(\n    SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) \n    AS REAL) * 100 / COUNT(*) AS percentage\nFROM Patient\nWHERE STRFTIME('%Y', Birthday) = '1980'\nAND Diagnosis = 'RA';",
+      "execution_time": 9.717626,
+      "execution_match": true,
+      "gold_time": 0.0,
+      "pred_time": 0.0
+    }
+  ]
+}

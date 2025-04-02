@@ -1,0 +1,62 @@
+2025-04-02 15:16:24,454 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:16:24,455 - __main__ - ERROR - Tables schema not found: MAC-SQL/data/minidev/MINIDEV\tables.json
+2025-04-02 15:17:47,444 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:17:47,445 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:17:47,445 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:17:47,446 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 2 --output output/bird_agent_results_20250402_151747.json
+2025-04-02 15:17:50,769 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '2', '--output', 'output/bird_agent_results_20250402_151747.json']' returned non-zero exit status 1.
+2025-04-02 15:18:35,798 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:18:35,799 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:18:35,799 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:18:35,799 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 2 --output output/bird_agent_results_20250402_151835.json
+2025-04-02 15:18:36,842 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '2', '--output', 'output/bird_agent_results_20250402_151835.json']' returned non-zero exit status 1.
+2025-04-02 15:19:40,675 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:19:40,676 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:19:40,676 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:19:40,676 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_151940.json
+2025-04-02 15:19:47,699 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output/bird_agent_results_20250402_151940.json']' returned non-zero exit status 1.
+2025-04-02 15:20:58,329 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:20:58,329 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:20:58,330 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:20:58,330 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_152058.json
+2025-04-02 15:21:42,818 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output/bird_agent_results_20250402_152058.json']' returned non-zero exit status 1.
+2025-04-02 15:22:19,109 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:22:19,109 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:22:19,110 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:22:19,110 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_152219.json
+2025-04-02 15:22:26,999 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output/bird_agent_results_20250402_152219.json']' returned non-zero exit status 1.
+2025-04-02 15:23:10,809 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:23:10,810 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:23:10,810 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:23:10,810 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_152310.json
+2025-04-02 15:23:27,607 - __main__ - ERROR - Evaluation failed: Command '['C:\\Python312\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output/bird_agent_results_20250402_152310.json']' returned non-zero exit status 1.
+2025-04-02 15:24:01,161 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:24:01,162 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:24:01,162 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:24:01,163 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_152401.json
+2025-04-02 15:24:28,370 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_152401.json
+2025-04-02 15:24:55,768 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:24:55,768 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:24:55,769 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:24:55,769 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output/bird_agent_results_20250402_152455.json
+2025-04-02 15:25:34,183 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_152455.json
+2025-04-02 15:25:44,577 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:25:44,578 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:25:44,578 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:25:44,579 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 5 --output output/bird_agent_results_20250402_152544.json
+2025-04-02 15:31:37,008 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_152544.json
+2025-04-02 15:43:14,800 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:43:14,801 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:43:14,801 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:43:14,801 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 2 --output output/bird_agent_results_20250402_154314.json
+2025-04-02 15:43:37,150 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_154314.json
+2025-04-02 15:47:21,341 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:47:21,341 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:47:21,341 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:47:21,342 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 3 --output output/bird_agent_results_20250402_154721.json
+2025-04-02 15:49:17,655 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_154721.json
+2025-04-02 15:50:28,753 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-02 15:50:28,753 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-02 15:50:28,753 - __main__ - INFO - Database structure verified successfully
+2025-04-02 15:50:28,754 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 2 --output output/bird_agent_results_20250402_155028.json
+2025-04-02 15:50:54,903 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_155028.json

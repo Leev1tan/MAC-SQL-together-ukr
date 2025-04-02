@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "timestamp": "2025-04-02T15:31:36.941694",
+    "num_samples": 5,
+    "execution_accuracy": 0.6,
+    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+    "dataset": "BIRD"
+  },
+  "results": [
+    {
+      "db_id": "european_football_2",
+      "question": "Please name one player whose overall strength is the greatest.",
+      "evidence": "overall strength is the greatest refers to MAX(overall_rating)",
+      "gold_sql": "SELECT DISTINCT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t2.overall_rating = ( SELECT MAX(overall_rating) FROM Player_Attributes)",
+      "pred_sql": "SELECT T1.player_name\nFROM Player AS T1\nINNER JOIN Player_Attributes AS T2\nON T1.player_api_id = T2.player_api_id\nWHERE T2.overall_rating = (\n  SELECT MAX(overall_rating)\n  FROM Player_Attributes\n)\nLIMIT 1",
+      "execution_time": 34.3724,
+      "execution_match": true
+    },
+    {
+      "db_id": "thrombosis_prediction",
+      "question": "Name the ID and age of patient with two or more laboratory examinations which show their hematoclit level exceeded the normal range.",
+      "evidence": "age = SUBTRACT(year(current_timestamp), year(Birthday)); patient with two or more laboratory examinations refers to COUNT(ID) > 2; hematoclit level exceeded the normal range refers to HCT > = 52;",
+      "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID IN ( SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2 )",
+      "pred_sql": "SELECT P.ID, (strftime('%Y', 'now') - strftime('%Y', P.Birthday)) as age\nFROM Patient P\nWHERE P.ID IN (\n  SELECT L1.ID\n  FROM Laboratory L1\n  WHERE L1.HCT >= 52\n  AND L1.ID IN (\n    SELECT ID\n    FROM Laboratory\n    GROUP BY ID\n    HAVING COUNT(ID) > 1\n  )\n  GROUP BY L1.ID\n  HAVING COUNT(L1.ID) > 1\n)",
+      "execution_time": 15.741849,
+      "execution_match": true
+    },
+    {
+      "db_id": "debit_card_specializing",
+      "question": "Please list the product descriptions of the transactions taken place in the gas stations in the Czech Republic.",
+      "evidence": "Czech Republic can be represented as the Country value in the gasstations table is 'CZE'; ",
+      "gold_sql": "SELECT DISTINCT T3.Description FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Country = 'CZE'",
+      "pred_sql": "SELECT DISTINCT T3.Description\n  FROM transactions_1k AS T1\n  INNER JOIN gasstations AS T2\n  ON T1.GasStationID = T2.GasStationID\n  INNER JOIN products AS T3\n  ON T1.ProductID = T3.ProductID\n  WHERE T2.Country = 'CZE' AND T3.Description IS NOT NULL",
+      "execution_time": 8.371667,
+      "execution_match": true
+    },
+    {
+      "db_id": "formula_1",
+      "question": "Which top 20 driver created the shortest lap time ever record in a Formula_1 race? Please give them full names.",
+      "evidence": "shortest lap time refers to MIN(time); the time format for the shortest lap time is 'MM:SS.mmm' or 'M:SS.mmm'; full name of the driver refers to forename, surname",
+      "gold_sql": "WITH lap_times_in_seconds AS (SELECT driverId, (CASE WHEN SUBSTR(time, 1, INSTR(time, ':') - 1) <> '' THEN CAST(SUBSTR(time, 1, INSTR(time, ':') - 1) AS REAL) * 60 ELSE 0 END + CASE WHEN SUBSTR(time, INSTR(time, ':') + 1, INSTR(time, '.') - INSTR(time, ':') - 1) <> '' THEN CAST(SUBSTR(time, INSTR(time, ':') + 1, INSTR(time, '.') - INSTR(time, ':') - 1) AS REAL) ELSE 0 END + CASE WHEN SUBSTR(time, INSTR(time, '.') + 1) <> '' THEN CAST(SUBSTR(time, INSTR(time, '.') + 1) AS REAL) / 1000 ELSE 0 END) AS time_in_seconds FROM lapTimes) SELECT T2.forename, T2.surname, T1.driverId FROM (SELECT driverId, MIN(time_in_seconds) AS min_time_in_seconds FROM lap_times_in_seconds GROUP BY driverId) AS T1 INNER JOIN drivers AS T2 ON T1.driverId = T2.driverId ORDER BY T1.min_time_in_seconds ASC LIMIT 20",
+      "pred_sql": "SELECT T1.forename, T1.surname\nFROM drivers AS T1\nINNER JOIN lapTimes AS T2\nON T1.driverId = T2.driverId\nWHERE T2.time = (SELECT MIN(time) FROM lapTimes)",
+      "execution_time": 33.116943,
+      "execution_match": false
+    },
+    {
+      "db_id": "card_games",
+      "question": "For the set of cards with \"Ancestor's Chosen\" in it, is there a Korean version of it?",
+      "evidence": "set of cards with \"Ancestor''s Chosen\" in it refers to name = 'Ancestor''s Chosen'; Korean version refers to language = 'Korean'",
+      "gold_sql": "SELECT IIF(SUM(CASE WHEN T2.language = 'Korean' AND T2.translation IS NOT NULL THEN 1 ELSE 0 END) > 0, 'YES', 'NO') FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Ancestor''s Chosen'",
+      "pred_sql": "SELECT T3.translation\nFROM cards AS T1\nINNER JOIN sets AS T2\nON T1.setCode = T2.code\nINNER JOIN set_translations AS T3\nON T2.code = T3.setCode\nWHERE T1.name = 'Ancestor''s Chosen'\nAND T3.language = 'Korean';",
+      "execution_time": 259.055057,
+      "execution_match": false
+    }
+  ]
+}
