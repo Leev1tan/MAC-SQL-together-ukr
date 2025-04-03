@@ -1,0 +1,57 @@
+{
+  "results": [
+    {
+      "question_id": "інтернет_магазин_014",
+      "db_id": "інтернет_магазин",
+      "question": "Для кожного товару визначте його популярність (кількість продажів) та прибуток.",
+      "gold_sql": "\n        SELECT \n            т.назва,\n            SUM(п.кількість) AS кількість_продажів,\n            SUM(п.кількість * п.ціна_за_одиницю) AS загальний_прибуток\n        FROM товари т\n        JOIN позиції_замовлення п ON т.ід = п.товар_ід\n        JOIN замовлення з ON п.замовлення_ід = з.ід\n        WHERE з.статус IN ('виконано', 'доставлено')\n        GROUP BY т.ід, т.назва\n        ORDER BY загальний_прибуток DESC;\n        ",
+      "difficulty": "complex",
+      "execution_match": true,
+      "gold_time": 0.0050046443939208984,
+      "pred_time": 0.0010008811950683594,
+      "error": null,
+      "agent_time": 11.531053066253662,
+      "pred_sql": "-- PostgreSQL query\nSELECT \n    T1.ід AS product_id,\n    T1.назва AS product_name,\n    SUM(T2.кількість) AS total_sales,\n    SUM(T2.ціна_за_одиницю * T2.кількість) AS revenue\nFROM \n    товари AS T1\nINNER JOIN \n    позиції_замовлення AS T2\nON \n    T1.ід = T2.товар_ід\nGROUP BY \n    T1.ід, T1.назва",
+      "agent_messages": []
+    },
+    {
+      "question_id": "лікарня_009",
+      "db_id": "лікарня",
+      "question": "Які лікарі провели найбільше відвідувань пацієнтів за останній тиждень?",
+      "gold_sql": "\n    SELECT \n        п.прізвище, \n        п.імя, \n        COUNT(в.ід) AS кількість_візитів\n    FROM персонал п\n    JOIN візити в ON п.ід = в.лікар_ід\n    JOIN посади_персоналу пп ON п.посада_ід = пп.ід\n    WHERE пп.категорія = 'лікар'\n      AND в.дата_час >= CURRENT_DATE - INTERVAL '7 days'\n      AND п.активний = TRUE\n    GROUP BY п.ід, п.прізвище, п.імя\n    ORDER BY кількість_візитів DESC\n    LIMIT 5\n    ",
+      "difficulty": "simple",
+      "execution_match": true,
+      "gold_time": 0.004002571105957031,
+      "pred_time": 0.0010008811950683594,
+      "error": null,
+      "agent_time": 11.717472553253174,
+      "pred_sql": "SELECT T2.прізвище, T2.імя, COUNT(T1.ід) AS кількість_відвідувань\nFROM візити AS T1\nINNER JOIN персонал AS T2\nON T1.лікар_ід = T2.ід\nWHERE T1.дата_час >= NOW() - INTERVAL '1 week'\nGROUP BY T2.ід, T2.прізвище, T2.імя\nORDER BY кількість_відвідувань DESC;",
+      "agent_messages": []
+    }
+  ],
+  "summary": {
+    "total_queries": 2,
+    "execution_matches": 2,
+    "execution_accuracy": 1.0,
+    "avg_gold_time": 0.004503607749938965,
+    "avg_pred_time": 0.0010008811950683594,
+    "args": {
+      "data_path": "./bird-ukr",
+      "num_samples": 2,
+      "db_filter": null,
+      "random": true,
+      "seed": 123,
+      "model": null,
+      "without_selector": false,
+      "debug": false,
+      "force_execution": false,
+      "delay": 0,
+      "output": "output\\bird_ukr\\20250402_164339\\results.json",
+      "visualize": false,
+      "viz_format": "html",
+      "viz_output": null
+    }
+  },
+  "timestamp": "2025-04-02T16:44:03.488626",
+  "model": null
+}

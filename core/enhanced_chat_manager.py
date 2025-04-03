@@ -15,7 +15,7 @@ from pathlib import Path
 try:
     from core.agents import Selector, Decomposer, Refiner
     from core.chat_manager import ChatManager
-    from core.const import SYSTEM_NAME, DECOMPOSER_NAME
+    from core.const import SYSTEM_NAME, DECOMPOSER_NAME, SELECTOR_NAME, REFINER_NAME
     HAS_CORE = True
 except ImportError:
     HAS_CORE = False
@@ -108,6 +108,9 @@ class EnhancedChatManager(ChatManager):
         self.pretty_output = pretty_output  # Add pretty_output attribute
         self.execution_trace = []  # For tracking agent interactions
         
+        # Initialize chat_group that will hold our agents
+        self.chat_group = []
+        
         # Check for dataset-specific paths
         if self.dataset_name == 'spider':
             # Check if Spider data directory exists
@@ -198,94 +201,148 @@ class EnhancedChatManager(ChatManager):
         
     def _create_agents(self, use_enhanced_agents=True):
         """
-        Create the appropriate agents based on the dataset.
-        
-        Args:
-            use_enhanced_agents: Whether to use enhanced agents when available
+        Create the agents for the specified dataset.
+        Returns:
+            The list of created agents.
         """
-        # Available enhanced agents
-        has_spider_extensions = False
-        has_bird_extensions = False
+        # Log that we're creating agents
+        logger.info(f"Creating agents for dataset: {self.dataset_name}")
         
-        # Check for enhanced agent availability
-        if use_enhanced_agents:
-            try:
-                from core.spider_extensions import EnhancedSpiderSelector, EnhancedSpiderRefiner
-                has_spider_extensions = True
-                logger.info("Using enhanced Spider agents")
-            except ImportError:
-                logger.info("Enhanced Spider agents not available")
+        # Try to load the spider extensions
+        try:
+            from core.spider_extensions import load_spider_selector
+            has_spider_extensions = True
+            logger.info("Using enhanced Spider agents")
+        except ImportError:
+            has_spider_extensions = False
+            logger.info("Spider extensions not available, using base agents")
             
-            try:
-                from core.bird_extensions import EnhancedBirdSelector, EnhancedBirdRefiner
-                has_bird_extensions = True
-                logger.info("Using enhanced BIRD agents")
-            except ImportError:
-                logger.info("Enhanced BIRD agents not available")
+        # Try to load the BIRD extensions
+        try:
+            from core.bird_extensions import load_bird_selector
+            has_bird_extensions = True
+            logger.info("Using enhanced BIRD agents")
+        except ImportError:
+            has_bird_extensions = False
+            logger.info("BIRD extensions not available, using base agents")
+            
+        # Try to load the BIRD-UKR extensions
+        try:
+            from core.bird_ukr_extensions import load_bird_ukr_extensions
+            has_bird_ukr_extensions = True
+            logger.info("Using BIRD-UKR PostgreSQL agents")
+        except ImportError:
+            has_bird_ukr_extensions = False
+            logger.info("BIRD-UKR extensions not available")
         
-        # Create agents based on dataset type and enhanced agent availability
-        if self.dataset_name == 'bird' and has_bird_extensions:
-            from core.bird_extensions import EnhancedBirdSelector, EnhancedBirdRefiner
-            self.chat_group = [
-                EnhancedBirdSelector(
-                    data_path=self.data_path,
-                    tables_json_path=self.tables_json_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                Decomposer(
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                EnhancedBirdRefiner(
-                    data_path=self.data_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                )
-            ]
-        elif self.dataset_name == 'spider' and has_spider_extensions:
-            self.chat_group = [
-                EnhancedSpiderSelector(
-                    data_path=self.data_path,
-                    tables_json_path=self.tables_json_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                Decomposer(
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                EnhancedSpiderRefiner(
-                    data_path=self.data_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                )
-            ]
+        # Dataset-specific agent creation
+        if self.dataset_name == "bird-ukr" and has_bird_ukr_extensions:
+            # Use the BIRD-UKR PostgreSQL agents
+            from core.bird_ukr_extensions import load_bird_ukr_extensions
+            agent_dict = load_bird_ukr_extensions(
+                data_path=self.data_path,
+                model_name=self.model_name,
+                tables_json_path=self.tables_json_path
+            )
+            # Convert to a list that matches the expected format
+            agents = [agent_dict[name] for name in [SELECTOR_NAME, DECOMPOSER_NAME, REFINER_NAME]]
+        elif self.dataset_name == "bird" and has_bird_extensions:
+            # Use the BIRD-specific agents
+            from core.bird_extensions import load_bird_selector, load_bird_refiner
+            
+            # Create selector
+            selector = load_bird_selector(
+                data_path=self.data_path,
+                tables_json_path=self.tables_json_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            # Create decomposer
+            decomposer = Decomposer(
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            # Create refiner
+            refiner = load_bird_refiner(
+                data_path=self.data_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            agents = [selector, decomposer, refiner]
+            
+        elif self.dataset_name == "spider" and has_spider_extensions:
+            # Use the Spider-specific agents
+            from core.spider_extensions import load_spider_selector, load_spider_refiner
+            
+            # Create selector
+            selector = load_spider_selector(
+                data_path=self.data_path,
+                tables_json_path=self.tables_json_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            # Create decomposer
+            decomposer = Decomposer(
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            # Create refiner
+            refiner = load_spider_refiner(
+                data_path=self.data_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            agents = [selector, decomposer, refiner]
         else:
-            # Default agents
-            self.chat_group = [
-                Selector(
-                    data_path=self.data_path,
-                    tables_json_path=self.tables_json_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                Decomposer(
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                ),
-                Refiner(
-                    data_path=self.data_path,
-                    model_name=self.model_name,
-                    dataset_name=self.dataset_name
-                )
-            ]
+            # Use the default agents
+            logger.info("Using default agents")
+            
+            # Create the selector with the without_selector flag
+            selector = Selector(
+                data_path=self.data_path, 
+                tables_json_path=self.tables_json_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name, 
+                without_selector=getattr(self, 'without_selector', False)  # Use default value if attribute doesn't exist
+            )
+            
+            # Create the decomposer
+            decomposer = Decomposer(
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            # Create the refiner
+            refiner = Refiner(
+                data_path=self.data_path,
+                model_name=self.model_name,
+                dataset_name=self.dataset_name
+            )
+            
+            agents = [selector, decomposer, refiner]
         
-        # Log created agents for debugging
-        for i, agent in enumerate(self.chat_group):
+        # Set the agent names correctly
+        agents[0].name = SELECTOR_NAME
+        agents[1].name = DECOMPOSER_NAME
+        agents[2].name = REFINER_NAME
+        
+        # Debug: Print out the agent names and classes
+        for i, agent in enumerate(agents):
             logger.info(f"Agent {i} name: {agent.name}")
             logger.info(f"Agent {i} class: {agent.__class__.__name__}")
-            logger.info(f"Agent {i} attributes: {dir(agent)}")
+            attrs = dir(agent)
+            logger.info(f"Agent {i} attributes: {attrs}")
+        
+        # Set the chat_group attribute to the created agents
+        self.chat_group = agents
+        
+        return agents
     
     def start(self, user_message: Dict[str, Any]):
         """

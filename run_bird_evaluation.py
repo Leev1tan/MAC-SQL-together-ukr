@@ -12,6 +12,7 @@ import logging
 import subprocess
 from pathlib import Path
 from datetime import datetime
+import random
 
 # Configure logging
 os.makedirs('logs', exist_ok=True)
@@ -161,101 +162,137 @@ def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"
         logger.error(f"Evaluation failed: {e}")
         return None
 
-def analyze_results(results_path):
-    """Analyze the evaluation results."""
-    if not os.path.exists(results_path):
-        logger.error(f"Results file not found: {results_path}")
-        return
-    
+def analyze_results(results_path, model_info=None):
+    """Analyze the results of the BIRD dataset evaluation."""
     with open(results_path, 'r') as f:
         data = json.load(f)
     
-    # Extract metadata and results
-    metadata = data.get("metadata", {})
-    results = data.get("results", [])
+    results = data.get('results', [])
+    metadata = data.get('metadata', {})
     
-    # Calculate metrics
+    # Get dataset type (BIRD or BIRD-UKR)
+    dataset_type = metadata.get('dataset', 'BIRD')
+    
+    # Check if results exist
+    if not results:
+        print("No results found.")
+        return
+
+    # Calculate total questions and number of matches
     total = len(results)
-    execution_matches = sum(1 for r in results if r.get("execution_match", False))
-    execution_accuracy = (execution_matches / total) * 100 if total > 0 else 0
+    matches = sum(1 for r in results if r.get('execution_match', False))
     
-    # Calculate execution time metrics
-    avg_gold_time = metadata.get("avg_gold_time", 0) 
-    avg_pred_time = metadata.get("avg_pred_time", 0)
+    # Calculate execution accuracy
+    ex = matches / total if total > 0 else 0
     
-    # Calculate time efficiency ratio where available
-    time_efficiency = "N/A"
-    if avg_gold_time > 0 and avg_pred_time > 0:
-        time_efficiency = avg_gold_time / avg_pred_time
+    # Calculate EM if available
+    em_matches = sum(1 for r in results if r.get('exact_match', False))
+    em = em_matches / total if total > 0 else 0
     
-    # Extract advanced metrics if available
-    em_score = 0
-    ex_score = execution_accuracy
+    # Calculate average execution times
+    valid_gold_times = [r.get('gold_time', 0) for r in results if r.get('gold_time') is not None]
+    valid_pred_times = [r.get('pred_time', 0) for r in results if r.get('pred_time') is not None]
     
-    if metadata.get("metrics"):
-        metrics = metadata.get("metrics", {})
-        em_score = metrics.get("exact_match", 0) * 100
+    avg_gold_time = sum(valid_gold_times) / len(valid_gold_times) if valid_gold_times else 0
+    avg_pred_time = sum(valid_pred_times) / len(valid_pred_times) if valid_pred_times else 0
+    
+    # Calculate time efficiency ratio (smaller is better)
+    time_ratio = avg_pred_time / avg_gold_time if avg_gold_time > 0 else float('inf')
     
     # Print summary
-    print("\n" + "="*60)
-    print("EVALUATION SUMMARY (BIRD Dataset)")
-    print("="*60)
+    print("=" * 50)
+    print(f"Dataset: {dataset_type}")
+    if model_info:
+        print(f"Model: {model_info}")
     print(f"Total queries: {total}")
-    print(f"Execution matches: {execution_matches}/{total}")
-    print(f"Execution Accuracy (EX): {execution_accuracy:.2f}%")
+    print(f"Execution matches: {matches}")
+    print(f"Execution accuracy (EX): {ex:.4f}")
     
-    # Print execution time metrics
-    print(f"Average gold SQL execution time: {avg_gold_time:.4f} seconds")
-    print(f"Average predicted SQL execution time: {avg_pred_time:.4f} seconds") 
-    if time_efficiency != "N/A":
-        print(f"Time efficiency ratio (gold/pred): {time_efficiency:.4f}")
-        if time_efficiency > 1:
-            print("  ✓ Predicted queries are faster on average")
-        elif time_efficiency < 1:
-            print("  ✗ Predicted queries are slower on average")
+    if any('exact_match' in r for r in results):
+        print(f"Exact matches: {em_matches}")
+        print(f"Exact match score (EM): {em:.4f}")
     
-    if metadata.get("metrics"):
-        print(f"Exact Match (EM): {em_score:.2f}%")
+    print(f"Average gold SQL time: {avg_gold_time:.4f}s")
+    print(f"Average pred SQL time: {avg_pred_time:.4f}s")
+    print(f"Time efficiency ratio: {time_ratio:.4f}")
+    print("=" * 50)
     
-    # Print model information if available
-    if metadata.get("model"):
-        print(f"Model: {metadata.get('model')}")
-    
-    print(f"Timestamp: {metadata.get('timestamp', 'N/A')}")
-    print("="*60 + "\n")
+    return {
+        "dataset": dataset_type,
+        "total": total,
+        "matches": matches,
+        "ex": ex,
+        "em_matches": em_matches,
+        "em": em,
+        "avg_gold_time": avg_gold_time,
+        "avg_pred_time": avg_pred_time,
+        "time_ratio": time_ratio
+    }
 
 def main():
-    parser = argparse.ArgumentParser(description='Run MAC-SQL evaluation against BIRD')
-    parser.add_argument('--samples', type=int, default=10, help='Number of samples to evaluate')
-    parser.add_argument('--visualize', action='store_true', help='Generate visualization of agent communication')
-    parser.add_argument('--viz-format', type=str, default="html", choices=["html", "json", "mermaid"], 
-                        help='Visualization format (if --visualize is used)')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default="meta-llama/Llama-3.3-70B-Instruct-Turbo", 
+                       help="LLM model to use")
+    parser.add_argument("--dataset", type=str, default="bird", 
+                        choices=["bird", "bird-dev", "bird-ukr"],
+                        help="Dataset to use: bird (full), bird-dev (dev set), or bird-ukr (Ukrainian)")
+    parser.add_argument("--num-samples", type=int, default=10, help="Number of samples to test")
+    parser.add_argument("--output-dir", type=str, default="output", help="Output directory")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    parser.add_argument("--analyze-only", type=str, help="Only analyze the given results file")
+    parser.add_argument("--db-filter", type=str, nargs="*", help="Filter by database IDs (space-separated)")
     args = parser.parse_args()
-    
-    # Find BIRD path
-    bird_path = find_dataset_paths()
-    if not bird_path:
-        return 1
-    
-    # Verify database structure
-    if not verify_database_structure(bird_path):
-        return 1
-    
-    # Run evaluation
-    results_file = run_evaluation(
-        bird_path, 
-        args.samples, 
-        visualize=args.visualize,
-        viz_format=args.viz_format
-    )
-    
-    if not results_file:
-        return 1
-    
-    # Analyze results
-    analyze_results(results_file)
-    
-    return 0
+
+    if args.analyze_only:
+        analyze_results(args.analyze_only)
+        sys.exit(0)
+
+    # Set the random seed
+    random.seed(args.seed)
+
+    # Determine which test script to run based on the dataset
+    if args.dataset == "bird-ukr":
+        # For Ukrainian BIRD dataset, use the specialized test script
+        test_script = "test_macsql_agent_bird_ukr.py"
+        data_path = "bird-ukr"
+    else:
+        # For English BIRD dataset, use the original test script
+        test_script = "test_macsql_agent_bird.py"
+        data_path = "bird" if args.dataset == "bird" else "bird-dev"
+
+    # Create output directory if it doesn't exist
+    os.makedirs(args.output_dir, exist_ok=True)
+
+    # Generate output filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    model_id = args.model.split("/")[-1].replace("-", "_").lower()
+    output_file = f"{model_id}_{args.dataset}_{args.num_samples}_{timestamp}.json"
+    output_path = os.path.join(args.output_dir, output_file)
+
+    # Build the command
+    cmd = [
+        "python",
+        test_script,
+        f"--model={args.model}",
+        f"--data-path={data_path}",
+        f"--num-samples={args.num_samples}",
+        f"--output={output_path}"
+    ]
+
+    # Add database filter if specified
+    if args.db_filter:
+        cmd.append(f"--db-filter={' '.join(args.db_filter)}")
+
+    # Run the test
+    print(f"Running command: {' '.join(cmd)}")
+    process = subprocess.run(cmd)
+
+    # Check if the test was successful
+    if process.returncode == 0 and os.path.exists(output_path):
+        print(f"Test completed successfully. Results saved to {output_path}")
+        analyze_results(output_path, args.model)
+    else:
+        print(f"Test failed with return code {process.returncode}")
 
 if __name__ == "__main__":
     sys.exit(main()) 

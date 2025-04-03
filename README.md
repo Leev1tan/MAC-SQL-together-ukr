@@ -69,6 +69,27 @@ This implementation integrates Together AI's powerful LLMs with the MAC-SQL fram
    - `MAC-SQL/data/spider/database/`
    - `MAC-SQL/data/spider/tables.json`
 
+## Datasets
+
+### BIRD Dataset
+To use the BIRD dataset, you need to download it from the [official source](https://bird-bench.github.io/) and place it in the `bird` directory.
+
+### Ukrainian BIRD (BIRD-UKR) Dataset
+This project also supports the Ukrainian BIRD dataset, which contains SQL questions in Ukrainian language. 
+
+To use the BIRD-UKR dataset:
+
+1. Download the BIRD-UKR dataset and place it in the `bird-ukr` directory.
+2. Set up a PostgreSQL database server (version 14 or later recommended).
+3. Copy `.env.sample` to `.env` and update the PostgreSQL connection parameters.
+4. Import the database schemas using the provided SQL scripts:
+
+```bash
+# For each database in the Ukrainian BIRD dataset
+cd bird-ukr/database/[database_name]
+psql -U postgres -h localhost -f import.sql
+```
+
 ## Usage
 
 ### Testing with BIRD Dataset
@@ -169,6 +190,34 @@ The `TogetherAIAdapter` class provides:
 
 (Insert your benchmark results here after running tests)
 
+## Evaluation
+
+### Running Evaluation on Standard BIRD
+To evaluate your agent on the BIRD dataset:
+
+```bash
+python run_bird_evaluation.py --dataset bird --num-samples 10 --agent-id macsql
+```
+
+### Running Evaluation on Ukrainian BIRD
+To evaluate your agent on the Ukrainian BIRD dataset:
+
+```bash
+python run_bird_evaluation.py --dataset bird-ukr --num-samples 10 --agent-id macsql
+```
+
+You can also filter by specific databases:
+
+```bash
+python run_bird_evaluation.py --dataset bird-ukr --db-filter бібліотека університет
+```
+
+### Analyzing Results
+To analyze previously generated results:
+
+```bash
+python run_bird_evaluation.py --analyze-only output/macsql_bird-ukr_10_20230515_123456.json
+```
 
 ## Acknowledgments
 

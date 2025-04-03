@@ -207,6 +207,38 @@ def safe_call_llm(input_prompt: str, **kwargs) -> str:
     logger.error(error_msg)
     raise Exception(error_msg)
 
+def call_llm(model_name: str, messages: List[Dict[str, str]]) -> Dict[str, Any]:
+    """
+    Call the LLM with a structured message list.
+    
+    Args:
+        model_name: The name of the model to use
+        messages: List of message dictionaries with role and content
+        
+    Returns:
+        Dictionary with response content
+    """
+    # Format the messages into a prompt for our current API implementation
+    if not messages:
+        return {"content": ""}
+    
+    # For now, we'll just use the last user message as the prompt
+    # This is a simplification - a proper implementation would format all messages
+    user_messages = [m for m in messages if m["role"] == "user"]
+    if not user_messages:
+        return {"content": ""}
+    
+    prompt = user_messages[-1]["content"]
+    
+    # Call the LLM
+    response_text = safe_call_llm(prompt)
+    
+    # Return a structured response
+    return {
+        "content": response_text,
+        "model": model_name
+    }
+
 if __name__ == "__main__":
     # Test the API
     response = safe_call_llm("Explain how a relational database works in one paragraph.")
