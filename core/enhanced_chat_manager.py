@@ -61,6 +61,9 @@ try:
 except ImportError:
     HAS_PRETTY_DEBUG = False
 
+# Add these imports at the top of the file, after other imports
+from core.const_ukr import SELECTOR_NAME, DECOMPOSER_NAME, REFINER_NAME, SYSTEM_NAME
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -373,8 +376,76 @@ class EnhancedChatManager(ChatManager):
             logger.debug(f"Using Decomposer agent: {self.chat_group[1].name}")
             logger.debug(f"Using Refiner agent: {self.chat_group[2].name}")
         
-        # Call parent method to process the message through the agents
-        super().start(user_message)
+        # Check if we have a parent implementation of start() to call
+        if HAS_CORE:
+            # Call parent method to process the message through the agents
+            super().start(user_message)
+        else:
+            # Custom implementation when the parent class doesn't have a start method
+            # Basic implementation to route the message through agents
+            logger.info("Using custom start implementation (no parent method available)")
+            current_message = user_message.copy()
+            
+            # Initial routing to the first agent (selector)
+            if 'send_to' not in current_message and len(self.chat_group) > 0:
+                current_message['send_to'] = self.chat_group[0].name
+                
+            # Process through agents until we get a final result
+            max_rounds = 10  # Prevent infinite loops
+            rounds = 0
+            
+            while rounds < max_rounds:
+                rounds += 1
+                logger.info(f"Processing round {rounds}")
+                
+                # Determine which agent should process this message
+                target_agent_name = current_message.get('send_to')
+                if not target_agent_name:
+                    break
+                    
+                # Find the target agent
+                target_agent = None
+                for agent in self.chat_group:
+                    if agent.name == target_agent_name:
+                        target_agent = agent
+                        break
+                        
+                if not target_agent:
+                    logger.error(f"Agent {target_agent_name} not found")
+                    break
+                    
+                # Process the message with the target agent
+                logger.info(f"Sending message to {target_agent_name}")
+                try:
+                    # If the agent has a process_message method, use it
+                    if hasattr(target_agent, 'process_message'):
+                        response = target_agent.process_message(current_message)
+                        current_message.update(response)
+                    else:
+                        # Otherwise, rely on the chat manager to route the message
+                        logger.info(f"Agent {target_agent_name} doesn't have process_message method")
+                        break
+                        
+                    # Check if we've reached the end of the chain
+                    if 'final_sql' in current_message:
+                        user_message['pred'] = current_message.get('final_sql')
+                        break
+                        
+                    # Check if we need to continue to another agent
+                    if 'send_to' in current_message and current_message['send_to'] != target_agent_name:
+                        logger.info(f"Message forwarded to {current_message['send_to']}")
+                        continue
+                    else:
+                        # No further routing
+                        break
+                        
+                except Exception as e:
+                    logger.error(f"Error processing message with agent {target_agent_name}: {e}")
+                    break
+                    
+            # Update the original message with results
+            if 'final_sql' in current_message:
+                user_message['pred'] = current_message.get('final_sql')
         
         # Post-process predictions based on dataset
         if 'pred' in user_message:

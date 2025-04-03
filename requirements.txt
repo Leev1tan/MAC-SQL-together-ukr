@@ -1,19 +1,17 @@
 # Core dependencies
-psycopg2-binary==2.9.9
-python-dotenv==1.0.0
-requests==2.31.0
-numpy==1.24.3
-pandas==2.0.3
-
-# Streamlit and visualization
-streamlit==1.30.0
-plotly==5.18.0
-
-# PostgreSQL connection pooling
-psycopg2-pool==1.1
+streamlit>=1.28.0
+pandas>=1.5.0
+plotly>=5.18.0
+python-dotenv>=1.0.0
+requests>=2.30.0
+psycopg2-binary>=2.9.9
 
 # API client
-together==0.2.7
+together>=0.1.5
+
+# Optional: PostgreSQL
+# If these cause installation problems, comment them out and install manually if needed
+# psycopg2-binary>=2.9.7
 
 # Natural Language Processing
 nltk>=3.6.2
@@ -26,4 +24,7 @@ seaborn>=0.11.2
 # Development and testing
 pytest>=6.2.5
 black>=21.7b0
-flake8>=3.9.2 
+flake8>=3.9.2
+
+# Added from the code block
+numpy>=1.26.0 

@@ -1,7 +1,7 @@
 .env
 __pycache__/
 .cursor/
-
+.venv/
 # Ignore MAC-SQL folder except for bird-ukr
 MAC-SQL/**
 !MAC-SQL/data/
