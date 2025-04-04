@@ -67,7 +67,15 @@ class PostgreSQLSelector(BaseAgent):
         """
         # Extract relevant information from the message
         db_id = message.get("db_id", "")
+        
+        # Support both 'query' and 'question' keys for flexibility
         query = message.get("query", "")
+        if not query:
+            query = message.get("question", "")
+            # If query came from 'question', add it back as 'query' for consistency
+            if query:
+                message["query"] = query
+                
         evidence = message.get("evidence", "")
         
         if not db_id or not query:

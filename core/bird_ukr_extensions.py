@@ -17,6 +17,7 @@ from core.agents import Decomposer, Refiner, BaseAgent
 from core.const_ukr import SELECTOR_NAME, DECOMPOSER_NAME, REFINER_NAME, refiner_template_ukr
 from core.utils import parse_sql_from_string
 from core.api import safe_call_llm
+from utils.pg_connection import get_pool_connection, return_connection
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +180,7 @@ class PostgreSQLRefiner(BaseAgent):
         try:
             # Create prompt for the LLM
             prompt = refiner_template_ukr.format(
-                query=query,
+                question=query,
                 evidence=evidence,
                 desc_str=desc_str,
                 fk_str=fk_str,

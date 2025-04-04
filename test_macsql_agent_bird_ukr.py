@@ -39,7 +39,8 @@ from utils.pg_connection import (
     get_pool_connection, 
     return_connection, 
     close_connection_pool,
-    close_all_connection_pools
+    close_all_connection_pools,
+    execute_query as pg_execute_query
 )
 from utils.bird_ukr_tables_adapter import convert_tables_format, generate_compatible_tables_json
 from core.enhanced_chat_manager import EnhancedChatManager as HighLevelChatManager
@@ -131,8 +132,22 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Load environment variables for database connection
-load_dotenv()
+# Load .env file first, force override, and check result
+load_result = load_dotenv(override=True)
+print(f"load_dotenv result (found file?): {load_result}")
+print(f"TOGETHER_MODEL after load_dotenv: {os.environ.get('TOGETHER_MODEL')}")
+
+# Early parse for --model argument ONLY
+early_parser = argparse.ArgumentParser(add_help=False) # Prevent conflict with later full parse
+early_parser.add_argument("--model", type=str, help="Override TOGETHER_MODEL env var")
+early_args, _ = early_parser.parse_known_args()
+
+# Set TOGETHER_MODEL env var if --model is provided, otherwise keep loaded value
+if early_args.model:
+    os.environ["TOGETHER_MODEL"] = early_args.model
+    print(f"Overriding TOGETHER_MODEL with --model arg: {early_args.model}")
+else:
+    print(f"Using TOGETHER_MODEL from environment: {os.getenv('TOGETHER_MODEL')}")
 
 class UkrainianBirdAdapter:
     """
@@ -221,6 +236,7 @@ class UkrainianBirdAdapter:
         message = {
             "db_id": db_id,
             "query": query,
+            "question": query,  # Add question key for compatibility with pg_selector.py
             "evidence": evidence,
             "send_to": "Selector"  # Start with the Selector agent
         }
@@ -378,7 +394,7 @@ def test_single_query(
     db_path = get_database_path(args.data_path, db_id)
     
     # Initialize result dictionary
-    result = {
+    result_info = {
         "question_id": question.get("question_id", "unknown"),
         "db_id": db_id,
         "question": question.get("question", ""),
@@ -397,82 +413,98 @@ def test_single_query(
     # Skip if no question text or database ID
     if not question.get("question") or not db_id:
         logger.warning(f"Skipping question {query_id}: Missing question text or database ID")
-        result["error"] = "Missing question text or database ID"
-        return result
+        result_info["error"] = "Missing question text or database ID"
+        return result_info
     
     # For PostgreSQL databases, we don't need to check if the path exists as a file
     if not os_path_exists_or_pg_db(db_path):
         logger.warning(f"Skipping question {query_id}: Database path not found: {db_path}")
-        result["error"] = f"Database path not found: {db_path}"
-        return result
+        result_info["error"] = f"Database path not found: {db_path}"
+        return result_info
     
     try:
-        # Call the agent to get SQL
-        agent_response = agent.run(
-            db_id=db_id,
-            query=question.get("question"),
-            evidence=question.get("evidence", ""),
-            ground_truth=""  # Don't pass gold SQL to prevent data leakage
-        )
+        # Ensure connection pool is initialized for this DB
+        init_connection_pool(db_id)
         
-        # Extract predicted SQL from agent response
-        pred_sql = agent_response.get("pred", "")
-        agent_time = agent_response.get("agent_time", 0)
-        agent_messages = agent_response.get("messages", [])
-        
-        # Log agent's response
-        logger.info(f"Agent time: {agent_time:.2f}s")
-        logger.info(f"Predicted SQL: {pred_sql}")
-        
-        # Save agent's messages and timing information
-        result["agent_time"] = agent_time
-        result["pred_sql"] = pred_sql
-        result["agent_messages"] = agent_messages
-        
-        # Skip execution comparison if no predicted SQL
-        if not pred_sql:
-            logger.warning(f"No SQL predicted for question {query_id}")
-            result["error"] = "No SQL predicted"
-            return result
-        
-        # Skip execution if no gold SQL for comparison
-        if not gold_query and not args.force_execution:
-            logger.warning(f"No gold SQL for question {query_id}")
-            result["error"] = "No gold SQL for comparison"
-            return result
-        
-        # Execute and compare queries
-        comparison_result = execute_and_compare_queries(
-            db_name=db_id, 
-            pred_sql=pred_sql, 
-            gold_sql=gold_query
-        )
-        
-        # Update result with execution information
-        result["execution_match"] = comparison_result.get("execution_match", False)
-        result["gold_time"] = comparison_result.get("gold_time")
-        result["pred_time"] = comparison_result.get("pred_time")
-        result["error"] = comparison_result.get("error") or comparison_result.get("pred_error")
-        
-        # Log execution results
-        if result["execution_match"]:
-            logger.info("Execution MATCH ✓")
-        else:
-            logger.info("Execution MISMATCH ✗")
+        # Start the agent process
+        agent.start(question)
+
+        # Get final predicted SQL
+        pred_sql = question.get('pred', '').strip()
+        final_sql = question.get('final_sql', '').strip()
+        if not pred_sql and final_sql:
+            pred_sql = final_sql
             
-        if result["gold_time"] is not None:
-            logger.info(f"Gold SQL time: {result['gold_time']:.4f}s")
-        if result["pred_time"] is not None:
-            logger.info(f"Pred SQL time: {result['pred_time']:.4f}s")
+        # --- Execute Gold SQL --- 
+        gold_success, gold_db_result, gold_time = pg_execute_query(db_id, gold_query)
+        result_info['gold_time'] = gold_time
+        if not gold_success:
+            result_info['gold_error'] = str(gold_db_result)
+            logger.warning(f"Gold SQL failed for {query_id}: {gold_db_result}")
+            # Even if gold fails, proceed to execute predicted SQL for debugging
+            
+        # --- Execute Predicted SQL --- 
+        pred_success, pred_db_result, pred_time = False, None, 0
+        if pred_sql:
+            pred_success, pred_db_result, pred_time = pg_execute_query(db_id, pred_sql)
+            result_info['pred_time'] = pred_time
+            if not pred_success:
+                result_info['pred_error'] = str(pred_db_result)
+                logger.warning(f"Predicted SQL failed for {query_id}: {pred_db_result}")
+        else:
+            result_info['pred_error'] = "No SQL query generated."
+            logger.warning(f"No SQL generated for {query_id}")
+            
+        # --- Compare Results --- 
+        execution_match = False
+        if gold_success and pred_success:
+            # Use the local compare_results function
+            execution_match = compare_results(gold_db_result, pred_db_result)
+            result_info['execution_match'] = execution_match
+            if execution_match:
+                logger.info("Execution MATCH ✓")
+            else:
+                logger.info("Execution MISMATCH ✗")
+                # Log mismatch details for debugging
+                logger.debug(f"Gold Result ({len(gold_db_result)} rows): {gold_db_result[:5]}") # Show first 5 rows
+                logger.debug(f"Pred Result ({len(pred_db_result)} rows): {pred_db_result[:5]}") # Show first 5 rows
+        elif gold_success and not pred_success:
+            logger.info("Execution MISMATCH ✗ (Prediction failed)")
+            result_info['execution_match'] = False
+        elif not gold_success and pred_success:
+             logger.info("Execution MISMATCH ✗ (Gold failed)")
+             result_info['execution_match'] = False
+        else: # Both failed
+             logger.info("Execution MISMATCH ✗ (Both failed)")
+             result_info['execution_match'] = False # Treat as mismatch if both failed
+
+        # --- Calculate Exact Match (if applicable) ---
+        if gold_query and pred_sql:
+            normalized_pred = normalize_sql(pred_sql)
+            normalized_gold = normalize_sql(gold_query)
+            result_info["exact_match"] = normalized_pred == normalized_gold
+        else:
+            result_info["exact_match"] = False
         
-        if result["error"]:
-            logger.warning(f"Error: {result['error']}")
+        # Save gold SQL in result for reference (but it wasn't used during prediction)
+        result_info["gold_sql"] = gold_query
         
     except Exception as e:
-        logger.error(f"Error testing question {query_id}: {e}", exc_info=True)
-        result["error"] = f"Test error: {str(e)}"
+        logger.exception(f"Error processing query {query_id}: {e}")
+        result_info['error'] = str(e)
+        
+    finally:
+        # Ensure connection pool is closed for this DB if it exists
+        # Note: closing after every query might be inefficient, 
+        # consider closing pools at the end of the script instead.
+        # close_connection_pool(db_id) 
+        pass
+        
+    # Update result info with final details
+    result_info['pred_sql'] = pred_sql
+    result_info['status'] = 'Success' if 'error' not in result_info else 'Failed'
     
-    return result
+    return result_info
 
 def test_agent_subset(agent, args):
     """
@@ -670,16 +702,15 @@ def main():
     """
     Main function for evaluating MAC-SQL Agents on BIRD-UKR dataset.
     """
-    # Parse command-line arguments
+    # Use the regular full parser here
     args = parse_arguments()
     
-    # Configure logging
-    setup_logging(args)
-    logger = logging.getLogger(__name__)
+    # Setup logging
+    logger = setup_logging(args)
     
-    # Log start message
-    logger.info(f"Starting BIRD-UKR evaluation with {args.num_samples} samples")
-    logger.info(f"Data path: {args.data_path}")
+    # Log start message and model being used
+    logger.info("Starting BIRD-UKR evaluation...")
+    logger.info(f"Using model (from env): {os.getenv('TOGETHER_MODEL', 'Not Set')}") 
     
     # Get tables.json path
     tables_json_path = get_tables_json_path(args.data_path)
@@ -748,11 +779,41 @@ def compare_results(gold_results, pred_results):
     """
     # Special case: both empty
     if not gold_results and not pred_results:
+        logger.info("Both result sets are empty - match!")
         return True
         
     # Special case: different length
     if len(gold_results) != len(pred_results):
+        logger.warning(f"Result length mismatch: gold={len(gold_results)}, pred={len(pred_results)}")
         return False
+    
+    # For PostgreSQL results with RealDictRow objects
+    if len(gold_results) > 0 and hasattr(gold_results[0], 'items'):
+        logger.info("Comparing RealDictRow results")
+        
+        # Convert to comparable forms (ordered tuples of values)
+        try:
+            # Extract values and sort them for each row
+            gold_values = [tuple(sorted(row.values())) for row in gold_results]
+            pred_values = [tuple(sorted(row.values())) for row in pred_results]
+            
+            # Sort the value tuples to normalize order
+            gold_values.sort()
+            pred_values.sort()
+            
+            logger.info(f"Gold values: {gold_values}")
+            logger.info(f"Pred values: {pred_values}")
+            
+            # Direct comparison
+            return gold_values == pred_values
+        except Exception as e:
+            logger.error(f"Error comparing RealDictRow results: {e}")
+            
+            # Fallback - try direct comparison
+            gold_str = str(gold_results)
+            pred_str = str(pred_results)
+            logger.info(f"Falling back to string comparison: {gold_str == pred_str}")
+            return gold_str == pred_str
     
     # Convert all results to sets for comparison
     if len(gold_results) > 0:
@@ -760,6 +821,21 @@ def compare_results(gold_results, pred_results):
         if isinstance(gold_results[0], tuple) and isinstance(pred_results[0], tuple):
             gold_set = set(gold_results)
             pred_set = set(pred_results)
+            return gold_set == pred_set
+        
+        # Handle RealDictCursor results (PostgreSQL)
+        if isinstance(gold_results[0], dict) and isinstance(pred_results[0], dict):
+            # Extract values only for comparison, ignore column names/order
+            gold_values = [tuple(sorted(row.values())) for row in gold_results]
+            pred_values = [tuple(sorted(row.values())) for row in pred_results]
+            
+            # Convert to sets for unordered comparison
+            gold_set = set(gold_values)
+            pred_set = set(pred_values)
+            
+            logger.info(f"Gold values: {gold_set}")
+            logger.info(f"Pred values: {pred_set}")
+            
             return gold_set == pred_set
         
         # Results might be dictionaries or complex objects
@@ -943,90 +1019,6 @@ def normalize_sql(sql):
     sql = re.sub(r'\s*,\s*', ', ', sql)
     
     return sql
-
-def execute_and_compare_queries(
-    db_name,
-    pred_sql,
-    gold_sql
-):
-    """
-    Execute and compare predicted and gold SQL queries.
-    
-    Args:
-        db_name: Database name to execute against
-        pred_sql: Predicted SQL query
-        gold_sql: Gold SQL query
-        
-    Returns:
-        Dictionary with execution results and comparison status
-    """
-    logger = logging.getLogger(__name__)
-    
-    # Initialize result
-    result = {
-        "execution_match": False,
-        "gold_time": None,
-        "pred_time": None,
-        "gold_result": None,
-        "pred_result": None,
-        "error": None
-    }
-    
-    # Get database connection
-    conn = get_pool_connection(db_name)
-    if not conn:
-        result["error"] = f"Could not connect to database {db_name}"
-        return result
-    
-    try:
-        # Execute gold SQL if provided
-        if gold_sql:
-            logger.info(f"Executing gold SQL against {db_name}")
-            try:
-                start_time = time.time()
-                cursor = conn.cursor(cursor_factory=RealDictCursor)
-                cursor.execute(gold_sql)
-                gold_result = cursor.fetchall()
-                gold_time = time.time() - start_time
-                cursor.close()
-                
-                result["gold_time"] = gold_time
-                result["gold_result"] = gold_result
-                logger.info(f"Gold SQL executed in {gold_time:.4f}s. Rows: {len(gold_result)}")
-            except Exception as e:
-                result["error"] = f"Error executing gold SQL: {str(e)}"
-                logger.error(f"Error executing gold SQL: {e}")
-                return result
-        
-        # Execute predicted SQL
-        if pred_sql:
-            logger.info(f"Executing predicted SQL against {db_name}")
-            try:
-                start_time = time.time()
-                cursor = conn.cursor(cursor_factory=RealDictCursor)
-                cursor.execute(pred_sql)
-                pred_result = cursor.fetchall()
-                pred_time = time.time() - start_time
-                cursor.close()
-                
-                result["pred_time"] = pred_time
-                result["pred_result"] = pred_result
-                logger.info(f"Predicted SQL executed in {pred_time:.4f}s. Rows: {len(pred_result)}")
-            except Exception as e:
-                result["error"] = f"Error executing predicted SQL: {str(e)}"
-                logger.error(f"Error executing predicted SQL: {e}")
-                return result
-        
-        # Compare results if both executed successfully
-        if gold_sql and pred_sql and "error" not in result:
-            result["execution_match"] = compare_results(result["gold_result"], result["pred_result"])
-            logger.info(f"Execution match: {result['execution_match']}")
-    
-    finally:
-        # Return connection to pool
-        return_connection(db_name, conn)
-    
-    return result
 
 if __name__ == "__main__":
     main() 

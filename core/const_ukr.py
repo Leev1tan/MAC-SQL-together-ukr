@@ -3,6 +3,15 @@
 Ukrainian constants and prompts for BIRD-UKR dataset.
 """
 
+# Database settings - EXPLICIT CONFIGURATION
+DB_TYPE = "postgresql"  # THIS IS A POSTGRESQL DATABASE - NOT SQLITE
+USE_POSTGRESQL = True
+USE_UKRAINIAN = True   # ALL TABLES AND COLUMNS ARE IN UKRAINIAN
+
+# PostgreSQL specific syntax
+PG_TRUE = "TRUE"       # PostgreSQL uses TRUE not 1
+PG_FALSE = "FALSE"     # PostgreSQL uses FALSE not 0
+
 # Agent names - keeping English names for compatibility
 SYSTEM_NAME = "System"
 SELECTOR_NAME = "Selector"
@@ -20,6 +29,12 @@ ENGINE_DEFAULT = ENGINE_TOGETHER
 # --- Enhanced Selector Prompt for BIRD-UKR (English Instructions) ---
 selector_template_ukr = """
 You are an experienced PostgreSQL database administrator. Your task is to analyze a user question (in Ukrainian) and a PostgreSQL database schema (with Ukrainian table/column names) to determine the relevant tables and columns.
+
+[IMPORTANT: UKRAINIAN DATABASE WITH POSTGRESQL SYNTAX]
+- This is a UKRAINIAN dataset - ALL table and column names are in UKRAINIAN, not English
+- This is a POSTGRESQL database, not SQLite - follow PostgreSQL syntax
+- Use TRUE/FALSE for boolean values, not 1/0
+- Never translate table or column names to English in your response
 
 [Input Schema Format]
 You will receive the database schema in the following format:
@@ -89,7 +104,7 @@ Now your turn:
 【Foreign keys】
 {fk_str}
 【Question】
-{query}
+{question}
 【Evidence】
 {evidence}
 【Answer】
@@ -98,6 +113,15 @@ Now your turn:
 # --- Enhanced Decomposer Prompt for BIRD-UKR (English Instructions) ---
 decomposer_template_ukr = """
 Given a PostgreSQL database schema (with Ukrainian names), additional 【Evidence】, and a 【Question】 in Ukrainian, your task is to decompose the question into logical sub-queries (if necessary) and generate a single, correct PostgreSQL SQL query that answers the question.
+
+[IMPORTANT: UKRAINIAN DATABASE WITH POSTGRESQL SYNTAX]
+- This is a UKRAINIAN dataset - ALL table and column names are in UKRAINIAN, not English
+- This is a POSTGRESQL database, not SQLite - follow PostgreSQL syntax
+- Use TRUE/FALSE for boolean values, not 1/0
+- Never translate table or column names to English in your response
+- Do not use = 1 for boolean conditions, use = TRUE instead
+- Do not use = 0 for boolean conditions, use = FALSE instead
+- ALWAYS use COUNT(*) instead of COUNT(column_name) unless you need to count specific non-null values
 
 [Input Schema Format]
 The schema is provided in a text format including table names (Ukrainian), columns (Ukrainian), their types, primary keys (PK), and value examples. Foreign keys (FK) are provided separately.
@@ -109,6 +133,7 @@ The schema is provided in a text format including table names (Ukrainian), colum
 4.  **Precision:** Select only the columns truly needed for the answer.
 5.  **Aggregation:** If using `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`, ensure `GROUP BY` is used correctly.
 6.  **String Literals:** Use single quotes (`'`) for string literals.
+7.  **Boolean Literals:** Use TRUE/FALSE for boolean values, not 1/0.
 
 [Example]
 ==========
@@ -156,7 +181,7 @@ Now your turn:
 【Foreign keys】
 {fk_str}
 【Question】
-{query}
+{question}
 【Evidence】
 {evidence}
 【Answer】
@@ -165,6 +190,15 @@ Now your turn:
 refiner_template_ukr = """
 You are given a PostgreSQL database schema with Ukrainian table and column names, a question in Ukrainian, and a SQL query with an error. Your task is to fix the SQL query.
 
+[IMPORTANT: UKRAINIAN DATABASE WITH POSTGRESQL SYNTAX]
+- This is a UKRAINIAN dataset - ALL table and column names are in UKRAINIAN, not English
+- This is a POSTGRESQL database, not SQLite - follow PostgreSQL syntax
+- Use TRUE/FALSE for boolean values, not 1/0
+- Never translate table or column names to English in your response
+- Do not use = 1 for boolean conditions, use = TRUE instead
+- Do not use = 0 for boolean conditions, use = FALSE instead
+- ALWAYS use COUNT(*) instead of COUNT(column_name) unless you need to count specific non-null values
+
 Important: This is a PostgreSQL database where tables already exist - DO NOT include any CREATE TABLE or INSERT statements in your response.
 
 【Database schema】
@@ -172,7 +206,7 @@ Important: This is a PostgreSQL database where tables already exist - DO NOT inc
 【Foreign keys】
 {fk_str}
 【Question】
-{query}
+{question}
 【Evidence】
 {evidence}
 
@@ -193,6 +227,8 @@ Common issues to check:
 2. Character encoding - Ensure proper handling of Ukrainian characters in string literals
 3. PostgreSQL-specific syntax for functions, operators, and aggregations
 4. Case sensitivity - PostgreSQL identifiers are case-sensitive when quoted
+5. Boolean literals - PostgreSQL uses TRUE/FALSE, not 1/0
+6. Table and column names - Use Ukrainian names, not English translations
 
 Write only the corrected SELECT query. Do not include any table creation or data insertion statements."""
 

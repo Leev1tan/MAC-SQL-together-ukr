@@ -14,6 +14,29 @@ from pathlib import Path
 from datetime import datetime
 import random
 
+# --- Early Environment Setup --- 
+from dotenv import load_dotenv
+
+# Load .env file first, force override, and check result
+load_result = load_dotenv(override=True)
+print(f"load_dotenv result (found file?): {load_result}")
+print(f"TOGETHER_MODEL after load_dotenv: {os.environ.get('TOGETHER_MODEL')}")
+
+# Early parse for --model argument ONLY
+# We need to parse this early to set the env var before core modules might be implicitly loaded
+# by the subprocess or other parts of this script.
+early_parser = argparse.ArgumentParser(add_help=False) 
+early_parser.add_argument("--model", type=str, help="Override TOGETHER_MODEL env var")
+early_args, _ = early_parser.parse_known_args()
+
+# Set TOGETHER_MODEL env var if --model is provided, otherwise keep loaded value
+if early_args.model:
+    os.environ["TOGETHER_MODEL"] = early_args.model
+    print(f"Overriding TOGETHER_MODEL with --model arg: {early_args.model}")
+else:
+    print(f"Using TOGETHER_MODEL from environment: {os.environ.get('TOGETHER_MODEL')}")
+# ------------------------------
+
 # Configure logging
 os.makedirs('logs', exist_ok=True)
 logging.basicConfig(
@@ -112,8 +135,8 @@ def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"
     # Make sure paths are absolute
     abs_bird_path = os.path.abspath(bird_path)
     
-    # Set environment variables
-    env = os.environ.copy()
+    # Set environment variables for the subprocess
+    env = os.environ.copy() # Start with current environment (includes TOGETHER_MODEL)
     env["BIRD_PATH"] = abs_bird_path
     
     # Pass tables json path if we found it during verification
@@ -126,6 +149,10 @@ def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"
     if os.name == 'nt':
         env["PYTHONPATH"] = f"{os.getcwd()};{env.get('PYTHONPATH', '')}"
     
+    # --- Log the model being passed to the subprocess ---
+    logger.info(f"Passing TOGETHER_MODEL={env.get('TOGETHER_MODEL')} to subprocess.")
+    # ----------------------------------------------------
+
     # Create output directory for results
     os.makedirs("output", exist_ok=True)
     
@@ -232,9 +259,11 @@ def analyze_results(results_path, model_info=None):
     }
 
 def main():
+    # Use the regular full parser here
     parser = argparse.ArgumentParser(description='Run MAC-SQL evaluation against BIRD')
-    parser.add_argument("--model", type=str, default="meta-llama/Llama-3.3-70B-Instruct-Turbo", 
-                        help="LLM model to use (for documentation only)")
+    # Add the --model argument back here for the full parse, but it's already handled
+    parser.add_argument("--model", type=str, default=os.getenv("TOGETHER_MODEL"), # Default to env var
+                        help="LLM model to use (sets TOGETHER_MODEL env var)")
     parser.add_argument("--dataset", type=str, default="bird", 
                         choices=["bird", "bird-dev", "bird-ukr"],
                         help="Dataset to use: bird (full), bird-dev (dev set), or bird-ukr (Ukrainian)")
@@ -247,6 +276,10 @@ def main():
                         help="Visualization format")
     args = parser.parse_args()
 
+    # Logging setup (can stay here)
+    logger.info("Starting BIRD evaluation...")
+    logger.info(f"Using model (from env): {os.getenv('TOGETHER_MODEL', 'Not Set')}") 
+
     if args.analyze_only:
         analyze_results(args.analyze_only, args.model)
         sys.exit(0)
@@ -257,7 +290,7 @@ def main():
     # Determine which dataset path to use
     if args.dataset == "bird-ukr":
         # For Ukrainian BIRD dataset, we need a different approach
-        logger.error("Ukrainian BIRD dataset evaluation is not supported in this script yet")
+        logger.error("Use test_macsql_agent_bird_ukr.py directly for the Ukrainian dataset.")
         sys.exit(1)
     else:
         # For English BIRD dataset
@@ -295,4 +328,5 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
+    # The early environment setup happens before this block
     sys.exit(main()) 

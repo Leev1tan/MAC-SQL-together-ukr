@@ -71,15 +71,18 @@ def together_api_call(prompt: str) -> Tuple[str, int, int]:
     Returns:
         Tuple of (response text, prompt tokens, completion tokens)
     """
-    api_key = TOGETHER_API_KEY
-    model = TOGETHER_MODEL
+    # Read API Key and Model directly from environment *inside* the function
+    # This ensures it picks up changes from .env or arguments
+    api_key = os.getenv("TOGETHER_API_KEY", "")
+    default_model = "meta-llama/Llama-3.3-70B-Instruct-Turbo" # Define default here
+    model = os.getenv("TOGETHER_MODEL", default_model)
     
     # Check if API key is available
     if not api_key:
         raise ValueError("Together API key not found. Set TOGETHER_API_KEY environment variable.")
     
     # Log model being used
-    print(f"\nUsing Together AI model: {model}\n")
+    logger.info(f"\nUsing Together AI model: {model}\n") # Log the currently resolved model
     
     # Prepare API request
     api_url = "https://api.together.xyz/v1/chat/completions"
