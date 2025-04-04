@@ -60,3 +60,73 @@
 2025-04-02 15:50:28,753 - __main__ - INFO - Database structure verified successfully
 2025-04-02 15:50:28,754 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 2 --output output/bird_agent_results_20250402_155028.json
 2025-04-02 15:50:54,903 - __main__ - INFO - Evaluation completed successfully, results stored in output/bird_agent_results_20250402_155028.json
+2025-04-04 15:41:27,142 - __main__ - INFO - Selected model (set via .env or default): meta-llama/Llama-3.3-70B-Instruct-Turbo
+2025-04-04 15:41:27,142 - __main__ - INFO - Setting random seed to: 42
+2025-04-04 15:41:27,143 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 15:41:27,143 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 15:41:27,143 - __main__ - INFO - Database structure verified successfully
+2025-04-04 15:41:27,143 - __main__ - INFO - Starting evaluation for dataset 'bird' (bird script) with 1 samples.
+2025-04-04 15:41:27,144 - __main__ - INFO - Running command: C:\Python312\python.exe F:\univ\praktika\projects\slowdown-macsql\test_macsql_agent_bird.py --samples 1 --output output\meta-llama_Llama-3.3-70B-Instruct-Turbo_bird_1_20250404_154127.json
+2025-04-04 15:41:28,149 - __main__ - ERROR - Test failed with return code 1
+2025-04-04 15:41:28,149 - __main__ - ERROR - stderr:
+INFO:core.debug_llm:Debug mode enabled
+2025-04-04 15:41:28,066 - core.debug_llm - DEBUG - Debug mode enabled from environment variables
+DEBUG:core.debug_llm:Debug mode enabled from environment variables
+WARNING:core.spider_extensions:Could not import from run_with_together
+INFO:__main__:Found BIRD data directory from environment variable: MAC-SQL/data/minidev/MINIDEV
+INFO:__main__:Using BIRD data in: MAC-SQL/data/minidev/MINIDEV
+INFO:__main__:Using tables.json from environment variable: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+INFO:__main__:Loading BIRD queries from MAC-SQL/data/minidev/MINIDEV\mini_dev_sqlite.json
+INFO:__main__:Testing 1 queries from BIRD dataset
+INFO:__main__:Query 1/1: Among the players born before the year 1986, how many of them would remain in his position and defense while the team attacked? (DB: european_football_2)
+INFO:__main__:Found BIRD data directory from environment variable: MAC-SQL/data/minidev/MINIDEV
+INFO:__main__:Using tables.json from environment variable: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+INFO:core.enhanced_chat_manager:Initializing EnhancedChatManager with dataset: bird
+INFO:core.enhanced_chat_manager:Creating agents for dataset: bird
+INFO:core.enhanced_chat_manager:Creating agents for dataset: bird
+INFO:core.enhanced_chat_manager:Spider extensions not available, using base agents
+INFO:core.enhanced_chat_manager:BIRD extensions not available, using base agents
+INFO:core.enhanced_chat_manager:Using BIRD-UKR PostgreSQL agents
+INFO:core.enhanced_chat_manager:Using default agents
+INFO:core.enhanced_chat_manager:Agent 0 name: Selector
+INFO:core.enhanced_chat_manager:Agent 0 class: Selector
+INFO:core.enhanced_chat_manager:Agent 0 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_build_bird_table_schema_list_str', '_build_bird_table_schema_sqlite_str', '_get_column_attributes', '_get_db_desc_str', '_get_unique_column_values_str', '_get_value_examples_str', '_is_need_prune', '_load_all_db_info', '_load_single_db_info', '_message', '_prune', 'data_path', 'dataset_name', 'db2dbjsons', 'db2infos', 'description', 'init_db2jsons', 'model_name', 'name', 'tables_json_path', 'talk', 'without_selector']
+INFO:core.enhanced_chat_manager:Agent 1 name: Decomposer
+INFO:core.enhanced_chat_manager:Agent 1 class: Decomposer
+INFO:core.enhanced_chat_manager:Agent 1 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_message', 'call_llm', 'dataset_name', 'description', 'model_name', 'name', 'talk']
+INFO:core.enhanced_chat_manager:Agent 2 name: Refiner
+INFO:core.enhanced_chat_manager:Agent 2 class: Refiner
+INFO:core.enhanced_chat_manager:Agent 2 attributes: ['__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_execute_sql', '_is_need_refine', '_message', '_refine', 'data_path', 'dataset_name', 'description', 'model_name', 'name', 'talk']
+ERROR:__main__:Error in main: 'charmap' codec can't encode character '\U0001f31f' in position 5: character maps to <undefined>
+Traceback (most recent call last):
+  File "F:\univ\praktika\projects\slowdown-macsql\test_macsql_agent_bird.py", line 903, in <module>
+    main()
+  File "F:\univ\praktika\projects\slowdown-macsql\test_macsql_agent_bird.py", line 865, in main
+    results, accuracy = test_agent_subset(
+                        ^^^^^^^^^^^^^^^^^^
+  File "F:\univ\praktika\projects\slowdown-macsql\test_macsql_agent_bird.py", line 766, in test_agent_subset
+    result = test_single_query(db_id, question, gold_sql, evidence, args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\univ\praktika\projects\slowdown-macsql\test_macsql_agent_bird.py", line 370, in test_single_query
+    chat_manager = EnhancedChatManager(
+                   ^^^^^^^^^^^^^^^^^^^^
+  File "F:\univ\praktika\projects\slowdown-macsql\core\enhanced_chat_manager.py", line 155, in __init__
+    enable_pretty_debug()
+  File "F:\univ\praktika\projects\slowdown-macsql\core\debug_pretty.py", line 258, in enable_pretty_debug
+    print(f"{Colors.GREEN}\U0001f31f Pretty debug output enabled{Colors.END}")
+  File "C:\Python312\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f31f' in position 5: character maps to <undefined>
+
+2025-04-04 15:41:28,170 - __main__ - ERROR - stdout:
+Loading .env file from current directory...
+Loaded .env file successfully
+API Key (exists): Yes
+API Key (length): 64 characters
+Model: meta-llama/Llama-3.3-70B-Instruct-Turbo
+Use func from core.api in agents.py
+Use func from core.api in chat_manager.py
+load json file from MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+
+2025-04-04 15:41:28,171 - __main__ - ERROR - Evaluation failed or output file was not generated.
