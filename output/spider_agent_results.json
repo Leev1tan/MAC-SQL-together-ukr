@@ -1,34 +1,42 @@
-[
-  {
-    "db_id": "flight_2",
-    "question": "What is the code of airport that has fewest number of flights?",
-    "predicted_sql": "SELECT AirportCode\nFROM (\n  SELECT a.AirportCode, \n    COALESCE(\n      (SELECT COUNT(*) \n       FROM flights \n       WHERE SourceAirport = a.AirportCode OR DestAirport = a.AirportCode), 0) AS FlightCount\n  FROM airports a\n)\nORDER BY FlightCount ASC\nLIMIT 1;",
-    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
-    "execution_match": false,
-    "execution_results": {
-      "pred_result": "[('AAF',)]",
-      "gold_result": "[]"
-    },
-    "metrics": {
-      "exact_match": 0.0,
-      "execution_accuracy": 0.5,
-      "valid_efficiency_score": 0.0
-    }
+{
+  "overall_metrics": {
+    "exact_match": 0.0,
+    "execution_accuracy": 0.0,
+    "valid_efficiency_score": 0.0
   },
-  {
-    "db_id": "course_teach",
-    "question": "Show names of teachers and the number of courses they teach.",
-    "predicted_sql": "SELECT \n    t.Name, \n    COUNT(ca.Course_ID) AS Number_of_Courses\nFROM \n    teacher t\nINNER JOIN \n    course_arrange ca ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY \n    t.Name\nORDER BY \n    t.Name ASC;",
-    "gold_sql": "SELECT T2.Name ,  COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name",
-    "execution_match": true,
-    "execution_results": {
-      "pred_result": "[('Anne Walker', 2), ('Gustaaf Deloor', 1), ('Kearsley Brown', 1), ('Lucy Wong', 1), ('Vicente Carretero', 1)]",
-      "gold_result": "[('Anne Walker', 2), ('Gustaaf Deloor', 1), ('Kearsley Brown', 1), ('Lucy Wong', 1), ('Vicente Carretero', 1)]"
+  "results": [
+    {
+      "db_id": "world_1",
+      "question": "Give the name, year of independence, and surface area of the country that has the lowest population.",
+      "predicted_sql": "SELECT Name, IndepYear, SurfaceArea\nFROM country\nWHERE Population IS NOT NULL AND Population = (SELECT MIN(Population) FROM country WHERE Population IS NOT NULL);",
+      "gold_sql": "SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1",
+      "execution_match": false,
+      "execution_results": {
+        "pred_result": "[('Antarctica', None, 13120000.0), ('French Southern territories', None, 7780.0), ('Bouvet Island', None, 59.0), ('Heard Island and McDonald Islands', None, 359.0), ('British Indian Ocean Territory', None, 78.0), ('South Georgia and the South Sandwich Islands', None, 3903.0), ('United States Minor Outlying Islands', None, 16.0)]",
+        "gold_result": "[('Antarctica', 13120000.0, None)]"
+      }
     },
-    "metrics": {
-      "exact_match": 0.0,
-      "execution_accuracy": 0.5,
-      "valid_efficiency_score": 0.0
+    {
+      "db_id": "concert_singer",
+      "question": "For each stadium, how many concerts play there?",
+      "predicted_sql": "SELECT s.Name, COUNT(c.concert_ID) AS Number_of_Concerts\nFROM stadium s\nJOIN concert c ON s.Stadium_ID = c.Stadium_ID\nGROUP BY s.Name\nORDER BY s.Name ASC;",
+      "gold_sql": "SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id",
+      "execution_match": false,
+      "execution_results": {
+        "pred_result": "[('Balmoor', 1), ('Glebe Park', 1), ('Recreation Park', 1), ('Somerset Park', 2), (\"Stark's Park\", 1)]",
+        "gold_result": "[(\"Stark's Park\", 1), ('Glebe Park', 1), ('Somerset Park', 2), ('Recreation Park', 1), ('Balmoor', 1)]"
+      }
+    },
+    {
+      "db_id": "dog_kennels",
+      "question": "Find the id and cell phone of the professionals who operate two or more types of treatments.",
+      "predicted_sql": "SELECT P.professional_id, P.cell_number\nFROM Professionals P\nJOIN (\n    SELECT professional_id\n    FROM Treatments\n    GROUP BY professional_id\n    HAVING COUNT(DISTINCT treatment_type_code) > 1\n) T ON P.professional_id = T.professional_id;",
+      "gold_sql": "SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+      "execution_match": false,
+      "execution_results": {
+        "pred_result": "[(6, '139-321-7313'), (9, '962-983-8109x3509'), (10, '461-801-2600'), (14, '1-185-137-1945x409')]",
+        "gold_result": "[(4, '00230569697'), (6, '139-321-7313'), (8, '328.842.3792'), (9, '962-983-8109x3509'), (10, '461-801-2600'), (14, '1-185-137-1945x409')]"
+      }
     }
-  }
-]
+  ]
+}

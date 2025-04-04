@@ -1,0 +1,31 @@
+{
+  "overall_metrics": {
+    "exact_match": 0.0,
+    "execution_accuracy": 0.5,
+    "valid_efficiency_score": 99984.45390023649
+  },
+  "results": [
+    {
+      "db_id": "wta_1",
+      "question": "How many players are from each country?",
+      "predicted_sql": "SELECT country_code, COUNT(player_id) AS number_of_players\nFROM players\nGROUP BY country_code\nORDER BY country_code ASC;",
+      "gold_sql": "SELECT count(*) ,  country_code FROM players GROUP BY country_code",
+      "execution_match": false,
+      "execution_results": {
+        "pred_result": "[('AHO', 6), ('ALB', 2), ('ALG', 63), ('AND', 1), ('ANG', 1), ('ANT', 8), ('ARG', 456), ('ARM', 27), ('AUS', 742), ('AUT', 236)]",
+        "gold_result": "[(6, 'AHO'), (2, 'ALB'), (63, 'ALG'), (1, 'AND'), (1, 'ANG'), (8, 'ANT'), (456, 'ARG'), (27, 'ARM'), (742, 'AUS'), (236, 'AUT')]"
+      }
+    },
+    {
+      "db_id": "world_1",
+      "question": "Which languages are spoken by only one country in republic governments?",
+      "predicted_sql": "SELECT Language\nFROM (\n  SELECT cl.Language, COUNT(DISTINCT cl.CountryCode) AS CountryCount\n  FROM countrylanguage cl\n  JOIN (\n    SELECT Code\n    FROM country\n    WHERE GovernmentForm = 'Republic'\n  ) AS republic_countries\n  ON cl.CountryCode = republic_countries.Code\n  GROUP BY cl.Language\n) AS language_counts\nWHERE CountryCount = 1;",
+      "gold_sql": "SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.GovernmentForm  =  \"Republic\" GROUP BY T2.Language HAVING COUNT(*)  =  1",
+      "execution_match": true,
+      "execution_results": {
+        "pred_result": "[('Abhyasi',), ('Acholi',), ('Adja',), ('Aizo',), ('Ambo',), ('Amhara',), ('Ami',), ('Ane',), ('Arabic-French',), ('Arabic-French-English',)]",
+        "gold_result": "[('Abhyasi',), ('Acholi',), ('Adja',), ('Aizo',), ('Ambo',), ('Amhara',), ('Ami',), ('Ane',), ('Arabic-French',), ('Arabic-French-English',)]"
+      }
+    }
+  ]
+}

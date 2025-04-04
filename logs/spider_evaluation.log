@@ -30,3 +30,14 @@
 2025-03-25 17:18:54,181 - __main__ - INFO - Database structure verified successfully
 2025-03-25 17:18:54,181 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2
 2025-03-25 17:19:17,115 - __main__ - INFO - Evaluation completed successfully
+2025-04-04 14:46:45,814 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-04-04 14:46:45,814 - __main__ - INFO - Database structure verified successfully
+2025-04-04 14:46:45,814 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2 --output output/spider_agent_results_20250404_144645.json
+2025-04-04 14:46:45,814 - __main__ - INFO - Results will be saved to: output/spider_agent_results_20250404_144645.json
+2025-04-04 14:47:04,721 - __main__ - INFO - Evaluation completed successfully
+2025-04-04 14:54:27,443 - __main__ - INFO - Found Spider data directory: MAC-SQL/data/spider
+2025-04-04 14:54:27,444 - __main__ - INFO - Database structure verified successfully
+2025-04-04 14:54:27,444 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_spider.py --samples 2 --output output/spider_agent_results_20250404_145427.json
+2025-04-04 14:54:27,444 - __main__ - INFO - Results will be saved to: output/spider_agent_results_20250404_145427.json
+2025-04-04 14:54:46,091 - __main__ - INFO - Evaluation completed successfully
+2025-04-04 14:54:46,098 - root - INFO - Using pre-calculated overall metrics from JSON.

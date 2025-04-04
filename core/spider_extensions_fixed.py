@@ -26,7 +26,7 @@ class EnhancedSpiderSelector(Selector):
     
     def _format_spider_schema(self, db_id: str, schema_info: dict) -> str:
         """
-        Format Spider schema in a way that's optimized for the LLM.
+        Format Spider schema in a way that's optimized for the LLM, including example values.
         
         Args:
             db_id: Database ID
@@ -35,6 +35,15 @@ class EnhancedSpiderSelector(Selector):
         Returns:
             Formatted schema string
         """
+        # Access the full DB info including values from the cache
+        full_db_info = self.db2infos.get(db_id, {})
+        value_dict = full_db_info.get('value_dict', {}) # {table_name: [(col_name, val_str), ...]}
+
+        # Create a lookup for faster value retrieval
+        table_value_lookup = {}
+        for table_name, columns_values in value_dict.items():
+            table_value_lookup[table_name] = {col_name: val_str for col_name, val_str in columns_values}
+
         result = [f"Database: {db_id}"]
         result.append("\nTables:")
         
@@ -45,14 +54,22 @@ class EnhancedSpiderSelector(Selector):
             
             # Column information with data types
             result.append("Columns:")
+            column_value_lookup = table_value_lookup.get(table_name, {})
             for column in table.get('columns', []):
                 column_name = column.get('column_name', '')
                 column_type = column.get('column_type', 'text').upper()
-                result.append(f"  {column_name} ({column_type})")
+                col_info = f"  {column_name} ({column_type})"
                 
                 # Add primary key information if available
                 if column.get('is_primary_key', False):
-                    result[-1] += " PRIMARY KEY"
+                    col_info += " PRIMARY KEY"
+                
+                # Add example values if available
+                example_values = column_value_lookup.get(column_name, '')
+                if example_values:
+                    col_info += f" Value examples: {example_values}"
+                
+                result.append(col_info)
         
         # Format foreign keys if available
         if 'foreign_keys' in schema_info and schema_info['foreign_keys']:

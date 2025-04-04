@@ -282,6 +282,7 @@ def parse_args():
     parser.add_argument("--viz-output", type=str, default=None, 
                         help="Path to save visualization output")
     parser.add_argument("--compare", action="store_true", help="Compare with pipeline approach")
+    parser.add_argument("--output", type=str, default="output/spider_agent_results.json", help="Path to save results JSON file")
     return parser.parse_args()
 
 def test_single_query(db_id, question, gold_sql=None, args=None):
@@ -810,15 +811,17 @@ def test_agent_subset(
     spider_path: str,
     num_samples: int = 5,
     visualize: bool = False,
-    log_level: str = "INFO"
+    log_level: str = "INFO",
+    output_file: str = "output/spider_agent_results.json"
 ):
     """Run tests for a subset of the Spider dataset."""
     # Set up logging
     logging.getLogger().setLevel(log_level)
     
     # Make sure the output directory exists
-    os.makedirs("output", exist_ok=True)
-    os.makedirs("logs", exist_ok=True)
+    output_dir = os.path.dirname(output_file)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
     
     # Try to import evaluate_metrics if available
     try:
@@ -1022,6 +1025,7 @@ def test_agent_subset(
             print(f"Predicted SQL: ERROR")
     
     # Calculate advanced metrics if evaluate_metrics is available
+    overall_metrics = {}
     if has_metrics:
         try:
             metrics = evaluate_metrics.evaluate_queries(
@@ -1031,34 +1035,39 @@ def test_agent_subset(
                 db_dir=db_path,
                 tables_json_path=os.path.join(spider_path, "tables.json")
             )
-            
+
             print("\n=== Advanced Metrics ===")
             print(f"Exact Match (EM): {metrics['exact_match']*100:.2f}%")
             print(f"Execution Accuracy (EX): {metrics['execution_accuracy']*100:.2f}%")
             print(f"Valid Efficiency Score (VES): {metrics['valid_efficiency_score']:.2f}")
-            
-            # Add metrics to each result
-            for i, result in enumerate(results):
-                result["metrics"] = {
-                    "exact_match": metrics.get("exact_match", 0),
-                    "execution_accuracy": metrics.get("execution_accuracy", 0),
-                    "valid_efficiency_score": metrics.get("valid_efficiency_score", 0)
-                }
-                
+
+            # Store overall metrics separately
+            overall_metrics = {
+                "exact_match": metrics.get("exact_match", 0),
+                "execution_accuracy": metrics.get("execution_accuracy", 0),
+                "valid_efficiency_score": metrics.get("valid_efficiency_score", 0)
+            }
+
         except Exception as e:
             logger.error(f"Error calculating metrics: {e}")
             # Log detailed stack trace for debugging
             import traceback
             logger.error(f"Stack trace: {traceback.format_exc()}")
-    
-    # Save results
-    results_file = "output/spider_agent_results.json"
-    with open(results_file, "w") as f:
-        json.dump(results, f, indent=2)
-    
-    print(f"Results saved to {results_file}")
-    
-    return results
+
+    # Prepare final output data structure
+    output_data = {
+        "overall_metrics": overall_metrics,
+        "results": results  # List of individual results without redundant metrics
+    }
+
+    # Save results to the specified file
+    with open(output_file, "w") as f:
+        # Save the new structure
+        json.dump(output_data, f, indent=2)
+
+    print(f"Results saved to {output_file}")
+
+    return results # Return the list of individual results
 
 def compare_approaches(num_samples=5):
     """
@@ -1126,17 +1135,20 @@ def main():
         logging.getLogger("core.agent_flow_viz").setLevel(logging.DEBUG)
         
         # Ensure output directory exists
-        os.makedirs("output", exist_ok=True)
+        output_dir = os.path.dirname(args.output)
+        if output_dir:
+            os.makedirs(output_dir, exist_ok=True)
         
         # Find Spider dataset
         spider_path = find_spider_data()
         
-        # Run test with agent-based approach
+        # Run test with agent-based approach, passing the output file path
         agent_results = test_agent_subset(
-            spider_path=spider_path, 
+            spider_path=spider_path,
             num_samples=args.samples,
             visualize=args.visualize,
-            log_level=logging.INFO
+            log_level=logging.INFO,
+            output_file=args.output
         )
         
         # Compare with pipeline approach if requested

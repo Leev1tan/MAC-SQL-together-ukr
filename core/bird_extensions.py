@@ -53,7 +53,7 @@ class EnhancedBirdSelector(Selector):
     
     def _format_bird_schema(self, db_id: str, schema_info: dict) -> str:
         """
-        Format BIRD schema in a way that's optimized for the LLM.
+        Format BIRD schema in a way that's optimized for the LLM, including example values.
         
         Args:
             db_id: Database ID
@@ -62,6 +62,18 @@ class EnhancedBirdSelector(Selector):
         Returns:
             Formatted schema string
         """
+        # Access the full DB info including values from the cache
+        # Note: Selector base class loads db2infos in _load_db_info if not lazy
+        # Or it's loaded within _load_single_db_info if called.
+        # We assume self.db2infos[db_id] is populated before this formatting call.
+        full_db_info = self.db2infos.get(db_id, {})
+        value_dict = full_db_info.get('value_dict', {}) # {table_name: [(col_name, val_str), ...]}
+
+        # Create a lookup for faster value retrieval
+        table_value_lookup = {}
+        for table_name, columns_values in value_dict.items():
+            table_value_lookup[table_name] = {col_name: val_str for col_name, val_str in columns_values}
+
         result = [f"Database: {db_id}"]
         
         # Format tables and columns
@@ -69,7 +81,9 @@ class EnhancedBirdSelector(Selector):
         for table in tables:
             table_name = table.get('table_name', '')
             result.append(f"\nTable: {table_name}")
-            
+            result.append("Columns:")
+
+            column_value_lookup = table_value_lookup.get(table_name, {})
             # Column information with data types
             for column in table.get('columns', []):
                 column_name = column.get('column_name', '')
@@ -80,6 +94,11 @@ class EnhancedBirdSelector(Selector):
                 if column.get('is_primary_key', False):
                     column_info += " PRIMARY KEY"
                     
+                # Add example values if available
+                example_values = column_value_lookup.get(column_name, '')
+                if example_values:
+                    column_info += f" Value examples: {example_values}"
+                
                 result.append(column_info)
         
         # Format foreign keys if available

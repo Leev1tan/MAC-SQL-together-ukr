@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "timestamp": "2025-04-04T14:25:33.163178",
+    "num_samples": 1,
+    "execution_accuracy": 1.0,
+    "avg_gold_time": 0,
+    "avg_pred_time": 0,
+    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+    "dataset": "BIRD",
+    "metrics": {
+      "exact_match": 0.0
+    }
+  },
+  "results": [
+    {
+      "db_id": "student_club",
+      "question": "Mention the total expense used on 8/20/2019.",
+      "evidence": "total expense refers SUM(cost) where expense_date = '2019-08-20'",
+      "gold_sql": "SELECT SUM(cost) FROM expense WHERE expense_date = '2019-08-20'",
+      "pred_sql": "SELECT COALESCE(SUM(`cost`), 0) \nFROM `expense` \nWHERE `expense_date` = '2019-08-20'",
+      "execution_time": 10.933968,
+      "execution_match": true,
+      "exact_match": false,
+      "gold_time": 0.0,
+      "pred_time": 0.0
+    }
+  ]
+}

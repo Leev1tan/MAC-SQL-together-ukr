@@ -11,6 +11,8 @@ import json
 import logging
 import subprocess
 from pathlib import Path
+import time
+from datetime import datetime
 
 # Configure logging
 os.makedirs('logs', exist_ok=True)
@@ -78,7 +80,7 @@ def verify_database_structure(spider_path):
     logger.info("Database structure verified successfully")
     return True
 
-def run_evaluation(spider_path, num_samples=10, visualize=False):
+def run_evaluation(spider_path, num_samples=10, visualize=False, output_path=None):
     """Run the evaluation using test_macsql_agent_spider.py."""
     # Make sure paths are absolute
     abs_spider_path = os.path.abspath(spider_path)
@@ -92,11 +94,20 @@ def run_evaluation(spider_path, num_samples=10, visualize=False):
     if os.name == 'nt':
         env["PYTHONPATH"] = f"{os.getcwd()};{env.get('PYTHONPATH', '')}"
     
+    # Determine output file path
+    if not output_path:
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        output_path = f"output/spider_agent_results_{timestamp}.json"
+    else:
+        # Ensure output directory exists if a specific path is given
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
     # Prepare the command
     cmd = [
         sys.executable,
         "test_macsql_agent_spider.py",
-        "--samples", str(num_samples)
+        "--samples", str(num_samples),
+        "--output", output_path # Pass the determined output path
     ]
     
     if visualize:
@@ -104,67 +115,76 @@ def run_evaluation(spider_path, num_samples=10, visualize=False):
     
     # Run the evaluation
     logger.info(f"Running evaluation with command: {' '.join(cmd)}")
+    logger.info(f"Results will be saved to: {output_path}")
     try:
         subprocess.run(cmd, env=env, check=True)
         logger.info("Evaluation completed successfully")
-        return True
+        return output_path # Return the actual path used
     except subprocess.CalledProcessError as e:
         logger.error(f"Evaluation failed: {e}")
-        return False
+        return None
 
-def analyze_results():
-    """Analyze the evaluation results."""
-    results_path = "output/spider_agent_results.json"
-    if not os.path.exists(results_path):
-        logger.error(f"Results file not found: {results_path}")
-        return
-    
-    with open(results_path, 'r') as f:
-        results = json.load(f)
-    
-    # Calculate metrics
-    total = len(results)
-    execution_matches = sum(1 for r in results if r.get("execution_match", False))
-    execution_accuracy = (execution_matches / total) * 100 if total > 0 else 0
-    
-    # Extract advanced metrics if available
-    em_score = 0
-    ex_score = execution_accuracy
-    ves_score = 0
-    
-    if "metrics" in results[0]:
-        metrics_counts = 0
-        em_total = 0
-        ves_total = 0
-        
-        for r in results:
-            if "metrics" in r:
-                metrics = r["metrics"]
-                metrics_counts += 1
-                if "exact_match" in metrics:
-                    em_total += metrics["exact_match"]
-                if "valid_efficiency_score" in metrics:
-                    ves_total += metrics["valid_efficiency_score"]
-        
-        if metrics_counts > 0:
-            em_score = (em_total / metrics_counts) * 100
-            ves_score = ves_total / metrics_counts
-    
-    # Print summary
-    print("\n" + "="*60)
-    print("EVALUATION SUMMARY (Spider Dataset)")
-    print("="*60)
-    print(f"Total queries: {total}")
-    print(f"Execution matches: {execution_matches}/{total}")
-    print(f"Execution Accuracy (EX): {execution_accuracy:.2f}%")
-    print(f"Exact Match (EM): {em_score:.2f}%")
-    print(f"Valid Efficiency Score (VES): {ves_score:.2f}")
-    print("="*60 + "\n")
+def analyze_results(results_path: str):
+    """Analyzes the results JSON file and prints metrics."""
+    try:
+        with open(results_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # --- Corrected access to the results list ---
+        results_list = data.get("results", []) # Access the list within the 'results' key
+        if not results_list:
+             print(f"Warning: No results found in {results_path}")
+             return
+        # --- End of correction ---
+
+        num_questions = len(results_list)
+        if num_questions == 0:
+            print("No results found to analyze.")
+            return
+
+        # Use metrics from overall_metrics if available, otherwise calculate
+        overall_metrics = data.get("overall_metrics")
+        if overall_metrics:
+            exact_matches = int(overall_metrics.get("exact_match", 0) * num_questions) # Approximate back
+            execution_matches = int(overall_metrics.get("execution_accuracy", 0) * num_questions) # Approximate back
+            ves = overall_metrics.get("valid_efficiency_score", 0)
+            logging.info("Using pre-calculated overall metrics from JSON.")
+        else:
+            # Calculate metrics if overall_metrics is not present (fallback)
+            logging.info("Calculating metrics from individual results (overall_metrics not found).")
+            exact_matches = sum(1 for r in results_list if r.get("exact_match", False))
+            execution_matches = sum(1 for r in results_list if r.get("execution_match", False))
+            # VES calculation might need more complex logic if not pre-calculated
+            ves = sum(r.get("ves_score", 0) for r in results_list) # Example, adjust if needed
+
+        exact_match_acc = (exact_matches / num_questions) * 100 if num_questions > 0 else 0
+        execution_acc = (execution_matches / num_questions) * 100 if num_questions > 0 else 0
+
+        print(f"--- Analysis Results ({results_path}) ---")
+        print(f"Total Questions: {num_questions}")
+        print(f"Exact Match Accuracy (EM): {exact_match_acc:.2f}% ({exact_matches}/{num_questions})")
+        print(f"Execution Accuracy (EX): {execution_acc:.2f}% ({execution_matches}/{num_questions})")
+        if overall_metrics:
+            print(f"Valid Efficiency Score (VES): {ves:.2f}")
+        else:
+            print(f"Summed VES (if available): {ves:.2f}") # Indicate if it was calculated differently
+        print("--- End Analysis ---")
+
+    except FileNotFoundError:
+        logging.error(f"Results file not found: {results_path}")
+    except json.JSONDecodeError:
+        logging.error(f"Error decoding JSON from file: {results_path}")
+    except Exception as e:
+        logging.error(f"An error occurred during analysis: {e}")
+        # Optionally re-raise or print traceback for more detail
+        # import traceback
+        # traceback.print_exc()
 
 def main():
     parser = argparse.ArgumentParser(description='Run MAC-SQL evaluation against Spider')
     parser.add_argument('--samples', type=int, default=10, help='Number of samples to evaluate')
     parser.add_argument('--visualize', action='store_true', help='Generate visualization of agent communication (currently disabled)')
+    parser.add_argument('--output', type=str, default=None, help='Specify the output JSON file path. Default: output/spider_agent_results_[timestamp].json')
     args = parser.parse_args()
     
     # Find Spider path
@@ -176,12 +196,13 @@ def main():
     if not verify_database_structure(spider_path):
         return 1
     
-    # Run evaluation without visualization
-    if not run_evaluation(spider_path, args.samples, visualize=False):
+    # Run evaluation, passing the desired output path (or None for default)
+    actual_output_path = run_evaluation(spider_path, args.samples, visualize=False, output_path=args.output)
+    if not actual_output_path:
         return 1
     
     # Analyze results
-    analyze_results()
+    analyze_results(actual_output_path) # Pass the correct path
     
     return 0
 

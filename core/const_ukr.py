@@ -15,11 +15,73 @@ ENGINE_TOGETHER = "meta-llama/Llama-3.3-70B-Instruct-Turbo"
 
 ENGINE_DEFAULT = ENGINE_TOGETHER
 
-# Templates for agents working with Ukrainian PostgreSQL database
-selector_template_ukr = """
-As an experienced database administrator, your task is to analyze a user question and a PostgreSQL database schema to provide relevant information. The database schema consists of tables in Ukrainian language, each containing multiple columns with sample values. Your goal is to identify the relevant tables and columns based on the user's question in Ukrainian.
+# Templates for agents working with Ukrainian PostgreSQL database (with English Prompts)
 
-Important: This is a PostgreSQL database with Ukrainian table and column names. All tables already exist. The schema includes sample values to help you understand the data.
+# --- Enhanced Selector Prompt for BIRD-UKR (English Instructions) ---
+selector_template_ukr = """
+You are an experienced PostgreSQL database administrator. Your task is to analyze a user question (in Ukrainian) and a PostgreSQL database schema (with Ukrainian table/column names) to determine the relevant tables and columns.
+
+[Input Schema Format]
+You will receive the database schema in the following format:
+- `# Table: <table_name>` (Ukrainian table name)
+- `Columns:`
+  - `<column_name> (<data_type>) [PRIMARY KEY] [Value examples: ...]` (Ukrainian column name)
+- Additionally, there might be a `Foreign Keys:` section listing relationships.
+
+[Instructions]
+1.  Carefully analyze the user question (provided in Ukrainian) to understand what information is needed.
+2.  Identify *only the tables and columns* that are directly necessary to answer the question. Be precise and minimalist.
+3.  If two tables are linked by a foreign key and both are needed, include both.
+4.  Prioritize tables containing columns that match keywords in the Ukrainian question.
+5.  Consider the `Value examples` to determine relevance.
+6.  If a table has 10 or fewer columns and is relevant, mark it as `"keep_all"`.
+7.  If a table is completely irrelevant, mark it as `"drop_all"`.
+8.  For relevant tables with more than 10 columns, list *only* the necessary columns (including primary and foreign keys if needed for joins).
+9.  Return the result in JSON format, using the original Ukrainian table and column names as keys/values where appropriate.
+
+[Example]
+==========
+【DB_ID】 університет
+【Schema】
+# Таблиця: студенти
+Стовпці:
+  id_студента (INTEGER) PRIMARY KEY
+  імʼя (VARCHAR)
+  прізвище (VARCHAR)
+  дата_народження (DATE)
+  id_факультету (INTEGER) Value examples: [1, 2, 3]
+
+# Таблиця: факультети
+Стовпці:
+  id_факультету (INTEGER) PRIMARY KEY
+  назва_факультету (VARCHAR) Value examples: ["Комп'ютерних наук", "Економічний"]
+  декан (VARCHAR)
+  рік_заснування (INTEGER)
+
+# Таблиця: курси
+Стовпці:
+  id_курсу (INTEGER) PRIMARY KEY
+  назва_курсу (VARCHAR)
+  кредити (INTEGER)
+  id_викладача (INTEGER)
+
+【Foreign keys】
+студенти.id_факультету = факультети.id_факультету
+【Question】
+Скільки студентів навчається на факультеті Комп'ютерних наук? (How many students are studying in the Computer Science faculty?)
+【Evidence】
+(none)
+【Answer】
+```json
+{{
+  "студенти": ["id_студента", "id_факультету"],
+  "факультети": ["id_факультету", "назва_факультету"],
+  "курси": "drop_all"
+}}
+```
+==========
+
+Now your turn:
 
 【DB_ID】 {db_id}
 【Schema】
@@ -27,40 +89,69 @@ Important: This is a PostgreSQL database with Ukrainian table and column names. 
 【Foreign keys】
 {fk_str}
 【Question】
-{question}
+{query}
 【Evidence】
 {evidence}
-
-[Instructions]
-1. Carefully analyze the user question to understand what information is being requested.
-2. Identify only the most relevant tables needed to answer the question - be precise and minimal.
-3. If two tables are connected by a foreign key and both are needed, include both.
-4. Prioritize tables containing columns that match keywords in the question.
-5. Consider sample values in columns to determine relevance.
-
-[Requirements]
-1. Select only the tables that are directly needed to answer the question.
-2. If the question involves aggregation, ensure you include tables with relevant numeric columns.
-3. If the question mentions specific entities (e.g., people, dates, locations), include tables with those entities.
-4. If the question asks for a comparison, include tables with comparable attributes.
-5. Use the foreign key information to understand relationships between tables.
-
-Return your answer in a valid JSON format with these fields:
-- selected_tables: An array of table names that are relevant
-- explanation: Detailed explanation of why these tables were selected, including which columns are most relevant
+【Answer】
 """
 
+# --- Enhanced Decomposer Prompt for BIRD-UKR (English Instructions) ---
 decomposer_template_ukr = """
-Given a PostgreSQL 【Database schema】 with Ukrainian table and column names, and a 【Question】 in Ukrainian, you need to decompose the question into logical steps and generate a valid PostgreSQL query.
+Given a PostgreSQL database schema (with Ukrainian names), additional 【Evidence】, and a 【Question】 in Ukrainian, your task is to decompose the question into logical sub-queries (if necessary) and generate a single, correct PostgreSQL SQL query that answers the question.
 
-Important constraints:
-- All tables already exist - DO NOT include any CREATE TABLE or INSERT statements
-- ONLY write SELECT queries for data retrieval
-- Use double quotes (") for Ukrainian identifiers when needed, not backticks (`)
-- Use standard PostgreSQL functions and syntax for dates, strings, and aggregations
-- When writing queries, be precise and only select the columns actually needed
+[Input Schema Format]
+The schema is provided in a text format including table names (Ukrainian), columns (Ukrainian), their types, primary keys (PK), and value examples. Foreign keys (FK) are provided separately.
 
-【Database schema】
+[Important PostgreSQL Constraints]
+1.  **`SELECT` Only:** Generate only `SELECT` queries. *Do not* include `CREATE TABLE`, `INSERT`, `UPDATE`, `DELETE`.
+2.  **Quoting Identifiers:** Use double quotes (`"`) for Ukrainian table and column names *if* they contain spaces, special characters, or are PostgreSQL reserved words. Simple names (e.g., `id_студента`) do not require quotes, but quoted names (e.g., `"Ім'я Студента"`) are safer if unsure.
+3.  **Syntax:** Use standard PostgreSQL syntax for functions (date, string, aggregation) and operators.
+4.  **Precision:** Select only the columns truly needed for the answer.
+5.  **Aggregation:** If using `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`, ensure `GROUP BY` is used correctly.
+6.  **String Literals:** Use single quotes (`'`) for string literals.
+
+[Example]
+==========
+【DB_ID】 університет
+【Schema】
+# Таблиця: студенти
+Стовпці:
+  id_студента (INTEGER) PRIMARY KEY
+  імʼя (VARCHAR)
+  прізвище (VARCHAR)
+  дата_народження (DATE)
+  id_факультету (INTEGER) Value examples: [1, 2, 3]
+
+# Таблиця: факультети
+Стовпці:
+  id_факультету (INTEGER) PRIMARY KEY
+  назва_факультету (VARCHAR) Value examples: ["Комп'ютерних наук", "Економічний"]
+  декан (VARCHAR)
+  рік_заснування (INTEGER)
+
+# Таблиця: курси
+Стовпці:
+  id_курсу (INTEGER) PRIMARY KEY
+  назва_курсу (VARCHAR)
+  кредити (INTEGER)
+  id_викладача (INTEGER)
+
+【Foreign keys】
+студенти.id_факультету = факультети.id_факультету
+【Question】
+Скільки студентів навчається на факультеті Комп'ютерних наук? (How many students are studying in the Computer Science faculty?)
+【Evidence】
+(none)
+【Answer】
+```sql
+SELECT COUNT(*) FROM студенти WHERE id_факультету = 1
+```
+==========
+
+Now your turn:
+
+【DB_ID】 {db_id}
+【Schema】
 {desc_str}
 【Foreign keys】
 {fk_str}
@@ -68,8 +159,8 @@ Important constraints:
 {query}
 【Evidence】
 {evidence}
-
-Decompose the question into logical steps, considering the sample values in the schema to understand the data. Then generate a single SQL query that follows PostgreSQL syntax to answer the question."""
+【Answer】
+"""
 
 refiner_template_ukr = """
 You are given a PostgreSQL database schema with Ukrainian table and column names, a question in Ukrainian, and a SQL query with an error. Your task is to fix the SQL query.
