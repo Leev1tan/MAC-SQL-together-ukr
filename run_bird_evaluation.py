@@ -107,7 +107,7 @@ def verify_database_structure(bird_path):
     logger.info("Database structure verified successfully")
     return True
 
-def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"):
+def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html", output_path=None):
     """Run the evaluation using test_macsql_agent_bird.py."""
     # Make sure paths are absolute
     abs_bird_path = os.path.abspath(bird_path)
@@ -129,16 +129,18 @@ def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"
     # Create output directory for results
     os.makedirs("output", exist_ok=True)
     
-    # Generate timestamp for unique filenames
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"output/bird_agent_results_{timestamp}.json"
+    # Use provided output path or generate one with timestamp
+    if not output_path:
+        # Generate timestamp for unique filenames
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = f"output/bird_agent_results_{timestamp}.json"
     
     # Prepare the command
     cmd = [
         sys.executable,
         "test_macsql_agent_bird.py",
         "--samples", str(num_samples),
-        "--output", output_file
+        "--output", output_path
     ]
     
     if visualize:
@@ -154,10 +156,10 @@ def run_evaluation(bird_path, num_samples=10, visualize=False, viz_format="html"
     logger.info(f"Running evaluation with command: {' '.join(cmd)}")
     try:
         subprocess.run(cmd, env=env, check=True)
-        logger.info(f"Evaluation completed successfully, results stored in {output_file}")
+        logger.info(f"Evaluation completed successfully, results stored in {output_path}")
         
         # Return the output file path for analysis
-        return output_file
+        return output_path
     except subprocess.CalledProcessError as e:
         logger.error(f"Evaluation failed: {e}")
         return None
@@ -230,9 +232,9 @@ def analyze_results(results_path, model_info=None):
     }
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Run MAC-SQL evaluation against BIRD')
     parser.add_argument("--model", type=str, default="meta-llama/Llama-3.3-70B-Instruct-Turbo", 
-                       help="LLM model to use")
+                        help="LLM model to use (for documentation only)")
     parser.add_argument("--dataset", type=str, default="bird", 
                         choices=["bird", "bird-dev", "bird-ukr"],
                         help="Dataset to use: bird (full), bird-dev (dev set), or bird-ukr (Ukrainian)")
@@ -240,59 +242,57 @@ def main():
     parser.add_argument("--output-dir", type=str, default="output", help="Output directory")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
     parser.add_argument("--analyze-only", type=str, help="Only analyze the given results file")
-    parser.add_argument("--db-filter", type=str, nargs="*", help="Filter by database IDs (space-separated)")
+    parser.add_argument("--visualize", action="store_true", help="Generate agent flow visualization")
+    parser.add_argument("--viz-format", type=str, default="html", choices=["html", "json", "mermaid"], 
+                        help="Visualization format")
     args = parser.parse_args()
 
     if args.analyze_only:
-        analyze_results(args.analyze_only)
+        analyze_results(args.analyze_only, args.model)
         sys.exit(0)
 
     # Set the random seed
     random.seed(args.seed)
 
-    # Determine which test script to run based on the dataset
+    # Determine which dataset path to use
     if args.dataset == "bird-ukr":
-        # For Ukrainian BIRD dataset, use the specialized test script
-        test_script = "test_macsql_agent_bird_ukr.py"
-        data_path = "bird-ukr"
+        # For Ukrainian BIRD dataset, we need a different approach
+        logger.error("Ukrainian BIRD dataset evaluation is not supported in this script yet")
+        sys.exit(1)
     else:
-        # For English BIRD dataset, use the original test script
-        test_script = "test_macsql_agent_bird.py"
-        data_path = "bird" if args.dataset == "bird" else "bird-dev"
-
-    # Create output directory if it doesn't exist
-    os.makedirs(args.output_dir, exist_ok=True)
+        # For English BIRD dataset
+        bird_path = find_dataset_paths()
+        if not bird_path:
+            sys.exit(1)
+            
+        # Verify database structure
+        if not verify_database_structure(bird_path):
+            sys.exit(1)
 
     # Generate output filename
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_id = args.model.split("/")[-1].replace("-", "_").lower()
     output_file = f"{model_id}_{args.dataset}_{args.num_samples}_{timestamp}.json"
     output_path = os.path.join(args.output_dir, output_file)
+    
+    # Make sure output directory exists
+    os.makedirs(args.output_dir, exist_ok=True)
 
-    # Build the command
-    cmd = [
-        "python",
-        test_script,
-        f"--model={args.model}",
-        f"--data-path={data_path}",
-        f"--num-samples={args.num_samples}",
-        f"--output={output_path}"
-    ]
-
-    # Add database filter if specified
-    if args.db_filter:
-        cmd.append(f"--db-filter={' '.join(args.db_filter)}")
-
-    # Run the test
-    print(f"Running command: {' '.join(cmd)}")
-    process = subprocess.run(cmd)
-
-    # Check if the test was successful
-    if process.returncode == 0 and os.path.exists(output_path):
-        print(f"Test completed successfully. Results saved to {output_path}")
-        analyze_results(output_path, args.model)
+    # Run the evaluation with the correct arguments
+    results_path = run_evaluation(
+        bird_path, 
+        num_samples=args.num_samples,
+        visualize=args.visualize,
+        viz_format=args.viz_format,
+        output_path=output_path
+    )
+    
+    if results_path and os.path.exists(results_path):
+        print(f"Test completed successfully. Results saved to {results_path}")
+        analyze_results(results_path, args.model)
     else:
-        print(f"Test failed with return code {process.returncode}")
+        print(f"Test failed or no results generated")
+        sys.exit(1)
 
 if __name__ == "__main__":
     sys.exit(main()) 

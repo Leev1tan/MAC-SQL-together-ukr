@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "timestamp": "2025-04-04T16:48:27.784670",
+    "num_samples": 1,
+    "execution_accuracy": 0.0,
+    "avg_gold_time": 0.2792544364929199,
+    "avg_pred_time": 0.16515040397644043,
+    "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+    "dataset": "BIRD",
+    "metrics": {
+      "exact_match": 0.0
+    }
+  },
+  "results": [
+    {
+      "db_id": "codebase_community",
+      "question": "Among posts by Harvey Motulsky and Noah Snyder, which one has higher popularity?",
+      "evidence": "Has higher popularity means the post has higher view count ; calculation = MAX(SUM(ViewCount)) where DisplayName = 'Harvey Motulsky' OR DisplayName = 'Noah Snyder';",
+      "gold_sql": "SELECT T1.DisplayName FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id WHERE T1.DisplayName = 'Harvey Motulsky' OR T1.DisplayName = 'Noah Snyder' GROUP BY T1.DisplayName ORDER BY SUM(T3.ViewCount) DESC LIMIT 1",
+      "pred_sql": "SELECT T1.`Id`, T1.`ViewCount`, T2.`DisplayName`\nFROM posts AS T1\nINNER JOIN users AS T2\nON T1.`OwnerUserId` = T2.`Id`\nWHERE T2.`DisplayName` IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY T1.`ViewCount` DESC\nLIMIT 1",
+      "execution_time": 19.641316,
+      "execution_match": false,
+      "exact_match": false,
+      "gold_time": 0.2792544364929199,
+      "pred_time": 0.16515040397644043
+    }
+  ]
+}

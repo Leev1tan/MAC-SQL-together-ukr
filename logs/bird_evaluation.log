@@ -130,3 +130,101 @@ Use func from core.api in chat_manager.py
 load json file from MAC-SQL/data/minidev/MINIDEV\dev_tables.json
 
 2025-04-04 15:41:28,171 - __main__ - ERROR - Evaluation failed or output file was not generated.
+2025-04-04 15:50:47,002 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 15:50:47,003 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 15:50:47,003 - __main__ - INFO - Database structure verified successfully
+2025-04-04 15:50:47,003 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_155047.json
+2025-04-04 15:50:56,266 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_155047.json
+2025-04-04 15:51:40,436 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 15:51:40,436 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 15:51:40,437 - __main__ - INFO - Database structure verified successfully
+2025-04-04 15:51:40,437 - __main__ - INFO - Running evaluation with command: C:\Python312\python.exe test_macsql_agent_bird.py --samples 100 --output output\llama_3.3_70b_instruct_turbo_bird_100_20250404_155140.json
+2025-04-04 15:58:56,742 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 15:58:56,743 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 15:58:56,743 - __main__ - INFO - Database structure verified successfully
+2025-04-04 15:58:56,743 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_155856.json
+2025-04-04 15:58:57,555 - __main__ - ERROR - Evaluation failed: Command '['F:\\univ\\praktika\\projects\\slowdown-macsql\\.venv\\Scripts\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output\\llama_3.3_70b_instruct_turbo_bird_1_20250404_155856.json']' returned non-zero exit status 1.
+2025-04-04 16:00:30,336 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:00:30,337 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:00:30,337 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:00:30,337 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_160030.json
+2025-04-04 16:00:35,493 - __main__ - ERROR - Evaluation failed: Command '['F:\\univ\\praktika\\projects\\slowdown-macsql\\.venv\\Scripts\\python.exe', 'test_macsql_agent_bird.py', '--samples', '1', '--output', 'output\\llama_3.3_70b_instruct_turbo_bird_1_20250404_160030.json']' returned non-zero exit status 1.
+2025-04-04 16:02:47,460 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:02:47,460 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:02:47,461 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:02:47,461 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_160247.json
+2025-04-04 16:04:42,504 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_160247.json
+2025-04-04 16:07:49,025 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:07:49,025 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:07:49,026 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:07:49,026 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_160749.json
+2025-04-04 16:08:31,587 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_160749.json
+2025-04-04 16:13:05,187 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:13:05,187 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:13:05,187 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:13:05,188 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_161305.json
+2025-04-04 16:13:39,220 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_161305.json
+2025-04-04 16:20:22,544 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:20:22,544 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:20:22,545 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:20:22,545 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162022.json
+2025-04-04 16:20:46,073 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:20:46,073 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:20:46,074 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:20:46,074 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162046.json
+2025-04-04 16:21:03,282 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162046.json
+2025-04-04 16:21:42,842 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:21:42,843 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:21:42,843 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:21:42,844 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162142.json
+2025-04-04 16:21:54,426 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162142.json
+2025-04-04 16:26:01,086 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:26:01,087 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:26:01,087 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:26:01,087 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162601.json
+2025-04-04 16:26:13,095 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162601.json
+2025-04-04 16:27:35,839 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:27:35,839 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:27:35,839 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:27:35,840 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162735.json
+2025-04-04 16:27:53,824 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162735.json
+2025-04-04 16:28:33,310 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:28:33,310 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:28:33,310 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:28:33,310 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162833.json
+2025-04-04 16:28:53,709 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_162833.json
+2025-04-04 16:30:02,974 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:30:02,974 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:30:02,974 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:30:02,975 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_163002.json
+2025-04-04 16:30:17,528 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_163002.json
+2025-04-04 16:33:13,304 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:33:13,305 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:33:13,305 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:33:13,306 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_163313.json
+2025-04-04 16:33:19,625 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_163313.json
+2025-04-04 16:46:39,107 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:46:39,107 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:46:39,107 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:46:39,108 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164639.json
+2025-04-04 16:46:55,534 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164639.json
+2025-04-04 16:47:19,876 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:47:19,876 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:47:19,876 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:47:19,877 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164719.json
+2025-04-04 16:47:32,554 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164719.json
+2025-04-04 16:47:48,792 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:47:48,793 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:47:48,793 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:47:48,793 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164748.json
+2025-04-04 16:47:55,476 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164748.json
+2025-04-04 16:48:06,818 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:48:06,818 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:48:06,819 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:48:06,819 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 1 --output output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164806.json
+2025-04-04 16:48:27,836 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_1_20250404_164806.json
+2025-04-04 16:50:01,890 - __main__ - INFO - Found BIRD data directory: MAC-SQL/data/minidev/MINIDEV
+2025-04-04 16:50:01,891 - __main__ - INFO - Found tables schema at: MAC-SQL/data/minidev/MINIDEV\dev_tables.json
+2025-04-04 16:50:01,891 - __main__ - INFO - Database structure verified successfully
+2025-04-04 16:50:01,891 - __main__ - INFO - Running evaluation with command: F:\univ\praktika\projects\slowdown-macsql\.venv\Scripts\python.exe test_macsql_agent_bird.py --samples 100 --output output\llama_3.3_70b_instruct_turbo_bird_100_20250404_165001.json
+2025-04-04 17:17:17,684 - __main__ - INFO - Evaluation completed successfully, results stored in output\llama_3.3_70b_instruct_turbo_bird_100_20250404_165001.json

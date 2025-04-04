@@ -157,7 +157,7 @@ class UkrainianBirdAdapter:
         """
         from core.enhanced_chat_manager import EnhancedChatManager
         from core.const import ENGINE_TOGETHER
-        from core.macsql_together_adapter import configure_together_rate_limits
+        from core.macsql_together_adapter import configure_together_rate_limits, patch_api_func, TogetherAIAdapter
         
         # Set Together API parameters
         together_api_key = os.environ.get("TOGETHER_API_KEY", "")
@@ -165,6 +165,17 @@ class UkrainianBirdAdapter:
         
         # Configure rate limiting
         configure_together_rate_limits()
+        
+        # Initialize TogetherAI adapter
+        try:
+            adapter = TogetherAIAdapter()
+            logger.info(f"Initialized TogetherAIAdapter")
+            
+            # Patch API functions to use Together
+            patch_api_func()
+            logger.info(f"Patched API functions to use Together")
+        except Exception as e:
+            logger.warning(f"Error initializing TogetherAIAdapter: {e}")
         
         # Get log path
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -206,12 +217,11 @@ class UkrainianBirdAdapter:
         Returns:
             Dictionary with results
         """
-        # Prepare message for the chat manager
+        # Prepare message for the chat manager - IMPORTANT: Don't include ground_truth to avoid data leakage
         message = {
             "db_id": db_id,
             "query": query,
             "evidence": evidence,
-            "ground_truth": ground_truth,
             "send_to": "Selector"  # Start with the Selector agent
         }
         
@@ -270,6 +280,9 @@ class UkrainianBirdAdapter:
             message["exact_match"] = normalized_pred == normalized_gold
         else:
             message["exact_match"] = False
+        
+        # Store gold SQL in result for reference (but it wasn't used during prediction)
+        message["gold_sql"] = ground_truth
         
         return message
 
@@ -399,7 +412,7 @@ def test_single_query(
             db_id=db_id,
             query=question.get("question"),
             evidence=question.get("evidence", ""),
-            ground_truth=gold_query
+            ground_truth=""  # Don't pass gold SQL to prevent data leakage
         )
         
         # Extract predicted SQL from agent response
@@ -881,6 +894,7 @@ def setup_logging(args):
 def normalize_sql(sql):
     """
     Normalize SQL query for comparison.
+    Following scientific definition: treats clauses as sets and ignores literal values.
     
     Args:
         sql: SQL query string
@@ -894,6 +908,12 @@ def normalize_sql(sql):
     # Convert to lowercase
     sql = sql.lower()
     
+    # Remove all string literals (replace with placeholder)
+    sql = re.sub(r"'[^']*'", "'VALUE'", sql)
+    
+    # Remove all number literals
+    sql = re.sub(r"\b\d+\b", "NUMBER", sql)
+    
     # Remove extra whitespace
     sql = re.sub(r'\s+', ' ', sql)
     sql = sql.strip()
@@ -901,14 +921,20 @@ def normalize_sql(sql):
     # Remove trailing semicolon
     sql = sql.rstrip(';')
     
+    # Remove backticks, quotes around identifiers
+    sql = sql.replace("`", "").replace("\"", "")
+    
+    # Standardize aliases completely by removing numbers
+    # Replace table aliases like t1, t2 with just "t"
+    sql = re.sub(r'\b([a-z])(\d+)\b', r'\1', sql, flags=re.IGNORECASE)
+    
+    # Remove "AS" keyword in aliases
+    sql = re.sub(r'\s+as\s+([a-z0-9_]+)', r' \1', sql, flags=re.IGNORECASE)
+    
     # Normalize whitespace around operators
-    sql = re.sub(r'\s*=\s*', ' = ', sql)
-    sql = re.sub(r'\s*<\s*', ' < ', sql)
-    sql = re.sub(r'\s*>\s*', ' > ', sql)
-    sql = re.sub(r'\s*<=\s*', ' <= ', sql)
-    sql = re.sub(r'\s*>=\s*', ' >= ', sql)
-    sql = re.sub(r'\s*<>\s*', ' <> ', sql)
-    sql = re.sub(r'\s*!=\s*', ' != ', sql)
+    sql = re.sub(r'\s*=\s*', '=', sql)
+    sql = re.sub(r'\s*<>\s*', '!=', sql)
+    sql = re.sub(r'\s*!=\s*', '!=', sql)
     
     # Normalize WHERE/AND/OR clauses
     sql = re.sub(r'where\s+and', 'where', sql)

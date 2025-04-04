@@ -21,6 +21,8 @@ from typing import List, Dict, Any, Optional
 import copy
 import types
 from datetime import datetime
+import re
+import sqlparse
 
 # Add imports for agent flow tracking and visualization
 try:
@@ -366,6 +368,21 @@ def test_single_query(db_id, question, gold_sql=None, evidence=None, args=None):
     db_path = get_bird_db_path(bird_path)
     tables_path = get_bird_tables_path(bird_path)
     
+    # Initialize Together AI adapter and patch API functions
+    try:
+        # Configure Together rate limits
+        configure_together_rate_limits()
+        
+        # Initialize TogetherAI adapter
+        adapter = TogetherAIAdapter()
+        logger.info(f"Initialized TogetherAIAdapter")
+        
+        # Patch API functions to use Together
+        patch_api_func()
+        logger.info(f"Patched API functions to use Together")
+    except Exception as e:
+        logger.warning(f"Error initializing TogetherAIAdapter: {e}")
+    
     # Create chat manager
     chat_manager = EnhancedChatManager(
         data_path=db_path,
@@ -458,13 +475,12 @@ def test_single_query(db_id, question, gold_sql=None, evidence=None, args=None):
         # Replace the method
         chat_manager._chat_single_round = types.MethodType(tracked_chat_single_round, chat_manager)
     
-    # Construct the message
+    # Construct the message - IMPORTANT: Don't include gold_sql in the message to avoid data leakage
     msg = {
         "db_id": db_id,
         "query": question,
         "evidence": evidence if evidence else "",
-        "ground_truth": gold_sql if gold_sql else "",
-        "send_to": "System"  # Initial routing to System
+        "send_to": "Selector"  # Initial routing to Selector (not System)
     }
     
     # Print the query information
@@ -582,7 +598,10 @@ def execute_and_compare_bird_queries(pred_sql, gold_sql, db_id, db_path):
         "gold_time": 0,
         "pred_time": 0,
         "gold_error": None,
-        "pred_error": None
+        "pred_error": None,
+        "gold_results": None,
+        "pred_results": None,
+        "mismatch_reason": None
     }
     
     if not pred_sql or not gold_sql:
@@ -609,6 +628,22 @@ def execute_and_compare_bird_queries(pred_sql, gold_sql, db_id, db_path):
             gold_result = cursor.fetchall()
             gold_cols = [desc[0] for desc in cursor.description] if cursor.description else []
             result["gold_time"] = time.time() - gold_start
+            # Store gold results (limiting to max 10 rows to avoid huge output files)
+            result["gold_results"] = {
+                "columns": gold_cols,
+                "rows": gold_result[:10],
+                "row_count": len(gold_result)
+            }
+            
+            # Print gold result for debugging
+            print("\n=== GOLD SQL RESULT ===")
+            print(f"Columns: {gold_cols}")
+            print("Rows:")
+            for row in gold_result[:10]:  # Limit to 10 rows
+                print(f"  {row}")
+            if len(gold_result) > 10:
+                print(f"  ... (total: {len(gold_result)} rows)")
+                
         except Exception as e:
             result["gold_error"] = str(e)
             logger.error(f"Error executing gold SQL: {e}")
@@ -622,6 +657,22 @@ def execute_and_compare_bird_queries(pred_sql, gold_sql, db_id, db_path):
             pred_result = cursor.fetchall()
             pred_cols = [desc[0] for desc in cursor.description] if cursor.description else []
             result["pred_time"] = time.time() - pred_start
+            # Store predicted results (limiting to max 10 rows to avoid huge output files)
+            result["pred_results"] = {
+                "columns": pred_cols,
+                "rows": pred_result[:10],
+                "row_count": len(pred_result)
+            }
+            
+            # Print predicted result for debugging
+            print("\n=== PREDICTED SQL RESULT ===")
+            print(f"Columns: {pred_cols}")
+            print("Rows:")
+            for row in pred_result[:10]:  # Limit to 10 rows
+                print(f"  {row}")
+            if len(pred_result) > 10:
+                print(f"  ... (total: {len(pred_result)} rows)")
+                
         except Exception as e:
             result["pred_error"] = str(e)
             logger.error(f"Error executing predicted SQL: {e}")
@@ -634,10 +685,16 @@ def execute_and_compare_bird_queries(pred_sql, gold_sql, db_id, db_path):
         # BIRD has specific rules for execution match comparison
         # Check if column counts match
         if len(gold_cols) != len(pred_cols):
+            result["mismatch_reason"] = f"Column count mismatch: gold={len(gold_cols)}, pred={len(pred_cols)}"
+            print(f"Column count mismatch: gold={len(gold_cols)}, pred={len(pred_cols)}")
+            print(f"Gold columns: {gold_cols}")
+            print(f"Pred columns: {pred_cols}")
             return result
         
         # Check if results have the same row count
         if len(gold_result) != len(pred_result):
+            result["mismatch_reason"] = f"Row count mismatch: gold={len(gold_result)}, pred={len(pred_result)}"
+            print(f"Row count mismatch: gold={len(gold_result)}, pred={len(pred_result)}")
             return result
         
         # Convert results to sets for comparison (ignoring column order)
@@ -646,6 +703,22 @@ def execute_and_compare_bird_queries(pred_sql, gold_sql, db_id, db_path):
         
         # Check if results match - binary result (True or False)
         result["execution_match"] = gold_set == pred_set
+        
+        # If sets don't match, identify the differences
+        if not result["execution_match"]:
+            result["mismatch_reason"] = "Row content mismatch"
+            gold_only = gold_set - pred_set
+            pred_only = pred_set - gold_set
+            if gold_only:
+                result["gold_only_rows"] = list(gold_only)[:3]  # Limit to 3 rows
+            if pred_only:
+                result["pred_only_rows"] = list(pred_only)[:3]  # Limit to 3 rows
+            print("\n=== EXECUTION MISMATCH DETAILS ===")
+            if gold_only:
+                print(f"Rows in gold but not in pred: {list(gold_only)[:3]}")
+            if pred_only:
+                print(f"Rows in pred but not in gold: {list(pred_only)[:3]}")
+        
         return result
     
     except Exception as e:
@@ -686,26 +759,56 @@ def log_agent_messages(message):
     logger.debug("-" * 50)
 
 def normalize_sql(sql):
-    """Normalize SQL for exact matching comparison."""
+    """
+    Normalize SQL for exact matching comparison.
+    Following scientific definition: treats clauses as sets and ignores literal values.
+    """
     if not sql:
         return ""
     
-    # Convert to lowercase
-    sql = sql.lower()
+    import sqlparse
+    import re
     
-    # Remove extra whitespace
-    sql = " ".join(sql.split())
+    # Parse SQL to standardize it
+    sql = sql.lower().strip()
+    
+    # Remove comments (like "-- script type: sqlite")
+    sql = re.sub(r'--.*?($|\n)', ' ', sql)
+    
+    # Remove all string literals (replace with placeholder)
+    sql = re.sub(r"'[^']*'", "'VALUE'", sql)
+    
+    # Remove all number literals
+    sql = re.sub(r"\b\d+\b", "NUMBER", sql)
     
     # Remove backticks, quotes around identifiers
-    sql = sql.replace("`", "")
+    sql = sql.replace("`", "").replace("\"", "")
     
-    # Normalize aliases (convert T1, T2 to t1, t2)
-    sql = sql.replace(" as t1", " as t1").replace(" as t2", " as t2")
+    # Normalize whitespace
+    sql = " ".join(sql.split())
+    
+    # Standardize aliases completely by removing numbers
+    # Replace table aliases like t1, t2 with just "t"
+    sql = re.sub(r'\b([a-z])(\d+)\b', r'\1', sql, flags=re.IGNORECASE)
+    
+    # Remove "AS" keyword in aliases
+    sql = re.sub(r'\s+as\s+([a-z0-9_]+)', r' \1', sql, flags=re.IGNORECASE)
+    
+    # Normalize JOIN conditions
+    # Standardize comparison operators
+    sql = re.sub(r'\s*=\s*', '=', sql)
+    sql = re.sub(r'\s*<>\s*', '!=', sql)
+    sql = re.sub(r'\s*!=\s*', '!=', sql)
     
     # Normalize SQL keywords
-    for keyword in ["select", "from", "where", "group by", "order by", "having", "limit", "join", "on", "and", "or"]:
-        # Ensure keywords are separated by spaces
-        sql = sql.replace(f" {keyword} ", f" {keyword} ")
+    for keyword in ["select", "from", "where", "group by", "order by", "having", "limit", 
+                   "join", "inner join", "left join", "right join", "on", "and", "or"]:
+        # Ensure keywords are separated by spaces and standardized
+        pattern = r'\b' + keyword.replace(' ', r'\s+') + r'\b'
+        sql = re.sub(pattern, ' ' + keyword + ' ', sql, flags=re.IGNORECASE)
+    
+    # Remove extra spaces
+    sql = re.sub(r'\s+', ' ', sql).strip()
     
     return sql
 
@@ -717,6 +820,11 @@ def calculate_exact_match(pred_sql, gold_sql):
     # Normalize both SQL queries
     norm_pred = normalize_sql(pred_sql)
     norm_gold = normalize_sql(gold_sql)
+    
+    # Print normalized queries for debugging
+    print("\nNormalized Gold SQL:", norm_gold)
+    print("Normalized Pred SQL:", norm_pred)
+    print("Exact Match:", norm_pred == norm_gold)
     
     # Compare normalized versions
     return norm_pred == norm_gold

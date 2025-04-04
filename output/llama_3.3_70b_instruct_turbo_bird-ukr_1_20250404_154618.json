@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-04-04 15:46:20",
+  "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  "dataset": "bird-ukr",
+  "execution_accuracy": 0.0,
+  "num_samples": 1,
+  "random_seed": null,
+  "avg_gold_time": 0,
+  "avg_pred_time": 0,
+  "results": [
+    {
+      "question_id": "інтернет_магазин_001",
+      "db_id": "інтернет_магазин",
+      "question": "Скільки всього активних товарів є в магазині?",
+      "gold_sql": "SELECT COUNT(*) FROM товари WHERE активний = TRUE;",
+      "difficulty": "simple",
+      "execution_match": false,
+      "gold_time": null,
+      "pred_time": null,
+      "gold_result": null,
+      "pred_result": null,
+      "agent_time": null,
+      "agent_messages": null,
+      "error": "Test error: 'query'"
+    }
+  ]
+}
