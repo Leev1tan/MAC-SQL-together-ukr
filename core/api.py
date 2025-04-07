@@ -24,13 +24,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Get environment variables
-TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY", "")
-TOGETHER_MODEL = os.getenv("TOGETHER_MODEL", "meta-llama/Llama-3.3-70B-Instruct-Turbo")
+# Remove these global reads/prints - they happen too early
+# TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY", "")
+# TOGETHER_MODEL = os.getenv("TOGETHER_MODEL", "meta-llama/Llama-3.3-70B-Instruct-Turbo")
 
 # Print environment variable values for debugging
-print(f"API Key (exists): {'Yes' if TOGETHER_API_KEY else 'No'}")
-print(f"API Key (length): {len(TOGETHER_API_KEY)} characters")
-print(f"Model: {TOGETHER_MODEL}")
+# print(f"API Key (exists): {'Yes' if TOGETHER_API_KEY else 'No'}")
+# print(f"API Key (length): {len(TOGETHER_API_KEY)} characters")
+# print(f"Model: {TOGETHER_MODEL}")
 
 # Initialize tracking variables for logging
 total_prompt_tokens = 0

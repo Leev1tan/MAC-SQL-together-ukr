@@ -97,6 +97,11 @@ class PostgreSQLSelector(BaseAgent):
         # Format full schema descriptions
         desc_str, fk_str = self.format_schema(schema_info)
         
+        # CRITICAL: Log the actual schema that's generated
+        logger.info(f"Generated schema for {db_id}. Schema length: {len(desc_str)}")
+        logger.debug(f"Schema:\n{desc_str}")
+        logger.debug(f"Foreign keys:\n{fk_str}")
+        
         # Now use the LLM to select relevant tables and columns based on the question
         selection_prompt = selector_template_ukr.format(
             question=query,
@@ -118,18 +123,61 @@ class PostgreSQLSelector(BaseAgent):
         # Extract selected tables and columns from response
         selection_content = selection_response.get("content", "")
         
+        # CRITICAL: Log the actual response from the LLM
+        logger.info(f"Got selection response. Length: {len(selection_content)}")
+        logger.debug(f"Selection response:\n{selection_content}")
+        
         try:
             # Look for JSON block in the response
             json_match = re.search(r'```json\s*(.*?)\s*```', selection_content, re.DOTALL)
             if json_match:
                 json_str = json_match.group(1)
+                logger.info(f"Found JSON block in response: {json_str[:100]}...")
                 selection_data = json.loads(json_str)
             else:
-                # Try to parse the entire content as JSON
-                selection_data = parse_json(selection_content)
+                # Try to extract any JSON-like structure
+                logger.info("No JSON code block found, trying to parse content directly")
+                json_start = selection_content.find('{')
+                json_end = selection_content.rfind('}')
+                if json_start >= 0 and json_end > json_start:
+                    json_str = selection_content[json_start:json_end+1]
+                    logger.info(f"Extracted JSON-like structure: {json_str[:100]}...")
+                    selection_data = json.loads(json_str)
+                else:
+                    # Last resort: try to parse the entire content
+                    logger.info("Trying to use custom JSON parser for content")
+                    selection_data = parse_json(selection_content)
             
-            # Create an annotated schema with selected tables and explanation
-            selected_tables = selection_data.get("selected_tables", [])
+            logger.info(f"Parsed selection data structure: {selection_data}")
+            
+            # IMPORTANT: Handle different JSON structure variations
+            # The LLM might return different formats:
+            # 1. {"selected_tables": ["table1", "table2"]}
+            # 2. {"table1": ["col1", "col2"], "table2": "*"}
+            # 3. {"table1": "keep_all", "table2": ["col1", "col2"], "table3": "drop_all"}
+            
+            selected_tables = []
+            
+            # Handle format 1: "selected_tables" key with list of tables
+            if "selected_tables" in selection_data:
+                selected_tables = selection_data["selected_tables"]
+                logger.info(f"Found 'selected_tables' format: {selected_tables}")
+            
+            # Handle format 2 & 3: Dictionary with table names as keys
+            else:
+                # Treat any table listed in the response as selected
+                for table_name, cols in selection_data.items():
+                    # Skip if explicitly marked to drop
+                    if cols == "drop_all" or cols == False:
+                        logger.info(f"Table {table_name} explicitly dropped")
+                        continue
+                    
+                    # Include if it exists in our schema
+                    if table_name in schema_info["tables"]:
+                        selected_tables.append(table_name)
+                        logger.info(f"Table {table_name} selected from structure")
+            
+            # Explanation may or may not be present
             explanation = selection_data.get("explanation", "")
             
             # Filter schema to only include selected tables
@@ -148,6 +196,11 @@ class PostgreSQLSelector(BaseAgent):
             # Format selected schema
             selected_desc_str, selected_fk_str = self.format_schema(selected_schema)
             
+            # Log final selected schema
+            logger.info(f"Selected tables: {selected_tables}")
+            logger.info(f"Final schema length: {len(selected_desc_str)}")
+            logger.debug(f"Final schema:\n{selected_desc_str}")
+            
             # Add selection info to the message
             message["desc_str"] = selected_desc_str
             message["fk_str"] = selected_fk_str
@@ -155,9 +208,17 @@ class PostgreSQLSelector(BaseAgent):
             
         except Exception as e:
             logger.warning(f"Error parsing selection response: {e}")
+            logger.exception("Detailed traceback:")
             # Fallback to full schema if parsing fails
+            logger.info("Using full schema as fallback")
             message["desc_str"] = desc_str
             message["fk_str"] = fk_str
+        
+        # CRITICAL: Verify that the message contains schema before sending to next agent
+        if message.get("desc_str"):
+            logger.info(f"Message contains schema ({len(message['desc_str'])} chars). Sending to Decomposer.")
+        else:
+            logger.warning("No schema in message! This will cause Decomposer to fail.")
         
         message["send_to"] = DECOMPOSER_NAME
         return message

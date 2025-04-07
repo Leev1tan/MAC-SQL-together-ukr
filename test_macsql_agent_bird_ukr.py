@@ -25,6 +25,9 @@ import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extras import RealDictCursor
 
+# Import essential constants
+from core.const import SELECTOR_NAME, DECOMPOSER_NAME, REFINER_NAME
+
 # Add the parent directory to the path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -356,7 +359,7 @@ def os_path_exists_or_pg_db(path):
     return True
 
 def test_single_query(
-    agent,
+    agent,  # This is a UkrainianBirdAdapter, not EnhancedChatManager
     args,
     query_id,
     question,
@@ -365,25 +368,9 @@ def test_single_query(
     gold_query="",
     gold_result=None,
     logger=None,
+    db_base_path: Optional[str] = None,
+    dataset_type: str = ""
 ) -> Dict[str, Any]:
-    """
-    Test a single query using the MAC-SQL agent.
-    
-    Args:
-        agent: The MAC-SQL agent
-        args: Command-line arguments
-        query_id: The ID of the query
-        question: The question to be answered
-        db_id: The ID of the database
-        tables_json_path: Path to the tables.json file
-        gold_query: The gold SQL query, if available
-        gold_result: The gold result, if available
-        logger: The logger to use
-        
-    Returns:
-        Results for the single query
-    """
-    # If logger is not provided, use the default logger
     if logger is None:
         logger = logging.getLogger(__name__)
     
@@ -398,16 +385,13 @@ def test_single_query(
         "question_id": question.get("question_id", "unknown"),
         "db_id": db_id,
         "question": question.get("question", ""),
+        "evidence": question.get("evidence", ""),
         "gold_sql": gold_query,
-        "difficulty": question.get("difficulty", ""),
-        "execution_match": False,
-        "gold_time": None,
-        "pred_time": None,
-        "gold_result": None,
-        "pred_result": None,
-        "agent_time": None,
-        "agent_messages": None,
-        "error": None
+        "status": "Failed",
+        "agent_time": 0,
+        "gold_time": 0,
+        "pred_time": 0,
+        "execution_match": False
     }
     
     # Skip if no question text or database ID
@@ -422,28 +406,40 @@ def test_single_query(
         result_info["error"] = f"Database path not found: {db_path}"
         return result_info
     
+    # Initialize pred_sql to prevent UnboundLocalError
+    pred_sql = ""
+    
     try:
         # Ensure connection pool is initialized for this DB
         init_connection_pool(db_id)
         
-        # Start the agent process
-        agent.start(question)
-
-        # Get final predicted SQL
-        pred_sql = question.get('pred', '').strip()
-        final_sql = question.get('final_sql', '').strip()
-        if not pred_sql and final_sql:
-            pred_sql = final_sql
-            
-        # --- Execute Gold SQL --- 
+        # Call the agent to get SQL - using run() method for UkrainianBirdAdapter
+        agent_response = agent.run(
+            db_id=db_id,
+            query=question.get("question", ""),
+            evidence=question.get("evidence", ""),
+            ground_truth=gold_query
+        )
+        
+        # Extract predicted SQL from agent response
+        pred_sql = agent_response.get("pred", "")
+        agent_time = agent_response.get("agent_time", 0)
+        
+        # Save agent's timing information
+        result_info["agent_time"] = agent_time
+        
+        # Log agent's response
+        logger.info(f"Agent time: {agent_time:.2f}s")
+        logger.info(f"Predicted SQL: {pred_sql}")
+        
+        # Execute Gold SQL
         gold_success, gold_db_result, gold_time = pg_execute_query(db_id, gold_query)
         result_info['gold_time'] = gold_time
         if not gold_success:
             result_info['gold_error'] = str(gold_db_result)
             logger.warning(f"Gold SQL failed for {query_id}: {gold_db_result}")
-            # Even if gold fails, proceed to execute predicted SQL for debugging
-            
-        # --- Execute Predicted SQL --- 
+        
+        # Execute Predicted SQL if available
         pred_success, pred_db_result, pred_time = False, None, 0
         if pred_sql:
             pred_success, pred_db_result, pred_time = pg_execute_query(db_id, pred_sql)
@@ -454,31 +450,29 @@ def test_single_query(
         else:
             result_info['pred_error'] = "No SQL query generated."
             logger.warning(f"No SQL generated for {query_id}")
-            
-        # --- Compare Results --- 
+        
+        # Compare Results
         execution_match = False
         if gold_success and pred_success:
-            # Use the local compare_results function
             execution_match = compare_results(gold_db_result, pred_db_result)
             result_info['execution_match'] = execution_match
             if execution_match:
                 logger.info("Execution MATCH ✓")
             else:
                 logger.info("Execution MISMATCH ✗")
-                # Log mismatch details for debugging
-                logger.debug(f"Gold Result ({len(gold_db_result)} rows): {gold_db_result[:5]}") # Show first 5 rows
-                logger.debug(f"Pred Result ({len(pred_db_result)} rows): {pred_db_result[:5]}") # Show first 5 rows
+                logger.debug(f"Gold Result ({len(gold_db_result)} rows): {gold_db_result[:5]}")
+                logger.debug(f"Pred Result ({len(pred_db_result)} rows): {pred_db_result[:5]}")
         elif gold_success and not pred_success:
             logger.info("Execution MISMATCH ✗ (Prediction failed)")
             result_info['execution_match'] = False
         elif not gold_success and pred_success:
-             logger.info("Execution MISMATCH ✗ (Gold failed)")
-             result_info['execution_match'] = False
-        else: # Both failed
-             logger.info("Execution MISMATCH ✗ (Both failed)")
-             result_info['execution_match'] = False # Treat as mismatch if both failed
-
-        # --- Calculate Exact Match (if applicable) ---
+            logger.info("Execution MISMATCH ✗ (Gold failed)")
+            result_info['execution_match'] = False
+        else:
+            logger.info("Execution MISMATCH ✗ (Both failed)")
+            result_info['execution_match'] = False
+        
+        # Calculate Exact Match if applicable
         if gold_query and pred_sql:
             normalized_pred = normalize_sql(pred_sql)
             normalized_gold = normalize_sql(gold_query)
@@ -486,24 +480,19 @@ def test_single_query(
         else:
             result_info["exact_match"] = False
         
-        # Save gold SQL in result for reference (but it wasn't used during prediction)
+        # Save gold SQL in result for reference
         result_info["gold_sql"] = gold_query
         
     except Exception as e:
         logger.exception(f"Error processing query {query_id}: {e}")
         result_info['error'] = str(e)
-        
+    
     finally:
-        # Ensure connection pool is closed for this DB if it exists
-        # Note: closing after every query might be inefficient, 
-        # consider closing pools at the end of the script instead.
-        # close_connection_pool(db_id) 
         pass
-        
+    
     # Update result info with final details
     result_info['pred_sql'] = pred_sql
     result_info['status'] = 'Success' if 'error' not in result_info else 'Failed'
-    
     return result_info
 
 def test_agent_subset(agent, args):
@@ -517,26 +506,20 @@ def test_agent_subset(agent, args):
     Returns:
         Results of the evaluation
     """
-    # Get data path
     data_path = args.data_path
     
-    # Get tables.json path
     tables_json_path = get_tables_json_path(data_path)
     
-    # Load questions based on arguments
     if args.random:
-        # Load random questions
         questions = load_random_subset(
             data_path=data_path,
             num_samples=args.num_samples,
             random_seed=args.seed
         )
     else:
-        # Load sequential questions
         questions_path = os.path.join(data_path, "questions.json")
         questions = load_questions(questions_path, limit=args.num_samples)
     
-    # Test the questions
     return test_agent_subset_questions(questions, tables_json_path, args, agent)
 
 def test_agent_subset_questions(
@@ -557,34 +540,26 @@ def test_agent_subset_questions(
     Returns:
         List of test results
     """
-    # Create logger
     logger = logging.getLogger(__name__)
     
-    # Collect unique database IDs from questions
     db_ids = set(q.get("db_id") for q in questions if q.get("db_id"))
     logger.info(f"Initializing connection pools for {len(db_ids)} databases...")
     
-    # Initialize PostgreSQL connection pools for each database
     for db_id in db_ids:
         try:
-            # Initialize pool for the database
             init_connection_pool(db_id)
             logger.info(f"Initialized pool for database: {db_id}")
         except Exception as e:
             logger.error(f"Error initializing pool for database {db_id}: {e}")
     
-    # Test all questions
     results = []
     try:
-        # Process each question
         for i, question in enumerate(questions):
-            # Get the database ID
             db_id = question.get("db_id")
             if not db_id:
                 logger.warning(f"Skipping question {i+1}: No database ID")
                 continue
                 
-            # Test the query
             result = test_single_query(
                 agent=agent,
                 args=args,
@@ -597,12 +572,10 @@ def test_agent_subset_questions(
                 logger=logger
             )
             
-            # Add result to list
             results.append(result)
     except Exception as e:
         logger.error(f"Error during testing: {e}", exc_info=True)
     finally:
-        # Close all connection pools
         for db_id in db_ids:
             try:
                 close_connection_pool(db_id)
@@ -624,12 +597,10 @@ def save_results(results, args, execution_accuracy, avg_gold_time, avg_pred_time
     """
     logger = logging.getLogger(__name__)
     
-    # Create output directory if it doesn't exist
     output_dir = os.path.dirname(args.output)
     if output_dir and not os.path.exists(output_dir):
         os.makedirs(output_dir)
     
-    # Create results dictionary
     output_data = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "model": args.model,
@@ -642,7 +613,6 @@ def save_results(results, args, execution_accuracy, avg_gold_time, avg_pred_time
         "results": results
     }
     
-    # Save results to file
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
     
@@ -657,7 +627,6 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description="Evaluate MAC-SQL on Ukrainian BIRD dataset")
     
-    # Dataset parameters
     parser.add_argument("--data-path", type=str, default="./bird-ukr",
                         help="Path to the BIRD-UKR dataset")
     parser.add_argument("--random", action="store_true",
@@ -667,13 +636,11 @@ def parse_arguments():
     parser.add_argument("--seed", type=int, default=42,
                         help="Random seed for sampling")
     
-    # Model parameters
     parser.add_argument("--model", type=str, default=os.environ.get("MODEL_NAME", "meta-llama/Llama-3.3-70B-Instruct-Turbo"),
                         help="Model name to use")
     parser.add_argument("--cache-dir", type=str, default=None,
                         help="Directory to cache API responses")
     
-    # Output parameters
     parser.add_argument("--output", type=str, default=None,
                         help="Path to save results JSON")
     parser.add_argument("--verbose", "-v", action="count", default=0,
@@ -681,13 +648,11 @@ def parse_arguments():
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug mode")
     
-    # Execution parameters
     parser.add_argument("--force-execution", action="store_true",
                         help="Force execution even if gold SQL is not available")
     parser.add_argument("--delay", type=float, default=0,
                         help="Delay between queries (in seconds)")
     
-    # Visualization parameters
     parser.add_argument("--visualize", action="store_true",
                         help="Generate visualization of agent flow")
     parser.add_argument("--viz-format", type=str, default="png",
@@ -702,27 +667,21 @@ def main():
     """
     Main function for evaluating MAC-SQL Agents on BIRD-UKR dataset.
     """
-    # Use the regular full parser here
     args = parse_arguments()
     
-    # Setup logging
-    logger = setup_logging(args)
+    setup_logging(args) 
+    logger = logging.getLogger(__name__) 
     
-    # Log start message and model being used
     logger.info("Starting BIRD-UKR evaluation...")
     logger.info(f"Using model (from env): {os.getenv('TOGETHER_MODEL', 'Not Set')}") 
     
-    # Get tables.json path
     tables_json_path = get_tables_json_path(args.data_path)
     logger.info(f"Using converted tables.json: {tables_json_path}")
     
-    # Load environment variables
     load_env()
     
-    # Configure debugging if enabled
     configure_debug()
     
-    # Initialize the MAC-SQL agent
     agent = get_agent(
         data_path=args.data_path,
         model_name=args.model,
@@ -731,22 +690,18 @@ def main():
         dataset_name="bird-ukr",
     )
     
-    # Test the agent on a subset of questions
     try:
         results = test_agent_subset(agent, args)
         
-        # Calculate and log summary
         num_matches = sum(1 for r in results if r.get("execution_match", False))
         execution_accuracy = num_matches / len(results) if results else 0
         
-        # Calculate average execution times (only for successful executions)
         gold_times = [r.get("gold_time", 0) for r in results if r.get("gold_time") is not None]
         pred_times = [r.get("pred_time", 0) for r in results if r.get("pred_time") is not None]
         
         avg_gold_time = sum(gold_times) / len(gold_times) if gold_times else 0
         avg_pred_time = sum(pred_times) / len(pred_times) if pred_times else 0
         
-        # Log summary
         logger.info("=" * 50)
         logger.info(f"Test summary:")
         logger.info(f"Total queries: {len(results)}")
@@ -756,14 +711,12 @@ def main():
         logger.info(f"Average pred SQL time: {avg_pred_time:.4f}s")
         logger.info("=" * 50)
         
-        # Save results if specified
         if args.output:
             save_results(results, args, execution_accuracy, avg_gold_time, avg_pred_time)
             
     except Exception as e:
         logger.error(f"Error during testing: {e}", exc_info=True)
     finally:
-        # Clean up any remaining resources
         close_all_pools()
 
 def compare_results(gold_results, pred_results):
@@ -777,59 +730,46 @@ def compare_results(gold_results, pred_results):
     Returns:
         True if the results are equivalent, False otherwise
     """
-    # Special case: both empty
     if not gold_results and not pred_results:
         logger.info("Both result sets are empty - match!")
         return True
         
-    # Special case: different length
     if len(gold_results) != len(pred_results):
         logger.warning(f"Result length mismatch: gold={len(gold_results)}, pred={len(pred_results)}")
         return False
     
-    # For PostgreSQL results with RealDictRow objects
     if len(gold_results) > 0 and hasattr(gold_results[0], 'items'):
         logger.info("Comparing RealDictRow results")
         
-        # Convert to comparable forms (ordered tuples of values)
         try:
-            # Extract values and sort them for each row
             gold_values = [tuple(sorted(row.values())) for row in gold_results]
             pred_values = [tuple(sorted(row.values())) for row in pred_results]
             
-            # Sort the value tuples to normalize order
             gold_values.sort()
             pred_values.sort()
             
             logger.info(f"Gold values: {gold_values}")
             logger.info(f"Pred values: {pred_values}")
             
-            # Direct comparison
             return gold_values == pred_values
         except Exception as e:
             logger.error(f"Error comparing RealDictRow results: {e}")
             
-            # Fallback - try direct comparison
             gold_str = str(gold_results)
             pred_str = str(pred_results)
             logger.info(f"Falling back to string comparison: {gold_str == pred_str}")
             return gold_str == pred_str
     
-    # Convert all results to sets for comparison
     if len(gold_results) > 0:
-        # Check if results are in tuple format
         if isinstance(gold_results[0], tuple) and isinstance(pred_results[0], tuple):
             gold_set = set(gold_results)
             pred_set = set(pred_results)
             return gold_set == pred_set
         
-        # Handle RealDictCursor results (PostgreSQL)
         if isinstance(gold_results[0], dict) and isinstance(pred_results[0], dict):
-            # Extract values only for comparison, ignore column names/order
             gold_values = [tuple(sorted(row.values())) for row in gold_results]
             pred_values = [tuple(sorted(row.values())) for row in pred_results]
             
-            # Convert to sets for unordered comparison
             gold_set = set(gold_values)
             pred_set = set(pred_values)
             
@@ -838,19 +778,13 @@ def compare_results(gold_results, pred_results):
             
             return gold_set == pred_set
         
-        # Results might be dictionaries or complex objects
-        # Try to convert to comparable types
         try:
-            # Sort results by first column as a simple normalization
-            # This works for most cases but might need refinement
             normalized_gold = sorted([tuple(row) for row in gold_results])
             normalized_pred = sorted([tuple(row) for row in pred_results])
             return normalized_gold == normalized_pred
         except Exception as e:
             logger.error(f"Error comparing results: {e}")
             
-            # Fallback: serialize and compare
-            # This is inefficient but should work as a last resort
             try:
                 gold_json = json.dumps(gold_results, sort_keys=True)
                 pred_json = json.dumps(pred_results, sort_keys=True)
@@ -872,12 +806,10 @@ def get_tables_json_path(data_path: str) -> str:
     Returns:
         Path to the compatible tables.json file
     """
-    # Check for original tables.json
     original_tables_path = os.path.join(data_path, "tables.json")
     if not os.path.exists(original_tables_path):
         raise FileNotFoundError(f"tables.json not found at {original_tables_path}")
     
-    # Convert tables.json to MAC-SQL compatible format
     logger.info("Converting tables.json to MAC-SQL compatible format...")
     converted_path = generate_compatible_tables_json(data_path)
     logger.info(f"Using converted tables.json: {converted_path}")
@@ -902,10 +834,8 @@ def load_env():
     logger = logging.getLogger(__name__)
     logger.info("Loading .env file from current directory...")
     
-    # Load environment variables from .env file
     load_dotenv()
     
-    # Check if API key is set
     api_key = os.environ.get("TOGETHER_API_KEY", "")
     api_key_exists = bool(api_key)
     api_key_length = len(api_key) if api_key_exists else 0
@@ -921,10 +851,8 @@ def configure_debug():
     """
     logger = logging.getLogger(__name__)
     
-    # Import debug module
     try:
         from core.debug_llm import is_debug_enabled
-        # Check if it's a function or a variable
         if callable(is_debug_enabled):
             debug_enabled = is_debug_enabled()
         else:
@@ -946,10 +874,8 @@ def setup_logging(args):
     Args:
         args: Command-line arguments
     """
-    # Set up logging format
     log_format = '%(levelname)s:%(name)s:%(message)s'
     
-    # Set log level based on verbosity
     if args.verbose == 0:
         log_level = logging.INFO
     elif args.verbose == 1:
@@ -957,13 +883,11 @@ def setup_logging(args):
     else:
         log_level = logging.DEBUG
     
-    # Configure logging
     logging.basicConfig(
         level=log_level,
         format=log_format
     )
     
-    # Reduce verbosity of some libraries
     logging.getLogger('urllib3').setLevel(logging.WARNING)
     logging.getLogger('httpx').setLevel(logging.WARNING)
 
@@ -978,44 +902,31 @@ def normalize_sql(sql):
     Returns:
         Normalized SQL string
     """
-    # Remove comments
     sql = re.sub(r'--.*', ' ', sql)
     
-    # Convert to lowercase
     sql = sql.lower()
     
-    # Remove all string literals (replace with placeholder)
     sql = re.sub(r"'[^']*'", "'VALUE'", sql)
     
-    # Remove all number literals
     sql = re.sub(r"\b\d+\b", "NUMBER", sql)
     
-    # Remove extra whitespace
     sql = re.sub(r'\s+', ' ', sql)
     sql = sql.strip()
     
-    # Remove trailing semicolon
     sql = sql.rstrip(';')
     
-    # Remove backticks, quotes around identifiers
     sql = sql.replace("`", "").replace("\"", "")
     
-    # Standardize aliases completely by removing numbers
-    # Replace table aliases like t1, t2 with just "t"
     sql = re.sub(r'\b([a-z])(\d+)\b', r'\1', sql, flags=re.IGNORECASE)
     
-    # Remove "AS" keyword in aliases
     sql = re.sub(r'\s+as\s+([a-z0-9_]+)', r' \1', sql, flags=re.IGNORECASE)
     
-    # Normalize whitespace around operators
     sql = re.sub(r'\s*=\s*', '=', sql)
     sql = re.sub(r'\s*<>\s*', '!=', sql)
     sql = re.sub(r'\s*!=\s*', '!=', sql)
     
-    # Normalize WHERE/AND/OR clauses
     sql = re.sub(r'where\s+and', 'where', sql)
     
-    # Normalize commas
     sql = re.sub(r'\s*,\s*', ', ', sql)
     
     return sql
