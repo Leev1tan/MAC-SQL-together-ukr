@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Get environment variables
 # Remove these global reads/prints - they happen too early
 # TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY", "")
-# TOGETHER_MODEL = os.getenv("TOGETHER_MODEL", "meta-llama/Llama-3.3-70B-Instruct-Turbo")
+TOGETHER_MODEL = os.getenv("TOGETHER_MODEL", "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo")
 
 # Print environment variable values for debugging
 # print(f"API Key (exists): {'Yes' if TOGETHER_API_KEY else 'No'}")
@@ -40,8 +40,9 @@ log_path = None
 api_trace_json_path = None
 
 # Rate limiting parameters
-MAX_RETRIES = 5
+MAX_RETRIES = 20  # Increased from 5 to 20 for more resilience
 RETRY_DELAY = 5  # seconds
+MAX_BACKOFF = 120  # Maximum delay in seconds (cap the exponential backoff)
 
 def init_log_path(my_log_path):
     """Initialize log path for API call logging"""
@@ -106,7 +107,7 @@ def together_api_call(prompt: str) -> Tuple[str, int, int]:
             
             # Check for rate limiting
             if response.status_code == 429:
-                wait_time = RETRY_DELAY * (2 ** attempt)  # Exponential backoff
+                wait_time = min(RETRY_DELAY * (2 ** attempt), MAX_BACKOFF)  # Exponential backoff with cap
                 logger.warning(f"Rate limited. Waiting {wait_time} seconds before retry.")
                 time.sleep(wait_time)
                 continue
@@ -151,6 +152,7 @@ def safe_call_llm(input_prompt: str, **kwargs) -> str:
     global total_response_tokens
     global log_path
     global api_trace_json_path
+    global TOGETHER_MODEL
     
     # Try to make the API call with retries
     for attempt in range(MAX_RETRIES):
@@ -178,6 +180,9 @@ def safe_call_llm(input_prompt: str, **kwargs) -> str:
                 
                 # Also log to API trace JSON if available
                 if api_trace_json_path:
+                    # Get current model name (environment variable might have changed)
+                    current_model = os.getenv("TOGETHER_MODEL", TOGETHER_MODEL)
+                    
                     # Create trace entry with all context
                     trace_entry = {
                         "prompt": input_prompt.strip(),
@@ -187,7 +192,7 @@ def safe_call_llm(input_prompt: str, **kwargs) -> str:
                         "total_prompt_tokens": total_prompt_tokens,
                         "total_response_tokens": total_response_tokens,
                         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-                        "model": TOGETHER_MODEL
+                        "model": current_model
                     }
                     
                     # Add any additional context from kwargs
@@ -203,7 +208,9 @@ def safe_call_llm(input_prompt: str, **kwargs) -> str:
             
         except Exception as e:
             logger.error(f"API call failed: {str(e)}")
-            print(f"Request {TOGETHER_MODEL} failed. Try {attempt+1} of {MAX_RETRIES}. Sleeping {RETRY_DELAY} seconds.")
+            # Get current model for error message
+            current_model = os.getenv("TOGETHER_MODEL", TOGETHER_MODEL)
+            print(f"Request {current_model} failed. Try {attempt+1} of {MAX_RETRIES}. Sleeping {RETRY_DELAY} seconds.")
             time.sleep(RETRY_DELAY)
     
     # If all retries failed

@@ -31,6 +31,22 @@ DROP TABLE IF EXISTS типи_занять CASCADE;
 DROP TABLE IF EXISTS статуси_студентів CASCADE;
 DROP TABLE IF EXISTS академічні_ступені CASCADE;
 DROP TABLE IF EXISTS наукові_звання CASCADE;
+DROP TABLE IF EXISTS стипендії CASCADE;
+DROP TABLE IF EXISTS типи_стипендій CASCADE;
+DROP TABLE IF EXISTS позичання_книг CASCADE;
+DROP TABLE IF EXISTS книги_університету CASCADE;
+DROP TABLE IF EXISTS бібліотечні_фонди CASCADE;
+DROP TABLE IF EXISTS участь_у_конференціях CASCADE;
+DROP TABLE IF EXISTS автори_публікацій CASCADE;
+DROP TABLE IF EXISTS дослідники_дослідження CASCADE;
+DROP TABLE IF EXISTS гранти CASCADE;
+DROP TABLE IF EXISTS публікації CASCADE;
+DROP TABLE IF EXISTS наукові_дослідження CASCADE;
+DROP TABLE IF EXISTS спонсорство_конференцій;
+DROP TABLE IF EXISTS учасники_конференцій;
+DROP TABLE IF EXISTS доповідачі_конференцій;
+DROP TABLE IF EXISTS секції_конференцій;
+DROP TABLE IF EXISTS конференції;
 
 -- =====================================
 -- CREATE TABLES
@@ -193,6 +209,7 @@ CREATE TABLE студенти (
     електронна_пошта VARCHAR(100),
     адреса TEXT,
     середній_бал NUMERIC(4,2),
+    чи_отримує_стипендію BOOLEAN DEFAULT FALSE,
     CONSTRAINT студенти_дати_check CHECK (
         дата_випуску IS NULL OR 
         дата_вступу <= дата_випуску
@@ -438,7 +455,7 @@ FROM
     JOIN заняття з ON р.заняття_ід = з.ід
     JOIN курси к ON з.курс_ід = к.ід
     JOIN викладачі в ON з.викладач_ід = в.ід
-    JOIN групи г ON з.група_ід = г.ід
+    JOIN групи г ON з.група_іd = г.ід
     JOIN типи_занять тз ON з.тип_заняття_ід = тз.ід
     JOIN аудиторії а ON р.аудиторія_ід = а.ід
     JOIN будівлі б ON а.будівля_ід = б.ід
@@ -522,4 +539,334 @@ GROUP BY
 -- Припустимо, що у нас є ролі 'адміністратор', 'викладач', 'студент'
 -- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO адміністратор;
 -- GRANT SELECT ON ALL TABLES IN SCHEMA public TO викладач;
--- GRANT SELECT ON студенти_повна_інформація, розклад_повна_інформація, оцінки_студентів TO студент; 
+-- GRANT SELECT ON студенти_повна_інформація, розклад_повна_інформація, оцінки_студентів TO студент;
+
+-- Added Scholarship Tables
+CREATE TABLE типи_стипендій (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(100) NOT NULL UNIQUE,
+    опис TEXT,
+    кількість_виплат_на_рік INTEGER
+);
+
+CREATE TABLE стипендії (
+    ід SERIAL PRIMARY KEY,
+    студент_ід INTEGER NOT NULL REFERENCES студенти(ід) ON DELETE CASCADE,
+    тип_стипендії_ід INTEGER NOT NULL REFERENCES типи_стипендій(ід) ON DELETE RESTRICT,
+    розмір DECIMAL(10, 2) NOT NULL CHECK (розмір > 0),
+    дата_початку DATE NOT NULL,
+    дата_кінця DATE NOT NULL,
+    підстава TEXT,
+    CONSTRAINT стипендії_дати_check CHECK (дата_початку <= дата_кінця)
+);
+
+-- Added Library Tables
+CREATE TABLE бібліотечні_фонди (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(100) NOT NULL,
+    опис TEXT,
+    розташування VARCHAR(100),
+    дата_створення DATE,
+    відповідальний_ід INTEGER REFERENCES викладачі(ід) ON DELETE SET NULL,
+    контактний_телефон VARCHAR(15),
+    електронна_пошта VARCHAR(100),
+    кількість_книг INTEGER DEFAULT 0 CHECK (кількість_книг >= 0),
+    примітки TEXT
+);
+
+CREATE TABLE книги_університету (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(200) NOT NULL,
+    автор VARCHAR(150),
+    видавництво VARCHAR(100),
+    рік_видання INTEGER,
+    кількість_сторінок INTEGER CHECK (кількість_сторінок > 0),
+    isbn VARCHAR(20),
+    мова VARCHAR(50) DEFAULT 'українська',
+    фонд_ід INTEGER NOT NULL REFERENCES бібліотечні_фонди(ід) ON DELETE CASCADE,
+    дата_придбання DATE,
+    вартість DECIMAL(10, 2) CHECK (вартість >= 0),
+    тип VARCHAR(50) DEFAULT 'підручник', -- підручник, посібник, монографія, тощо
+    кількість_примірників INTEGER DEFAULT 1 CHECK (кількість_примірників >= 0),
+    доступна_кількість INTEGER DEFAULT 1 CHECK (доступна_кількість >= 0),
+    ключові_слова TEXT,
+    опис TEXT,
+    примітки TEXT,
+    CONSTRAINT книги_доступна_кількість_check CHECK (доступна_кількість <= кількість_примірників)
+);
+
+CREATE TABLE позичання_книг (
+    ід SERIAL PRIMARY KEY,
+    книга_ід INTEGER NOT NULL REFERENCES книги_університету(ід) ON DELETE RESTRICT,
+    студент_ід INTEGER REFERENCES студенти(ід) ON DELETE SET NULL,
+    викладач_ід INTEGER REFERENCES викладачі(ід) ON DELETE SET NULL,
+    дата_видачі DATE NOT NULL,
+    очікувана_дата_повернення DATE NOT NULL,
+    дата_повернення DATE,
+    продовжено_разів INTEGER DEFAULT 0 CHECK (продовжено_разів >= 0),
+    статус VARCHAR(50) DEFAULT 'видано' CHECK (статус IN ('видано', 'повернуто', 'прострочено', 'втрачено')),
+    видав_співробітник_ід INTEGER NOT NULL REFERENCES викладачі(ід) ON DELETE RESTRICT,
+    прийняв_співробітник_ід INTEGER REFERENCES викладачі(ід) ON DELETE SET NULL,
+    примітки TEXT,
+    CONSTRAINT позичання_дати_check CHECK (дата_видачі <= очікувана_дата_повернення),
+    CONSTRAINT позичання_повернення_check CHECK (дата_повернення IS NULL OR дата_видачі <= дата_повернення),
+    CONSTRAINT користувач_check CHECK (
+        (студент_ід IS NOT NULL AND викладач_ід IS NULL) OR
+        (студент_ід IS NULL AND викладач_ід IS NOT NULL)
+    )
+);
+
+-- Indexes and Views for Library
+CREATE INDEX книги_університету_назва_автор_idx ON книги_університету (назва, автор);
+CREATE INDEX позичання_книг_дати_idx ON позичання_книг (дата_видачі, очікувана_дата_повернення, дата_повернення);
+CREATE INDEX позичання_книг_статус_idx ON позичання_книг (статус);
+CREATE INDEX позичання_книг_студент_idx ON позичання_книг (студент_ід) WHERE студент_ід IS NOT NULL;
+CREATE INDEX позичання_книг_викладач_idx ON позичання_книг (викладач_ід) WHERE викладач_ід IS NOT NULL;
+
+CREATE VIEW активні_позичання AS
+SELECT 
+    п.ід AS позичання_ід,
+    к.назва AS назва_книги,
+    к.автор,
+    CASE 
+        WHEN п.студент_ід IS NOT NULL THEN 'студент'
+        WHEN п.викладач_ід IS NOT NULL THEN 'викладач'
+    END AS тип_користувача,
+    CASE 
+        WHEN п.студент_ід IS NOT NULL THEN (SELECT с.прізвище || ' ' || с.імя FROM студенти с WHERE с.ід = п.студент_ід)
+        WHEN п.викладач_ід IS NOT NULL THEN (SELECT в.прізвище || ' ' || в.імя FROM викладачі в WHERE в.ід = п.викладач_ід)
+    END AS користувач,
+    п.дата_видачі,
+    п.очікувана_дата_повернення,
+    п.статус,
+    CASE 
+        WHEN п.очікувана_дата_повернення < CURRENT_DATE AND п.дата_повернення IS NULL THEN 'так'
+        ELSE 'ні'
+    END AS прострочено,
+    CASE 
+        WHEN п.очікувана_дата_повернення < CURRENT_DATE AND п.дата_повернення IS NULL 
+        THEN (CURRENT_DATE - п.очікувана_дата_повернення)
+        ELSE 0
+    END AS днів_прострочення
+FROM 
+    позичання_книг п
+    JOIN книги_університету к ON п.книга_ід = к.ід
+WHERE 
+    п.дата_повернення IS NULL;
+
+CREATE VIEW статистика_бібліотеки AS
+SELECT 
+    SUM(кількість_книг) AS загальна_кількість_книг,
+    (SELECT COUNT(*) FROM книги_університету) AS кількість_найменувань,
+    (SELECT SUM(кількість_примірників) FROM книги_університету) AS загальна_кількість_примірників,
+    (SELECT COUNT(*) FROM позичання_книг WHERE дата_повернення IS NULL) AS кількість_виданих_книг,
+    (SELECT COUNT(*) FROM позичання_книг WHERE статус = 'прострочено') AS кількість_прострочених,
+    (SELECT COUNT(*) FROM позичання_книг WHERE дата_видачі >= CURRENT_DATE - INTERVAL '30 day') AS видано_за_останні_30_днів,
+    (SELECT COUNT(DISTINCT студент_ід) FROM позичання_книг WHERE студент_ід IS NOT NULL AND дата_видачі >= CURRENT_DATE - INTERVAL '365 day') AS активних_студентів_читачів,
+    (SELECT COUNT(DISTINCT викладач_ід) FROM позичання_книг WHERE викладач_ід IS NOT NULL AND дата_видачі >= CURRENT_DATE - INTERVAL '365 day') AS активних_викладачів_читачів
+FROM 
+    бібліотечні_фонди;
+
+-- Added Research Tables
+CREATE TABLE наукові_дослідження (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(255) NOT NULL,
+    опис TEXT,
+    тип VARCHAR(100) NOT NULL, -- фундаментальне, прикладне, розробка, тощо
+    статус VARCHAR(50) NOT NULL DEFAULT 'активне' CHECK (статус IN ('активне', 'завершене', 'призупинене', 'планується')),
+    дата_початку DATE NOT NULL,
+    дата_закінчення DATE,
+    бюджет DECIMAL(12, 2) CHECK (бюджет >= 0),
+    джерело_фінансування VARCHAR(100),
+    кафедра_ід INTEGER REFERENCES кафедри(ід) ON DELETE SET NULL,
+    керівник_ід INTEGER REFERENCES викладачі(ід) ON DELETE SET NULL,
+    пріоритетність INTEGER DEFAULT 3 CHECK (пріоритетність BETWEEN 1 AND 5),
+    номер_держреєстрації VARCHAR(50),
+    примітки TEXT,
+    CONSTRAINT дати_дослідження_check CHECK (дата_початку <= дата_закінчення OR дата_закінчення IS NULL)
+);
+
+CREATE TABLE публікації (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(255) NOT NULL,
+    тип VARCHAR(100) NOT NULL, -- стаття, монографія, тези, патент, тощо
+    видання VARCHAR(200),
+    рік INTEGER NOT NULL CHECK (рік > 1900 AND рік < 2100),
+    том VARCHAR(50),
+    номер VARCHAR(50),
+    сторінки VARCHAR(50),
+    doi VARCHAR(100) UNIQUE,
+    url VARCHAR(255),
+    імпакт_фактор DECIMAL(5, 3) CHECK (імпакт_фактор >= 0),
+    індексація VARCHAR(255), -- Scopus, Web of Science, тощо
+    цитування_кількість INTEGER DEFAULT 0 CHECK (цитування_кількість >= 0),
+    дослідження_ід INTEGER REFERENCES наукові_дослідження(ід) ON DELETE SET NULL,
+    примітки TEXT
+);
+
+CREATE TABLE гранти (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(255) NOT NULL,
+    організація VARCHAR(200) NOT NULL, -- грантодавець
+    тип VARCHAR(100) NOT NULL, -- науковий, освітній, інфраструктурний, тощо
+    сума DECIMAL(12, 2) NOT NULL CHECK (сума > 0),
+    валюта VARCHAR(10) DEFAULT 'UAH',
+    дата_початку DATE NOT NULL,
+    дата_закінчення DATE,
+    статус VARCHAR(50) NOT NULL DEFAULT 'активний' CHECK (статус IN ('активний', 'завершений', 'відхилений', 'підготовка')),
+    дослідження_ід INTEGER REFERENCES наукові_дослідження(ід) ON DELETE SET NULL,
+    керівник_гранту_ід INTEGER REFERENCES викладачі(ід) ON DELETE SET NULL,
+    опис TEXT,
+    умови TEXT,
+    примітки TEXT,
+    CONSTRAINT дати_гранту_check CHECK (дата_початку <= дата_закінчення OR дата_закінчення IS NULL)
+);
+
+CREATE TABLE дослідники_дослідження (
+    ід SERIAL PRIMARY KEY,
+    дослідження_ід INTEGER NOT NULL REFERENCES наукові_дослідження(ід) ON DELETE CASCADE,
+    викладач_ід INTEGER NOT NULL REFERENCES викладачі(ід) ON DELETE CASCADE,
+    роль VARCHAR(100) NOT NULL, -- керівник, виконавець, консультант, тощо
+    дата_початку DATE NOT NULL,
+    дата_закінчення DATE,
+    навантаження DECIMAL(5, 2) CHECK (навантаження >= 0 AND навантаження <= 100), -- відсоток ставки або годин на тиждень
+    примітки TEXT,
+    UNIQUE (дослідження_ід, викладач_ід, роль),
+    CONSTRAINT дати_участі_check CHECK (дата_початку <= дата_закінчення OR дата_закінчення IS NULL)
+);
+
+CREATE TABLE автори_публікацій (
+    ід SERIAL PRIMARY KEY,
+    публікація_ід INTEGER NOT NULL REFERENCES публікації(ід) ON DELETE CASCADE,
+    викладач_ід INTEGER REFERENCES викладачі(ід) ON DELETE CASCADE,
+    зовнішній_автор_прізвище VARCHAR(100),
+    зовнішній_автор_імя VARCHAR(100),
+    зовнішній_автор_установа VARCHAR(200),
+    порядок_авторів INTEGER NOT NULL CHECK (порядок_авторів > 0),
+    є_кореспондуючим BOOLEAN DEFAULT FALSE,
+    примітки TEXT,
+    CONSTRAINT автор_check CHECK (
+        (викладач_ід IS NOT NULL AND зовнішній_автор_прізвище IS NULL AND зовнішній_автор_імя IS NULL) OR
+        (викладач_ід IS NULL AND зовнішній_автор_прізвище IS NOT NULL AND зовнішній_автор_імя IS NOT NULL)
+    )
+);
+
+CREATE TABLE участь_у_конференціях (
+    ід SERIAL PRIMARY KEY,
+    викладач_ід INTEGER NOT NULL REFERENCES викладачі(ід),
+    назва_конференції VARCHAR(255) NOT NULL,
+    місце_проведення VARCHAR(255) NOT NULL,
+    дата_початку DATE NOT NULL,
+    дата_закінчення DATE NOT NULL,
+    тип_участі VARCHAR(100) NOT NULL, -- доповідач, слухач, організатор, член комітету
+    назва_доповіді VARCHAR(255),
+    публікація_ід INTEGER REFERENCES публікації(ід) ON DELETE SET NULL,
+    фінансування_ід INTEGER REFERENCES гранти(ід) ON DELETE SET NULL,
+    примітки TEXT,
+    CONSTRAINT дати_конференції_check CHECK (дата_початку <= дата_закінчення)
+);
+
+-- Conferences (конференції)
+CREATE TABLE конференції (
+    ід SERIAL PRIMARY KEY,
+    назва VARCHAR(255) NOT NULL,
+    опис TEXT,
+    тип VARCHAR(100) NOT NULL, -- міжнародна, всеукраїнська, регіональна, університетська
+    дата_початку DATE NOT NULL,
+    дата_закінчення DATE NOT NULL,
+    місце_проведення VARCHAR(255) NOT NULL,
+    організатор_кафедра_ід INTEGER REFERENCES кафедри(ід),
+    головний_організатор_ід INTEGER REFERENCES викладачі(ід),
+    формат VARCHAR(50) NOT NULL, -- офлайн, онлайн, гібридний
+    вебсайт VARCHAR(255),
+    емейл_контакт VARCHAR(100),
+    телефон_контакт VARCHAR(20),
+    максимум_учасників INTEGER,
+    вартість_участі DECIMAL(10, 2),
+    валюта VARCHAR(3) DEFAULT 'UAH',
+    дедлайн_реєстрації DATE,
+    дедлайн_тез DATE,
+    статус VARCHAR(50) DEFAULT 'запланована', -- запланована, активна, завершена, скасована
+    примітки TEXT,
+    CONSTRAINT конференції_дати_check CHECK (дата_початку <= дата_закінчення),
+    CONSTRAINT конференції_дедлайни_check CHECK (
+        (дедлайн_реєстрації IS NULL OR дедлайн_реєстрації <= дата_початку) AND
+        (дедлайн_тез IS NULL OR дедлайн_тез <= дата_початку)
+    )
+);
+
+-- Conference sections (секції_конференцій)
+CREATE TABLE секції_конференцій (
+    ід SERIAL PRIMARY KEY,
+    конференція_ід INTEGER NOT NULL REFERENCES конференції(ід) ON DELETE CASCADE,
+    назва VARCHAR(255) NOT NULL,
+    опис TEXT,
+    голова_секції_ід INTEGER REFERENCES викладачі(ід),
+    дата DATE,
+    час_початку TIME,
+    час_закінчення TIME,
+    місце VARCHAR(255),
+    максимум_доповідей INTEGER,
+    примітки TEXT,
+    CONSTRAINT секції_час_check CHECK (час_початку < час_закінчення OR час_початку IS NULL OR час_закінчення IS NULL)
+);
+
+-- Conference speakers (доповідачі_конференцій)
+CREATE TABLE доповідачі_конференцій (
+    ід SERIAL PRIMARY KEY,
+    конференція_ід INTEGER NOT NULL REFERENCES конференції(ід) ON DELETE CASCADE,
+    секція_ід INTEGER REFERENCES секції_конференцій(ід) ON DELETE CASCADE,
+    викладач_ід INTEGER REFERENCES викладачі(ід),
+    зовнішній_доповідач_прізвище VARCHAR(50),
+    зовнішній_доповідач_імя VARCHAR(50),
+    зовнішній_доповідач_установа VARCHAR(255),
+    тема_доповіді VARCHAR(255) NOT NULL,
+    тип_доповіді VARCHAR(50) NOT NULL, -- пленарна, секційна, стендова
+    час_початку TIME,
+    тривалість_хвилин INTEGER,
+    короткий_опис TEXT,
+    презентація_url VARCHAR(255),
+    стаття_публікація_ід INTEGER REFERENCES публікації(ід),
+    примітки TEXT,
+    CONSTRAINT доповідачі_перевірка CHECK (
+        (викладач_ід IS NOT NULL AND зовнішній_доповідач_прізвище IS NULL AND зовнішній_доповідач_імя IS NULL) OR
+        (викладач_ід IS NULL AND зовнішній_доповідач_прізвище IS NOT NULL AND зовнішній_доповідач_імя IS NOT NULL)
+    )
+);
+
+-- Conference participants (учасники_конференцій)
+CREATE TABLE учасники_конференцій (
+    ід SERIAL PRIMARY KEY,
+    конференція_ід INTEGER NOT NULL REFERENCES конференції(ід) ON DELETE CASCADE,
+    викладач_ід INTEGER REFERENCES викладачі(ід),
+    студент_ід INTEGER REFERENCES студенти(ід),
+    зовнішній_учасник_прізвище VARCHAR(50),
+    зовнішній_учасник_імя VARCHAR(50),
+    зовнішній_учасник_установа VARCHAR(255),
+    роль VARCHAR(50) NOT NULL, -- учасник, організатор, доповідач, голова секції
+    дата_реєстрації DATE NOT NULL DEFAULT CURRENT_DATE,
+    оплата_статус VARCHAR(20) DEFAULT 'не оплачено', -- не оплачено, оплачено, не потрібна
+    сертифікат_виданий BOOLEAN DEFAULT FALSE,
+    примітки TEXT,
+    CONSTRAINT учасники_перевірка CHECK (
+        (викладач_ід IS NOT NULL AND студент_ід IS NULL AND зовнішній_учасник_прізвище IS NULL AND зовнішній_учасник_імя IS NULL) OR
+        (викладач_ід IS NULL AND студент_ід IS NOT NULL AND зовнішній_учасник_прізвище IS NULL AND зовнішній_учасник_імя IS NULL) OR
+        (викладач_ід IS NULL AND студент_ід IS NULL AND зовнішній_учасник_прізвище IS NOT NULL AND зовнішній_учасник_імя IS NOT NULL)
+    )
+);
+
+-- Conference sponsorships (спонсорство_конференцій)
+CREATE TABLE спонсорство_конференцій (
+    ід SERIAL PRIMARY KEY,
+    конференція_ід INTEGER NOT NULL REFERENCES конференції(ід) ON DELETE CASCADE,
+    назва_організації VARCHAR(255) NOT NULL,
+    тип_спонсорства VARCHAR(50) NOT NULL, -- головний, золотий, срібний, бронзовий, партнер
+    сума_внеску DECIMAL(10, 2),
+    валюта VARCHAR(3) DEFAULT 'UAH',
+    контактна_особа VARCHAR(100),
+    емейл VARCHAR(100),
+    телефон VARCHAR(20),
+    логотип_url VARCHAR(255),
+    опис TEXT,
+    примітки TEXT
+); 
