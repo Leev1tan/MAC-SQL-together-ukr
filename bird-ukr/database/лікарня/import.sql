@@ -16,7 +16,6 @@
 \i 'data_staff.sql'
 \i 'data_patients.sql'
 \i 'data_patient_insurances.sql'
-\i 'data_appointments.sql'
 \i 'data_diagnoses.sql'
 \i 'data_hospitalizations.sql'
 \i 'data_procedures.sql'
