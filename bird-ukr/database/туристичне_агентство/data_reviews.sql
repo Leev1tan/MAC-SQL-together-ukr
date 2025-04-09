@@ -51,4 +51,4 @@ SELECT setval('відгуки_id_seq', (SELECT MAX(id) FROM відгуки));
 DO $$
 BEGIN
     RAISE NOTICE 'Дані про відгуки успішно імпортовано. Загальна кількість записів: %', (SELECT COUNT(*) FROM відгуки);
-END $$; 
+END $$;     
