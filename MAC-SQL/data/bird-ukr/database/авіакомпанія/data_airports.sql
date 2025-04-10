@@ -2,11 +2,7 @@
 
 INSERT INTO аеропорти (код_іата, код_ікао, назва, місто, країна, часовий_пояс, кількість_терміналів, кількість_злітно_посадкових_смуг, географічні_координати) VALUES
 -- Українські аеропорти
-('KBP', 'UKBB', 'Міжнародний аеропорт «Бориспіль»', 'Київ', 'Україна', 'Europe/Kiev', 2, 2, '50.345000, 30.894722'),
-('IEV', 'UKKK', 'Міжнародний аеропорт «Київ» імені Ігоря Сікорського', 'Київ', 'Україна', 'Europe/Kiev', 1, 1, '50.401944, 30.449444'),
-('LWO', 'UKLL', 'Міжнародний аеропорт «Львів» імені Данила Галицького', 'Львів', 'Україна', 'Europe/Kiev', 1, 1, '49.8125, 23.956111'),
-('ODS', 'UKOO', 'Міжнародний аеропорт «Одеса»', 'Одеса', 'Україна', 'Europe/Kiev', 1, 1, '46.426767, 30.676533'),
-('DNK', 'UKDD', 'Міжнародний аеропорт «Дніпро»', 'Дніпро', 'Україна', 'Europe/Kiev', 1, 1, '48.357222, 35.100556'),
+
 ('HRK', 'UKHH', 'Міжнародний аеропорт «Харків»', 'Харків', 'Україна', 'Europe/Kiev', 1, 1, '49.924722, 36.290000'),
 ('ZAP', 'UKDE', 'Міжнародний аеропорт «Запоріжжя»', 'Запоріжжя', 'Україна', 'Europe/Kiev', 1, 1, '47.867222, 35.315833'),
 ('IFO', 'UKLI', 'Міжнародний аеропорт «Івано-Франківськ»', 'Івано-Франківськ', 'Україна', 'Europe/Kiev', 1, 1, '48.884167, 24.686111'),
@@ -14,16 +10,17 @@ INSERT INTO аеропорти (код_іата, код_ікао, назва, м
 ('PLV', 'UKON', 'Міжнародний аеропорт «Полтава»', 'Полтава', 'Україна', 'Europe/Kiev', 1, 1, '49.584444, 34.397222'),
 
 -- Європейські аеропорти
-('FRA', 'EDDF', 'Frankfurt Airport', 'Франкфурт', 'Німеччина', 'Europe/Berlin', 2, 4, '50.033333, 8.570556'),
-('CDG', 'LFPG', 'Charles de Gaulle Airport', 'Париж', 'Франція', 'Europe/Paris', 3, 4, '49.009722, 2.547778'),
-('LHR', 'EGLL', 'Heathrow Airport', 'Лондон', 'Велика Британія', 'Europe/London', 5, 2, '51.4775, -0.461389'),
+
 ('AMS', 'EHAM', 'Amsterdam Airport Schiphol', 'Амстердам', 'Нідерланди', 'Europe/Amsterdam', 1, 6, '52.308056, 4.764167'),
 ('MAD', 'LEMD', 'Adolfo Suárez Madrid–Barajas Airport', 'Мадрид', 'Іспанія', 'Europe/Madrid', 4, 4, '40.472222, -3.560833'),
 ('FCO', 'LIRF', 'Leonardo da Vinci–Fiumicino Airport', 'Рим', 'Італія', 'Europe/Rome', 4, 4, '41.800278, 12.238889'),
 ('VIE', 'LOWW', 'Vienna International Airport', 'Відень', 'Австрія', 'Europe/Vienna', 3, 2, '48.110833, 16.570833'),
-('WAW', 'EPWA', 'Warsaw Chopin Airport', 'Варшава', 'Польща', 'Europe/Warsaw', 2, 2, '52.165833, 20.967222'),
+
 ('IST', 'LTFM', 'Istanbul Airport', 'Стамбул', 'Туреччина', 'Europe/Istanbul', 5, 3, '41.275556, 28.751944'),
 ('BUD', 'LHBP', 'Budapest Ferenc Liszt International Airport', 'Будапешт', 'Угорщина', 'Europe/Budapest', 2, 2, '47.438889, 19.261944'),
+
+-- Інші європейські/близькосхідні аеропорти
+('TEL', 'LLBG', 'Ben Gurion Airport', 'Тель-Авів', 'Ізраїль', 'Asia/Jerusalem', 2, 3, '32.009444, 34.886667'),
 
 -- Азіатські аеропорти
 ('DXB', 'OMDB', 'Dubai International Airport', 'Дубай', 'ОАЕ', 'Asia/Dubai', 3, 2, '25.252778, 55.364444'),
@@ -38,9 +35,9 @@ INSERT INTO аеропорти (код_іата, код_ікао, назва, м
 ('PVG', 'ZSPD', 'Shanghai Pudong International Airport', 'Шанхай', 'Китай', 'Asia/Shanghai', 2, 4, '31.143333, 121.805278'),
 
 -- Американські аеропорти
-('JFK', 'KJFK', 'John F. Kennedy International Airport', 'Нью-Йорк', 'США', 'America/New_York', 6, 4, '40.639722, -73.778889'),
 ('LAX', 'KLAX', 'Los Angeles International Airport', 'Лос-Анджелес', 'США', 'America/Los_Angeles', 9, 4, '33.9425, -118.408056'),
-('ORD', 'KORD', 'O\'Hare International Airport', 'Чикаго', 'США', 'America/Chicago', 4, 8, '41.978611, -87.904722'),
+('SFO', 'KSFO', 'San Francisco International Airport', 'Сан-Франциско', 'США', 'America/Los_Angeles', 4, 4, '37.621313, -122.378955'),
+('ORD', 'KORD', 'O\'\'Hare International Airport', 'Чикаго', 'США', 'America/Chicago', 4, 8, '41.978611, -87.904722'),
 ('ATL', 'KATL', 'Hartsfield–Jackson Atlanta International Airport', 'Атланта', 'США', 'America/New_York', 7, 5, '33.636667, -84.428056'),
 ('MIA', 'KMIA', 'Miami International Airport', 'Маямі', 'США', 'America/New_York', 3, 4, '25.793333, -80.290556'),
 ('YYZ', 'CYYZ', 'Toronto Pearson International Airport', 'Торонто', 'Канада', 'America/Toronto', 2, 5, '43.677222, -79.630556'),

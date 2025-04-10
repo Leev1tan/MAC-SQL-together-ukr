@@ -11,6 +11,7 @@ INSERT INTO маршрути (аеропорт_відправлення_id, ае
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'LWO'), 540, 60, 1500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'ODS'), 450, 55, 1450.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'DNK'), 430, 50, 1400.00),
+((SELECT id FROM аеропорти WHERE код_іата = 'DNK'), (SELECT id FROM аеропорти WHERE код_іата = 'KBP'), 430, 50, 1400.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'HRK'), 410, 50, 1380.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'ZAP'), 510, 60, 1500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'IFO'), 520, 65, 1550.00),
@@ -19,7 +20,9 @@ INSERT INTO маршрути (аеропорт_відправлення_id, ае
 
 -- Міжнародні маршрути з Києва (Бориспіль)
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'WAW'), 690, 90, 3500.00),
+((SELECT id FROM аеропорти WHERE код_іата = 'WAW'), (SELECT id FROM аеропорти WHERE код_іата = 'KBP'), 690, 90, 3500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'FRA'), 1850, 180, 6500.00),
+((SELECT id FROM аеропорти WHERE код_іата = 'FRA'), (SELECT id FROM аеропорти WHERE код_іата = 'KBP'), 1850, 180, 6500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'CDG'), 2150, 210, 7200.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'LHR'), 2400, 230, 7800.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'AMS'), 1980, 200, 6800.00),
@@ -31,10 +34,10 @@ INSERT INTO маршрути (аеропорт_відправлення_id, ае
 
 -- Далекі маршрути з Києва (Бориспіль)
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'JFK'), 7600, 580, 19500.00),
+((SELECT id FROM аеропорти WHERE код_іата = 'JFK'), (SELECT id FROM аеропорти WHERE код_іата = 'KBP'), 7600, 580, 19500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'DXB'), 3500, 300, 12500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'PEK'), 6900, 540, 18500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'BKK'), 7800, 600, 21000.00),
-((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'SYD'), 15700, 1100, 35000.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'CAI'), 2500, 240, 9500.00),
 ((SELECT id FROM аеропорти WHERE код_іата = 'KBP'), (SELECT id FROM аеропорти WHERE код_іата = 'YYZ'), 7500, 570, 19000.00),
 
