@@ -25,7 +25,8 @@ CREATE TABLE видавництва (
 CREATE TABLE жанри (
     ід SERIAL PRIMARY KEY,
     назва VARCHAR(50) NOT NULL UNIQUE,
-    опис TEXT
+    опис TEXT,
+    батьківський_жанр_ід INTEGER REFERENCES жанри(ід) ON DELETE SET NULL
 );
 
 -- Authors (автори)
@@ -101,7 +102,8 @@ CREATE TABLE відділи (
     розташування VARCHAR(100),
     телефон VARCHAR(20),
     електронна_пошта VARCHAR(100),
-    часи_роботи VARCHAR(100)
+    часи_роботи VARCHAR(100),
+    керівник_ід INTEGER REFERENCES працівники(ід) ON DELETE SET NULL
 );
 
 -- Employees (працівники)
@@ -130,7 +132,9 @@ CREATE TABLE працівник_відділ (
     дата_початку DATE NOT NULL,
     дата_закінчення DATE,
     основний BOOLEAN DEFAULT TRUE,
+    примітки TEXT,
     UNIQUE (працівник_ід, відділ_ід, дата_початку)
+    
 );
 
 -- Readers (читачі)
