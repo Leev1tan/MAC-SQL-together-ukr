@@ -1,0 +1,515 @@
+{
+    "інтернет_магазин_001": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_002": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_003": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_004": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_005": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_006": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_007": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_008": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_009": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_010": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_011": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_012": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_013": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_014": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_015": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_016": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_017": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_018": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_019": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "інтернет_магазин_020": {
+        "error": "Failed to execute query on database інтернет_магазин"
+    },
+    "авіакомпанія_001": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_002": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_003": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_004": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_005": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_006": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_007": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_008": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_009": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_010": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_011": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_012": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_013": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_014": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "авіакомпанія_015": {
+        "error": "Failed to execute query on database авіакомпанія"
+    },
+    "бібліотека_001": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_002": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_003": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_004": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_005": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_006": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_007": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_008": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_009": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_010": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_011": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_012": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_013": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_014": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_015": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_016": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_017": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_018": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_019": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_020": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_021": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_022": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_023": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_024": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "бібліотека_025": {
+        "error": "Failed to execute query on database бібліотека"
+    },
+    "лікарня_001": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_002": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_003": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_004": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_005": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_006": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_007": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_008": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_009": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_010": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_011": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_012": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_013": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_014": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_015": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_016": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_017": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_018": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_019": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_020": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_021": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_022": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_023": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_024": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "лікарня_025": {
+        "error": "Failed to execute query on database лікарня"
+    },
+    "ресторан_001": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_002": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_003": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_004": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_005": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_006": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_007": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_008": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_009": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_010": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_011": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_012": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_013": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_014": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_015": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_016": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "ресторан_017": {
+        "error": "Failed to execute query on database ресторан"
+    },
+    "спортивний_клуб_001": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_002": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_003": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_004": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_005": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_006": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_007": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_008": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_009": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_010": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_011": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_012": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_013": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_014": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_015": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_016": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_017": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_018": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_019": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_020": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_021": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_022": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_023": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_024": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_025": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_026": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_027": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_028": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_029": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_030": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_031": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_032": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_033": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_034": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "спортивний_клуб_035": {
+        "error": "Failed to execute query on database спортивний_клуб"
+    },
+    "туристичне_агентство_001": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_002": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_003": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_004": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_005": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_006": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_007": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_008": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_009": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_010": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_011": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_012": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_013": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_014": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_015": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_016": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "туристичне_агентство_017": {
+        "error": "Failed to execute query on database туристичне_агентство"
+    },
+    "університет_001": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_002": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_003": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_004": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_005": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_006": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_007": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_008": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_009": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_010": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_011": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_012": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_013": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_014": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_015": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_016": {
+        "error": "Failed to execute query on database університет"
+    },
+    "університет_017": {
+        "error": "Failed to execute query on database університет"
+    }
+}

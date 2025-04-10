@@ -37,7 +37,7 @@ INSERT INTO аеропорти (код_іата, код_ікао, назва, м
 -- Американські аеропорти
 ('LAX', 'KLAX', 'Los Angeles International Airport', 'Лос-Анджелес', 'США', 'America/Los_Angeles', 9, 4, '33.9425, -118.408056'),
 ('SFO', 'KSFO', 'San Francisco International Airport', 'Сан-Франциско', 'США', 'America/Los_Angeles', 4, 4, '37.621313, -122.378955'),
-('ORD', 'KORD', 'O\'\'Hare International Airport', 'Чикаго', 'США', 'America/Chicago', 4, 8, '41.978611, -87.904722'),
+('ORD', 'KORD', 'O''Hare International Airport', 'Чикаго', 'США', 'America/Chicago', 4, 8, '41.978611, -87.904722'),
 ('ATL', 'KATL', 'Hartsfield–Jackson Atlanta International Airport', 'Атланта', 'США', 'America/New_York', 7, 5, '33.636667, -84.428056'),
 ('MIA', 'KMIA', 'Miami International Airport', 'Маямі', 'США', 'America/New_York', 3, 4, '25.793333, -80.290556'),
 ('YYZ', 'CYYZ', 'Toronto Pearson International Airport', 'Торонто', 'Канада', 'America/Toronto', 2, 5, '43.677222, -79.630556'),
