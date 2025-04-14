@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "інтернетмагазин_gen_001",
+    "db_id": "інтернет_магазин",
+    "question": "Скільки всього товарів у категорії 'Електроніка'?",
+    "gold_sql": "SELECT COUNT(T1.id) FROM товари AS T1 INNER JOIN категорії AS T2 ON T1.категорія_id = T2.id WHERE T2.назва = 'Електроніка';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_002",
+    "db_id": "інтернет_магазин",
+    "question": "Перелічіть імена та email користувачів, які зареєструвалися минулого місяця.",
+    "gold_sql": "SELECT ім_я, email FROM користувачі WHERE дата_реєстрації >= date_trunc('month', CURRENT_DATE - interval '1 month') AND дата_реєстрації < date_trunc('month', CURRENT_DATE);",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_003",
+    "db_id": "інтернет_магазин",
+    "question": "Знайдіть товари, ціна яких перевищує 1000.",
+    "gold_sql": "SELECT назва, ціна FROM товари WHERE ціна > 1000;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_004",
+    "db_id": "інтернет_магазин",
+    "question": "Які методи доставки доступні?",
+    "gold_sql": "SELECT назва FROM методи_доставки;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_005",
+    "db_id": "інтернет_магазин",
+    "question": "Покажіть деталі замовлення з ID 50.",
+    "gold_sql": "SELECT T1.назва, T3.кількість, T3.ціна_за_одиницю FROM товари AS T1 INNER JOIN деталі_замовлення AS T3 ON T1.id = T3.товар_id WHERE T3.замовлення_id = 50;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_006",
+    "db_id": "інтернет_магазин",
+    "question": "Яка загальна сума всіх замовлень зі статусом 'Оплачено'?",
+    "gold_sql": "SELECT SUM(T1.загальна_вартість) FROM замовлення AS T1 INNER JOIN статуси_замовлень AS T2 ON T1.статус_id = T2.id WHERE T2.назва = 'Оплачено';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_007",
+    "db_id": "інтернет_магазин",
+    "question": "Знайдіть користувачів, які нічого не замовляли.",
+    "gold_sql": "SELECT ім_я, прізвище, email FROM користувачі WHERE id NOT IN (SELECT користувач_id FROM замовлення);",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_008",
+    "db_id": "інтернет_магазин",
+    "question": "Перелічіть товари, кількість яких на складі менша за 10.",
+    "gold_sql": "SELECT назва, кількість_на_складі FROM товари WHERE кількість_на_складі < 10;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_009",
+    "db_id": "інтернет_магазин",
+    "question": "Знайдіть відгуки з оцінкою 1 або 2.",
+    "gold_sql": "SELECT T2.ім_я AS користувач, T3.назва AS товар, T1.оцінка, T1.коментар FROM відгуки AS T1 INNER JOIN користувачі AS T2 ON T1.користувач_id = T2.id INNER JOIN товари AS T3 ON T1.товар_id = T3.id WHERE T1.оцінка <= 2;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_010",
+    "db_id": "інтернет_магазин",
+    "question": "Який середній рейтинг товарів у категорії 'Книги'?",
+    "gold_sql": "SELECT AVG(T1.рейтинг) FROM товари AS T1 INNER JOIN категорії AS T2 ON T1.категорія_id = T2.id WHERE T2.назва = 'Книги';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_011",
+    "db_id": "інтернет_магазин",
+    "question": "Знайдіть 5 найдорожчих товарів.",
+    "gold_sql": "SELECT назва, ціна FROM товари ORDER BY ціна DESC LIMIT 5;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_012",
+    "db_id": "інтернет_магазин",
+    "question": "Які товари були додані до магазину останніми?",
+    "gold_sql": "SELECT назва, дата_додавання FROM товари ORDER BY дата_додавання DESC LIMIT 10;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_013",
+    "db_id": "інтернет_магазин",
+    "question": "Знайдіть користувачів, які зробили більше 3 замовлень.",
+    "gold_sql": "SELECT T1.ім_я, T1.прізвище, COUNT(T2.id) AS кількість_замовлень FROM користувачі AS T1 INNER JOIN замовлення AS T2 ON T1.id = T2.користувач_id GROUP BY T1.id HAVING COUNT(T2.id) > 3;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_014",
+    "db_id": "інтернет_магазин",
+    "question": "Перелічіть замовлення, що були оплачені кредитною карткою.",
+    "gold_sql": "SELECT T1.id, T3.ім_я AS користувач, T1.дата_замовлення, T1.загальна_вартість FROM замовлення AS T1 INNER JOIN методи_оплати AS T2 ON T1.метод_оплати_id = T2.id INNER JOIN користувачі AS T3 ON T1.користувач_id = T3.id WHERE T2.назва = 'Кредитна картка';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "інтернетмагазин_gen_015",
+    "db_id": "інтернет_магазин",
+    "question": "Який товар найчастіше додають до кошика?",
+    "gold_sql": "SELECT T1.назва, COUNT(T2.id) AS кількість_додавань FROM товари AS T1 INNER JOIN елементи_кошика AS T2 ON T1.id = T2.товар_id GROUP BY T1.id ORDER BY кількість_додавань DESC LIMIT 1;",
+    "difficulty": "complex"
+  }
+] 

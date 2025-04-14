@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "університет_gen_001",
+    "db_id": "університет",
+    "question": "Скільки студентів навчається на кожному факультеті?",
+    "gold_sql": "SELECT T1.назва ,  count(*) FROM факультети AS T1 JOIN кафедри AS T2 ON T1.id  =  T2.факультет_ід JOIN групи AS T3 ON T2.id  =  T3.напрям_ід JOIN студенти AS T4 ON T3.id  =  T4.група_ід GROUP BY T1.назва",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_002",
+    "db_id": "університет",
+    "question": "Перелічіть усі курси, які викладає викладач з прізвищем 'Мельник'.",
+    "gold_sql": "SELECT T2.назва FROM викладачі AS T1 JOIN заняття AS T3 ON T1.id  =  T3.викладач_ід JOIN курси AS T2 ON T3.курс_ід  =  T2.id WHERE T1.прізвище  =  'Мельник'",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_003",
+    "db_id": "університет",
+    "question": "Який середній бал студентів групи 'ПМ-21'?",
+    "gold_sql": "SELECT avg(T1.середній_бал) FROM студенти AS T1 JOIN групи AS T2 ON T1.група_ід  =  T2.id WHERE T2.назва  =  'ПМ-21'",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_004",
+    "db_id": "університет",
+    "question": "Які аудиторії мають проектор та місткість понад 50 осіб?",
+    "gold_sql": "SELECT T1.номер ,  T2.назва FROM аудиторії AS T1 JOIN будівлі AS T2 ON T1.будівля_ід  =  T2.id WHERE T1.має_проектор IS TRUE AND T1.місткість  >  50",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "університет_gen_005",
+    "db_id": "університет",
+    "question": "Знайдіть імена та електронні адреси всіх завідувачів кафедр.",
+    "gold_sql": "SELECT T2.прізвище ,  T2.імя ,  T2.електронна_пошта FROM кафедри AS T1 JOIN викладачі AS T2 ON T1.завідувач_ід  =  T2.id",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_006",
+    "db_id": "університет",
+    "question": "Скільки курсів пропонує кожна кафедра?",
+    "gold_sql": "SELECT T1.назва ,  count(T2.id) FROM кафедри AS T1 JOIN курси AS T2 ON T1.id  =  T2.кафедра_ід GROUP BY T1.назва",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_007",
+    "db_id": "університет",
+    "question": "Перелічіть студентів, які вступили до університету після 1 вересня 2022 року.",
+    "gold_sql": "SELECT прізвище ,  імя FROM студенти WHERE дата_вступу  >  '2022-09-01'",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "університет_gen_008",
+    "db_id": "університет",
+    "question": "Які існують типи занять?",
+    "gold_sql": "SELECT назва FROM типи_занять",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "університет_gen_009",
+    "db_id": "університет",
+    "question": "Знайдіть усіх викладачів з науковим ступенем 'Доктор наук'.",
+    "gold_sql": "SELECT T1.прізвище ,  T1.імя FROM викладачі AS T1 JOIN академічні_ступені AS T2 ON T1.науковий_ступінь_ід  =  T2.ід WHERE T2.назва  =  'Доктор наук'",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_010",
+    "db_id": "університет",
+    "question": "Який розклад занять для курсу 'Програмування' у поточному семестрі?",
+    "gold_sql": "SELECT T3.день_тижня ,  T3.час_початку ,  T3.час_кінця ,  T5.номер FROM курси AS T1 JOIN заняття AS T2 ON T1.id  =  T2.курс_ід JOIN розклад_занять AS T3 ON T2.id  =  T3.заняття_ід JOIN семестри AS T4 ON T2.семестр_ід  =  T4.id JOIN аудиторії AS T5 ON T3.аудиторія_ід  =  T5.id WHERE T1.назва  =  'Програмування' AND T4.є_активним IS TRUE",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "університет_gen_011",
+    "db_id": "університет",
+    "question": "Перелічіть усі факультети та імена їхніх деканів.",
+    "gold_sql": "SELECT T1.назва ,  T2.прізвище ,  T2.імя FROM факультети AS T1 JOIN викладачі AS T2 ON T1.декан_ід  =  T2.id",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_012",
+    "db_id": "університет",
+    "question": "Скільки студентів у кожній групі навчається на бюджетній формі?",
+    "gold_sql": "SELECT T1.назва ,  count(T2.id) FROM групи AS T1 JOIN студенти AS T2 ON T1.id  =  T2.група_ід WHERE T2.фінансування  =  'Бюджет' GROUP BY T1.назва",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_013",
+    "db_id": "університет",
+    "question": "Знайдіть навчальні матеріали (назву та тип), доступні для курсу 'Математичний аналіз'.",
+    "gold_sql": "SELECT T1.назва ,  T1.тип FROM навчальні_матеріали AS T1 JOIN курси AS T2 ON T1.курс_ід  =  T2.id WHERE T2.назва  =  'Математичний аналіз'",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "університет_gen_014",
+    "db_id": "університет",
+    "question": "Яка загальна кількість викладачів в університеті?",
+    "gold_sql": "SELECT count(*) FROM викладачі WHERE активний = TRUE",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "університет_gen_015",
+    "db_id": "університет",
+    "question": "Перелічіть студентів (прізвище, ім'я) із середнім балом вище 90.",
+    "gold_sql": "SELECT прізвище ,  імя FROM студенти WHERE середній_бал  >  90",
+    "difficulty": "simple"
+  }
+] 

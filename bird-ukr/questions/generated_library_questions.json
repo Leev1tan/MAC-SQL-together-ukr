@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "бібліотека_gen_001",
+    "db_id": "бібліотека",
+    "question": "Скільки книг у жанрі 'Наукова фантастика'?",
+    "gold_sql": "SELECT COUNT(k.id) FROM книги k JOIN книга_жанр kg ON k.id = kg.книга_ід JOIN жанри g ON kg.жанр_ід = g.id WHERE g.назва = 'Наукова фантастика';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "бібліотека_gen_002",
+    "db_id": "бібліотека",
+    "question": "Перелічіть авторів, що народилися в Україні.",
+    "gold_sql": "SELECT імя, прізвище FROM автори WHERE країна = 'Україна';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "бібліотека_gen_003",
+    "db_id": "бібліотека",
+    "question": "Знайдіть книгу за назвою 'Майстер і Маргарита'.",
+    "gold_sql": "SELECT назва, рік_видання, кількість_сторінок FROM книги WHERE назва = 'Майстер і Маргарита';",
+    "difficulty": "simple"
+  },
+    {
+    "question_id": "бібліотека_gen_004",
+    "db_id": "бібліотека",
+    "question": "Скільки читачів зареєстровано в категорії 'Студент'?",
+    "gold_sql": "SELECT COUNT(ч.id) FROM читачі ч JOIN категорії_читачів кч ON ч.категорія_ід = кч.id WHERE кч.назва = 'Студент';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "бібліотека_gen_005",
+    "db_id": "бібліотека",
+    "question": "Перелічіть назви видавництв, заснованих після 2000 року.",
+    "gold_sql": "SELECT назва, місто FROM видавництва WHERE рік_заснування > 2000;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "бібліотека_gen_006",
+    "db_id": "бібліотека",
+    "question": "Які книги видав автор 'Ліна Костенко'?",
+    "gold_sql": "SELECT k.назва, k.рік_видання FROM книги k JOIN книга_автор ka ON k.id = ka.книга_ід JOIN автори a ON ka.автор_ід = a.id WHERE a.імя = 'Ліна' AND a.прізвище = 'Костенко';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "бібліотека_gen_007",
+    "db_id": "бібліотека",
+    "question": "Знайдіть 5 найстаріших працівників бібліотеки.",
+    "gold_sql": "SELECT імя, прізвище, дата_народження FROM працівники ORDER BY дата_народження ASC NULLS LAST LIMIT 5;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "бібліотека_gen_008",
+    "db_id": "бібліотека",
+    "question": "Яка середня кількість сторінок книг у бібліотеці?",
+    "gold_sql": "SELECT AVG(кількість_сторінок) FROM книги;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "бібліотека_gen_009",
+    "db_id": "бібліотека",
+    "question": "Знайдіть читачів, які мають прострочені книги.",
+    "gold_sql": "SELECT DISTINCT ч.імя, ч.прізвище, ч.телефон FROM читачі ч JOIN видачі в ON ч.id = в.читач_ід WHERE в.статус = 'прострочено';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "бібліотека_gen_010",
+    "db_id": "бібліотека",
+    "question": "Скільки примірників кожної книги зараз доступно?",
+    "gold_sql": "SELECT k.назва, COUNT(p.id) AS доступна_кількість FROM книги k JOIN примірники p ON k.id = p.книга_ід WHERE p.доступний = TRUE AND p.списаний = FALSE GROUP BY k.назва ORDER BY доступна_кількість DESC;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "бібліотека_gen_011",
+    "db_id": "бібліотека",
+    "question": "Знайдіть читачів, які мають неоплачені штрафи на суму понад 50.",
+    "gold_sql": "SELECT DISTINCT ч.імя, ч.прізвище, SUM(ш.сума) AS загальний_штраф FROM читачі ч JOIN видачі в ON ч.id = в.читач_ід JOIN штрафи ш ON в.id = ш.видача_ід WHERE ш.статус = 'не оплачено' GROUP BY ч.id, ч.імя, ч.прізвище HAVING SUM(ш.сума) > 50;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "бібліотека_gen_012",
+    "db_id": "бібліотека",
+    "question": "Які 5 найпопулярніших жанрів книг за кількістю видач?",
+    "gold_sql": "SELECT g.назва, COUNT(v.id) AS кількість_видач FROM жанри g JOIN книга_жанр kg ON g.id = kg.жанр_ід JOIN книги k ON kg.книга_ід = k.id JOIN примірники p ON k.id = p.книга_ід JOIN видачі v ON p.id = v.примірник_ід GROUP BY g.назва ORDER BY кількість_видач DESC LIMIT 5;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "бібліотека_gen_013",
+    "db_id": "бібліотека",
+    "question": "Знайдіть середній термін видачі книг (в днях) для кожної категорії читачів.",
+    "gold_sql": "SELECT кч.назва, AVG(EXTRACT(DAY FROM (в.дата_повернення - в.дата_видачі))) AS середній_термін_днів FROM категорії_читачів кч JOIN читачі ч ON кч.id = ч.категорія_ід JOIN видачі в ON ч.id = в.читач_ід WHERE в.дата_повернення IS NOT NULL GROUP BY кч.назва;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "бібліотека_gen_014",
+    "db_id": "бібліотека",
+    "question": "Перелічіть працівників, які працюють у відділі 'Абонемент' та мають зарплату вище середньої по бібліотеці.",
+    "gold_sql": "SELECT пр.імя, пр.прізвище, пр.зарплата FROM працівники пр JOIN працівник_відділ пв ON пр.id = пв.працівник_ід JOIN відділи в ON пв.відділ_ід = в.id WHERE в.назва = 'Абонемент' AND пр.зарплата > (SELECT AVG(зарплата) FROM працівники WHERE активний = TRUE);",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "бібліотека_gen_015",
+    "db_id": "бібліотека",
+    "question": "Визначте місяць з найбільшою кількістю виданих книг за останній рік.",
+    "gold_sql": "SELECT EXTRACT(YEAR FROM дата_видачі) AS рік, EXTRACT(MONTH FROM дата_видачі) AS місяць, COUNT(id) AS кількість_видач FROM видачі WHERE дата_видачі >= CURRENT_DATE - INTERVAL '1 year' GROUP BY рік, місяць ORDER BY кількість_видач DESC LIMIT 1;",
+    "difficulty": "complex"
+  }
+] 

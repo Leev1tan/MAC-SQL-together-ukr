@@ -1,0 +1,212 @@
+{
+    "авіакомпанія_gen_012": {
+        "db_id": "авіакомпанія",
+        "original_sql": "SELECT tl.назва AS тип_літака, AVG(EXTRACT(EPOCH FROM (t.дата_завершення - t.дата_початку)) / 86400.0) AS середня_тривалість_днів FROM технічне_обслуговування t JOIN літаки l ON t.літак_id = l.id JOIN типи_літаків tl ON l.тип_літака_id = tl.id WHERE t.дата_завершення IS NOT NULL AND t.дата_початку IS NOT NULL GROUP BY tl.назва;",
+        "fixed_sql": "SELECT tl.назва AS тип_літака, AVG((t.дата_завершення - t.дата_початку)) AS середня_тривалість_днів FROM технічне_обслуговування t JOIN літаки l ON t.літак_id = l.id JOIN типи_літаків tl ON l.тип_літака_id = tl.id WHERE t.дата_завершення IS NOT NULL AND t.дата_початку IS NOT NULL GROUP BY tl.назва;",
+        "error": "function pg_catalog.extract(unknown, integer) does not exist\nLINE 1: SELECT tl.назва AS тип_літака, AVG(EXTRACT(EPOCH FROM (t.дат...\n                                           ^\nHINT:  No function matches the given name and argument types. You might need to add explicit type casts.\n",
+        "status": "fixed"
+    },
+    "ресторан_gen_003": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT імя, прізвище, посада FROM працівники WHERE прізвище = 'Іванов';",
+        "fixed_sql": "SELECT п.імя, п.прізвище, пс.назва FROM персонал п JOIN посади пс ON п.посада_ід = пс.ід WHERE п.прізвище = 'Іванов';",
+        "error": "ERROR:  column п.ім_я does not exist\nLINE 1: EXPLAIN SELECT п.ім_я, п.прізвище, пс.назва FROM персонал п ...\n                       ^\nHINT:  Perhaps you meant to reference the column \"п.імя\".",
+        "status": "fixed_manually_v2"
+    },
+    "ресторан_gen_005": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT COUNT(*) FROM працівники WHERE посада = 'Офіціант';",
+        "fixed_sql": "SELECT COUNT(*) FROM персонал п JOIN посади пс ON п.посада_ід = пс.ід WHERE пс.назва = 'Офіціант';",
+        "error": "relation \"працівники\" does not exist\nLINE 1: SELECT COUNT(*) FROM працівники WHERE посада = 'Офіціант';\n                             ^\n",
+        "status": "fixed_manually"
+    },
+    "ресторан_gen_006": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT імя, прізвище, дата_народження FROM клієнти WHERE EXTRACT(MONTH FROM дата_народження) = 9;",
+        "fixed_sql": "SELECT ім_я, прізвище, дата_народження FROM клієнти WHERE EXTRACT(MONTH FROM дата_народження) = 9;",
+        "error": "column \"імя\" does not exist\nLINE 1: SELECT імя, прізвище, дата_народження FROM клієнти WHERE EXT...\n               ^\nHINT:  Perhaps you meant to reference the column \"клієнти.ім_я\".\n",
+        "status": "fixed"
+    },
+    "ресторан_gen_007": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT ід, прізвище_клієнта AS клієнт, дата_час FROM резервації WHERE статус_ід IN (SELECT ід FROM статуси_резервацій WHERE назва = 'Скасовано') AND дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+        "fixed_sql": "SELECT ід, прізвище_клієнта AS клієнт, дата_час FROM резервації WHERE статус_ід IN (SELECT ід FROM статуси_резервацій WHERE назва = 'Скасовано') AND дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+        "error": "ERROR:  column \"дата_час\" does not exist\nLINE 1: EXPLAIN SELECT ід, прізвище_клієнта AS клієнт, дата_час FROM...\n                                                       ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "ресторан_gen_008": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT посада, AVG(зарплата) AS середня_зарплата FROM працівники GROUP BY посада;",
+        "fixed_sql": "SELECT пс.назва, AVG(п.зарплата) AS середня_зарплата FROM персонал п JOIN посади пс ON п.посада_ід = пс.ід GROUP BY пс.назва;",
+        "error": "ERROR:  column п.зарплата does not exist\nLINE 1: EXPLAIN SELECT пс.назва, AVG(п.зарплата) AS середня_зарплата...\n                                     ^",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "ресторан_gen_009": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT с.назва, с.опис, зн.кількість FROM замовлення з JOIN замовлення_страви зс ON з.ід = зс.замовлення_ід JOIN страви с ON зс.страва_ід = с.ід WHERE з.клієнт_ід = 123;",
+        "fixed_sql": "SELECT с.назва, с.опис, зс.кількість FROM замовлення з JOIN позиції_замовлення зс ON з.ід = зс.замовлення_ід JOIN страви с ON зс.страва_ід = с.ід WHERE з.клієнт_ід = 123;",
+        "error": "ERROR:  column з.клієнт_ід does not exist\nLINE 1: ...ння_ід JOIN страви с ON зс.страва_ід = с.ід WHERE з.клієнт_і...\n                                                             ^",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "ресторан_gen_012": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT п.імя, п.прізвище, COUNT(з.ід) AS кількість_замовлень FROM працівники п JOIN замовлення з ON п.ід = з.офіціант_ід WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months' GROUP BY п.ід, п.імя, п.прізвище ORDER BY кількість_замовлень DESC LIMIT 10;",
+        "fixed_sql": "SELECT п.імя, п.прізвище, COUNT(з.ід) AS кількість_замовлень FROM персонал п JOIN замовлення з ON п.ід = з.офіціант_ід WHERE з.дата_час >= CURRENT_DATE - INTERVAL '3 months' GROUP BY п.ід, п.імя, п.прізвище ORDER BY кількість_замовлень DESC LIMIT 10;",
+        "error": "ERROR:  column п.ім_я does not exist\nLINE 1: EXPLAIN SELECT п.ім_я, п.прізвище, COUNT(з.ід) AS кількість_...\n                       ^\nHINT:  Perhaps you meant to reference the column \"п.імя\".",
+        "status": "fixed_manually_v2"
+    },
+    "ресторан_gen_013": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT AVG(з.загальна_вартість) AS середня_вартість FROM замовлення з WHERE з.дата_час >= CURRENT_DATE - INTERVAL '1 year';",
+        "fixed_sql": "SELECT AVG(з.загальна_сума) AS середня_вартість FROM замовлення з WHERE з.дата_час >= CURRENT_DATE - INTERVAL '1 year';",
+        "error": "column з.загальна_вартість does not exist\nLINE 1: SELECT AVG(з.загальна_вартість) AS середня_вартість FROM зам...\n                   ^\n",
+        "status": "fixed_manually"
+    },
+    "ресторан_gen_014": {
+        "db_id": "ресторан",
+        "original_sql": "SELECT назва, вартість FROM послуги WHERE доступність_для_клієнтів LIKE '%VIP%';",
+        "fixed_sql": "SELECT назва, вартість FROM послуги WHERE доступність_для_клієнтів LIKE '%VIP%';",
+        "error": "relation \"послуги\" does not exist\nLINE 1: SELECT назва, вартість FROM послуги WHERE доступність_для_кл...\n                                    ^\n",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "спортклуб_gen_003": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT імя, прізвище, спеціалізація FROM тренери WHERE прізвище = 'Сидоров';",
+        "fixed_sql": "SELECT імя, прізвище, спеціалізація_id FROM тренери WHERE прізвище = 'Сидоров';",
+        "error": "ERROR:  column \"спеціалізація_id\" does not exist\nLINE 1: EXPLAIN SELECT імя, прізвище, спеціалізація_id FROM тренери ...\n                                      ^",
+        "status": "fixed_manually_v3"
+    },
+    "спортклуб_gen_004": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT назва FROM види_спорту;",
+        "fixed_sql": "SELECT назва FROM спеціалізація;",
+        "error": "ERROR:  relation \"спеціалізація\" does not exist\nLINE 1: EXPLAIN SELECT назва FROM спеціалізація;\n                                  ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_005": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT COUNT(*) FROM тренери WHERE спеціалізація = 'Фітнес';",
+        "fixed_sql": "SELECT COUNT(*) FROM тренери t JOIN спеціалізація s ON t.спеціалізація_id = s.id WHERE s.назва = 'Фітнес';",
+        "error": "ERROR:  relation \"спеціалізація\" does not exist\nLINE 1: EXPLAIN SELECT COUNT(*) FROM тренери t JOIN спеціалізація s ...\n                                                    ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_007": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT зз.ід, чк.прізвище AS член_клубу, тр.прізвище AS тренер, рз.дата_час FROM записи_на_заняття зз JOIN члени_клубу чк ON зз.член_клубу_ід = чк.ід JOIN тренери тр ON зз.тренер_ід = тр.ід JOIN розклад_занять рз ON зз.розклад_заняття_ід = рз.ід WHERE зз.статус = 'скасовано' AND рз.дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+        "fixed_sql": "SELECT зз.id, чк.прізвище AS член_клубу, тр.прізвище AS тренер, рз.дата_час FROM записи_на_заняття зз JOIN члени_клубу чк ON зз.член_клубу_id = чк.id JOIN тренери тр ON зз.тренер_ід = тр.id JOIN розклад_занять рз ON зз.розклад_заняття_ід = рз.id WHERE зз.статус = 'скасовано' AND рз.дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+        "error": "ERROR:  column зз.тренер_ід does not exist\nLINE 1: ...чк ON зз.член_клубу_id = чк.id JOIN тренери тр ON зз.тренер_...\n                                                             ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_008": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT тч.назва, AVG(чк.вартість_членства) AS середня_вартість FROM члени_клубу чк JOIN типи_членства тч ON чк.тип_членства_ід = тч.ід GROUP BY тч.назва;",
+        "fixed_sql": "SELECT тч.назва, AVG(чк.вартість_членства) AS середня_вартість FROM члени_клубу чк JOIN членство тч ON чк.тип_членства_ід = тч.id GROUP BY тч.назва;",
+        "error": "ERROR:  relation \"членство\" does not exist\nLINE 1: ...тва) AS середня_вартість FROM члени_клубу чк JOIN членство т...\n                                                             ^",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "спортклуб_gen_009": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT вз.назва, вз.дата_час FROM відвідування в JOIN записи_на_заняття зз ON в.запис_на_заняття_ід = зз.ід JOIN розклад_занять рз ON зз.розклад_заняття_ід = рз.ід JOIN заняття вз ON рз.заняття_ід = вз.ід WHERE в.член_клубу_ід = 123;",
+        "fixed_sql": "SELECT вз.назва, рз.дата_час FROM відвідування в JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id JOIN розклад_занять рз ON зз.розклад_заняття_id = рз.id JOIN заняття вз ON рз.заняття_ід = вз.id WHERE в.член_клубу_ід = 123;",
+        "error": "ERROR:  relation \"заняття\" does not exist\nLINE 1: ...д_занять рз ON зз.розклад_заняття_id = рз.id JOIN заняття вз...\n                                                             ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_010": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT назва, вартість FROM послуги ORDER BY вартість DESC NULLS LAST LIMIT 5;",
+        "fixed_sql": "SELECT назва, вартість FROM додаткові_послуги ORDER BY вартість DESC NULLS LAST LIMIT 5;",
+        "error": "ERROR:  relation \"додаткові_послуги\" does not exist\nLINE 1: EXPLAIN SELECT назва, вартість FROM додаткові_послуги ORDER ...\n                                            ^",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "спортклуб_gen_011": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT TO_CHAR(дата_час, 'Day') AS день_тижня, COUNT(*) AS кількість_відвідувань FROM відвідування WHERE дата_час >= CURRENT_DATE - INTERVAL '1 month' GROUP BY день_тижня ORDER BY кількість_відвідувань DESC;",
+        "fixed_sql": "SELECT TO_CHAR(в.дата_і_час_початку, 'Day') AS день_тижня, COUNT(*) AS кількість_відвідувань FROM відвідування в WHERE в.дата_і_час_початку >= CURRENT_DATE - INTERVAL '1 month' GROUP BY TO_CHAR(в.дата_і_час_початку, 'Day') ORDER BY кількість_відвідувань DESC;",
+        "error": "ERROR:  column в.дата_і_час_початку does not exist\nLINE 1: EXPLAIN SELECT TO_CHAR(в.дата_і_час_початку, 'Day') AS день_...\n                               ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_012": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT тр.імя, тр.прізвище, COUNT(в.ід) AS кількість_занять FROM тренери тр JOIN розклад_занять рз ON тр.ід = рз.тренер_ід JOIN відвідування в ON рз.ід = в.розклад_заняття_ід WHERE в.дата_час >= CURRENT_DATE - INTERVAL '3 months' GROUP BY тр.ід, тр.імя, тр.прізвище ORDER BY кількість_занять DESC LIMIT 10;",
+        "fixed_sql": "SELECT тр.імя, тр.прізвище, COUNT(в.id) AS кількість_занять FROM тренери тр JOIN розклад_занять рз ON тр.id = рз.тренер_id JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id JOIN відвідування в ON зз.id = в.запис_на_заняття_id WHERE в.дата_час >= CURRENT_DATE - INTERVAL '3 months' GROUP BY тр.id, тр.імя, тр.прізвище ORDER BY кількість_занять DESC LIMIT 10;",
+        "error": "ERROR:  column в.дата_час does not exist\nLINE 1: ...ідування в ON зз.id = в.запис_на_заняття_id WHERE в.дата_час...\n                                                             ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "спортклуб_gen_013": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "SELECT AVG(іб.вартість) AS середня_вартість FROM індивідуальні_бронювання іб WHERE іб.дата_створення >= CURRENT_DATE - INTERVAL '1 year';",
+        "fixed_sql": "SELECT AVG(іб.вартість) AS середня_вартість FROM індивідуальні_бронювання іб WHERE іб.дата_створення >= CURRENT_DATE - INTERVAL '1 year';",
+        "error": "column іб.вартість does not exist\nLINE 1: SELECT AVG(іб.вартість) AS середня_вартість FROM індивідуаль...\n                   ^\n",
+        "status": "cannot_fix_no_schema_discrepancy"
+    },
+    "спортклуб_gen_014": {
+        "db_id": "спортивний_клуб",
+        "original_sql": "WITH MemberPremiseVisits AS ( SELECT DISTINCT в.член_клубу_ід, тп.назва AS тип_приміщення FROM відвідування в JOIN приміщення п ON (в.запис_на_заняття_ід IS NOT NULL AND п.ід = (SELECT рз.приміщення_ід FROM розклад_занять рз JOIN записи_на_заняття зз ON рз.ід = зз.розклад_заняття_ід WHERE зз.ід = в.запис_на_заняття_ід)) OR (в.індивідуальне_бронювання_ід IS NOT NULL AND п.ід = (SELECT іб.приміщення_ід FROM індивідуальні_бронювання іб WHERE іб.ід = в.індивідуальне_бронювання_ід)) JOIN типи_приміщень тп ON п.тип_приміщення_ід = тп.ід WHERE тп.назва IN ('Басейн', 'Сауна') ) SELECT чк.імя, чк.прізвище FROM члени_клубу чк JOIN MemberPremiseVisits mpv ON чк.ід = mpv.член_клубу_ід WHERE чк.активний = TRUE GROUP BY чк.ід, чк.імя, чк.прізвище HAVING COUNT(DISTINCT mpv.тип_приміщення) = 2;",
+        "fixed_sql": "WITH MemberPremiseVisits AS ( SELECT DISTINCT в.член_клубу_id, тп.назва AS тип_приміщення FROM відвідування в JOIN приміщення п ON (в.запис_на_заняття_id IS NOT NULL AND п.id = (SELECT рз.приміщення_id FROM розклад_занять рз JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id WHERE зз.id = в.запис_на_заняття_id)) OR (в.індивідуальне_бронювання_id IS NOT NULL AND п.id = (SELECT іб.приміщення_id FROM індивідуальні_бронювання іб WHERE іб.id = в.індивідуальне_бронювання_id)) JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id WHERE тп.назва IN ('Басейн', 'Сауна') ) SELECT чк.імя, чк.прізвище FROM члени_клубу чк JOIN MemberPremiseVisits mpv ON чк.id = mpv.член_клубу_id WHERE чк.активний = TRUE GROUP BY чк.id, чк.імя, чк.прізвище HAVING COUNT(DISTINCT mpv.тип_приміщення) = 2;",
+        "error": "ERROR:  column mpv.член_клубу_ід does not exist\nLINE 1: ..._клубу чк JOIN MemberPremiseVisits mpv ON чк.id = mpv.член_к...\n                                                             ^\nHINT:  Perhaps you meant to reference the column \"mpv.член_клубу_id\".",
+        "status": "fixed_manually_v5"
+    },
+    "університет_gen_004": {
+        "db_id": "університет",
+        "original_sql": "SELECT імя, прізвище, посада FROM викладачі WHERE прізвище = 'Петров';",
+        "fixed_sql": "SELECT імя, прізвище, посада_ід FROM викладачі WHERE прізвище = 'Петров';",
+        "error": "column \"посада\" does not exist\nLINE 1: SELECT імя, прізвище, посада FROM викладачі WHERE прізвище =...\n                              ^\nHINT:  Perhaps you meant to reference the column \"викладачі.посада_ід\".\n",
+        "status": "fixed"
+    },
+    "університет_gen_005": {
+        "db_id": "університет",
+        "original_sql": "SELECT назва FROM предмети WHERE кафедра_ід IN (SELECT ід FROM кафедри WHERE назва = 'Інформатика');",
+        "fixed_sql": "SELECT DISTINCT з.дисципліна FROM заняття з JOIN викладачі в ON з.викладач_ід = в.ід JOIN кафедри к ON в.кафедра_ід = к.ід WHERE к.назва = 'Інформатика';",
+        "error": "ERROR:  column з.дисципліна does not exist\nLINE 1: EXPLAIN SELECT DISTINCT з.дисципліна FROM заняття з JOIN викл...\n                                ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "університет_gen_006": {
+        "db_id": "університет",
+        "original_sql": "SELECT COUNT(*) FROM викладачі WHERE вчене_звання = 'доцент';",
+        "fixed_sql": "SELECT COUNT(*) FROM викладачі WHERE вчене_звання_ід = 'доцент';",
+        "error": "ERROR:  invalid input syntax for type integer: \"доцент\"\nLINE 1: ...CT COUNT(*) FROM викладачі WHERE вчене_звання_ід = 'доцент';\n                                                              ^",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "університет_gen_008": {
+        "db_id": "університет",
+        "original_sql": "SELECT посада, AVG(зарплата) AS середня_зарплата FROM викладачі GROUP BY посада;",
+        "fixed_sql": "SELECT посада_ід, AVG(зарплата) AS середня_зарплата FROM викладачі GROUP BY посада_ід;",
+        "error": "column \"посада\" does not exist\nLINE 1: SELECT посада, AVG(зарплата) AS середня_зарплата FROM виклад...\n               ^\nHINT:  Perhaps you meant to reference the column \"викладачі.посада_ід\".\n",
+        "status": "fixed"
+    },
+    "університет_gen_009": {
+        "db_id": "університет",
+        "original_sql": "SELECT п.назва, п.опис FROM предмети п JOIN оцінки о ON п.ід = о.предмет_ід WHERE о.студент_ід = 123;",
+        "fixed_sql": "SELECT DISTINCT з.дисципліна FROM оцінки о JOIN заняття з ON о.заняття_ід = з.ід WHERE о.студент_ід = 123;",
+        "error": "ERROR:  column о.заняття_ід does not exist\nLINE 1: ...LECT DISTINCT з.дисципліна FROM оцінки о JOIN заняття з ON о...\n                                                                     ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "університет_gen_010": {
+        "db_id": "університет",
+        "original_sql": "SELECT назва, вартість FROM предмети ORDER BY вартість DESC NULLS LAST LIMIT 5;",
+        "fixed_sql": "SELECT назва, вартість FROM предмети ORDER BY вартість DESC NULLS LAST LIMIT 5;",
+        "error": "relation \"предмети\" does not exist\nLINE 1: SELECT назва, вартість FROM предмети ORDER BY вартість DESC ...\n                                    ^\n",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "університет_gen_013": {
+        "db_id": "університет",
+        "original_sql": "SELECT AVG(о.оцінка) AS середня_оцінка FROM оцінки о JOIN студенти с ON о.студент_ід = с.ід JOIN групи г ON с.група_ід = г.ід JOIN предмети п ON о.предмет_ід = п.ід WHERE г.назва = 'ПМ-21' AND п.назва = 'Математика';",
+        "fixed_sql": "SELECT AVG(о.оцінка) AS середня_оцінка FROM оцінки о JOIN студенти с ON о.студент_ід = с.ід JOIN групи г ON с.група_ід = г.ід JOIN заняття з ON о.заняття_ід = з.ід WHERE г.назва = 'ПМ-21' AND з.дисципліна = 'Математика';",
+        "error": "ERROR:  column о.студент_ід does not exist\nLINE 1: ...S середня_оцінка FROM оцінки о JOIN студенти с ON о.студент_...\n                                                             ^",
+        "status": "cannot_fix_schema_discrepancy"
+    },
+    "університет_gen_014": {
+        "db_id": "університет",
+        "original_sql": "SELECT назва, вартість FROM послуги WHERE доступність_для_студентів LIKE '%VIP%';",
+        "fixed_sql": "SELECT назва, вартість FROM послуги WHERE доступність_для_студентів LIKE '%VIP%';",
+        "error": "relation \"послуги\" does not exist\nLINE 1: SELECT назва, вартість FROM послуги WHERE доступність_для_ст...\n                                    ^\n",
+        "status": "cannot_fix_schema_mismatch"
+    },
+    "університет_gen_015": {
+        "db_id": "університет",
+        "original_sql": "SELECT імя, прізвище, група FROM студенти WHERE стипендія IS NOT NULL AND фінансування = 'Бюджет';",
+        "fixed_sql": "SELECT імя, прізвище, група_ід FROM студенти WHERE стипендія IS NOT NULL AND фінансування = 'Бюджет';",
+        "error": "ERROR:  column \"стипендія\" does not exist\nLINE 1: ...ELECT імя, прізвище, група_ід FROM студенти WHERE стипендія ...\n                                                             ^",
+        "status": "cannot_fix_schema_mismatch"
+    }
+}

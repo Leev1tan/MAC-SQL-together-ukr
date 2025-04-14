@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "ресторан_gen_001",
+    "db_id": "ресторан",
+    "question": "Скільки страв є вегетаріанськими?",
+    "gold_sql": "SELECT COUNT(*) FROM страви WHERE вегетаріанська = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "ресторан_gen_002",
+    "db_id": "ресторан",
+    "question": "Перелічіть назви всіх категорій страв.",
+    "gold_sql": "SELECT назва FROM категорії WHERE активна = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "ресторан_gen_003",
+    "db_id": "ресторан",
+    "question": "Знайдіть персонал за прізвищем 'Іваненко'.",
+    "gold_sql": "SELECT імя, прізвище, телефон FROM персонал WHERE прізвище = 'Іваненко' AND активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "ресторан_gen_004",
+    "db_id": "ресторан",
+    "question": "Які столики розраховані на 4 місця?",
+    "gold_sql": "SELECT номер, розташування FROM столики WHERE кількість_місць = 4 AND активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "ресторан_gen_005",
+    "db_id": "ресторан",
+    "question": "Які інгредієнти є алергенами?",
+    "gold_sql": "SELECT назва, опис FROM інгредієнти WHERE алерген = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "ресторан_gen_006",
+    "db_id": "ресторан",
+    "question": "Знайдіть страви дорожчі за 200.",
+    "gold_sql": "SELECT назва, ціна FROM страви WHERE ціна > 200 AND активна = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "ресторан_gen_007",
+    "db_id": "ресторан",
+    "question": "Які замовлення обслуговував офіціант 'Петро Сидоренко'?",
+    "gold_sql": "SELECT з.id, з.дата_час, з.фінальна_сума FROM замовлення з JOIN персонал п ON з.офіціант_ід = п.id WHERE п.імя = 'Петро' AND п.прізвище = 'Сидоренко';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "ресторан_gen_008",
+    "db_id": "ресторан",
+    "question": "Яка середня вартість страв у категорії 'Десерти'?",
+    "gold_sql": "SELECT AVG(с.ціна) FROM страви с JOIN категорії к ON с.категорія_ід = к.id WHERE к.назва = 'Десерти' AND с.активна = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "ресторан_gen_009",
+    "db_id": "ресторан",
+    "question": "Знайдіть резервації на сьогоднішній вечір (після 18:00).",
+    "gold_sql": "SELECT р.id, с.номер AS столик, р.прізвище_клієнта, р.телефон_клієнта, р.час_початку FROM резервації р JOIN столики с ON р.столик_ід = с.id JOIN статуси_резервацій ст ON р.статус_ід = ст.id WHERE р.дата = CURRENT_DATE AND р.час_початку >= '18:00:00' AND ст.назва = 'Підтверджено';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "ресторан_gen_010",
+    "db_id": "ресторан",
+    "question": "Скільки інгредієнтів постачає постачальник 'Продукти Плюс'?",
+    "gold_sql": "SELECT COUNT(i.id) FROM інгредієнти i JOIN постачальники p ON i.постачальник_ід = p.id WHERE p.назва = 'Продукти Плюс' AND i.активний = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "ресторан_gen_011",
+    "db_id": "ресторан",
+    "question": "Визначте 5 найпопулярніших страв за кількістю замовлень.",
+    "gold_sql": "SELECT с.назва, COUNT(пз.id) AS кількість_замовлень FROM страви с JOIN позиції_замовлення пз ON с.id = пз.страва_ід GROUP BY с.назва ORDER BY кількість_замовлень DESC LIMIT 5;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "ресторан_gen_012",
+    "db_id": "ресторан",
+    "question": "Знайдіть офіціантів, чия середня сума замовлення перевищує 500 за останній місяць.",
+    "gold_sql": "SELECT п.імя, п.прізвище, AVG(з.фінальна_сума) AS середня_сума_замовлення FROM персонал п JOIN замовлення з ON п.id = з.офіціант_ід JOIN посади по ON п.посада_ід = по.id WHERE по.назва = 'Офіціант' AND з.дата_час >= CURRENT_DATE - INTERVAL '1 month' GROUP BY п.id, п.імя, п.прізвище HAVING AVG(з.фінальна_сума) > 500;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "ресторан_gen_013",
+    "db_id": "ресторан",
+    "question": "Які інгредієнти потрібно замовити (кількість на складі менше мінімальної)?",
+    "gold_sql": "SELECT назва, кількість_на_складі, мінімальна_кількість FROM інгредієнти WHERE кількість_на_складі < мінімальна_кількість AND активний = TRUE;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "ресторан_gen_014",
+    "db_id": "ресторан",
+    "question": "Розрахуйте загальну суму чайових за минулий тиждень.",
+    "gold_sql": "SELECT SUM(чайові) AS загальні_чайові FROM замовлення WHERE дата_час >= CURRENT_DATE - INTERVAL '7 days' AND статус_ід IN (SELECT id FROM статуси_замовлень WHERE є_фінальним = TRUE);",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "ресторан_gen_015",
+    "db_id": "ресторан",
+    "question": "Знайдіть клієнтів, які робили резервації та не з'явилися.",
+    "gold_sql": "SELECT DISTINCT р.прізвище_клієнта, р.імя_клієнта, р.телефон_клієнта FROM резервації р JOIN статуси_резервацій ср ON р.статус_ід = ср.id WHERE ср.назва = 'Не з''явився';",
+    "difficulty": "complex"
+  }
+] 

@@ -1,0 +1,525 @@
+[
+  {
+    "question_id": "авіакомпанія_gen_001",
+    "db_id": "авіакомпанія",
+    "question": "Скільки аеропортів знаходиться у місті Київ?",
+    "gold_sql": "SELECT COUNT(*) FROM аеропорти WHERE місто = 'Київ';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_002",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть назви та виробників типів літаків з пасажиромісткістю понад 250 осіб.",
+    "gold_sql": "SELECT назва, виробник FROM типи_літаків WHERE максимальна_кількість_пасажирів > 250;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_003",
+    "db_id": "авіакомпанія",
+    "question": "Які існують статуси рейсів?",
+    "gold_sql": "SELECT назва FROM статуси_рейсів;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_004",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть 5 співробітників з найвищою зарплатою.",
+    "gold_sql": "SELECT прізвище, імя, зарплата FROM персонал ORDER BY зарплата DESC NULLS LAST LIMIT 5;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_005",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть рейси, заплановані на завтра, вказавши місто відправлення та місто призначення.",
+    "gold_sql": "SELECT r.номер_рейсу, a1.місто AS місто_відправлення, a2.місто AS місто_призначення, r.дата_час_відправлення FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id JOIN аеропорти a1 ON m.аеропорт_відправлення_id = a1.id JOIN аеропорти a2 ON m.аеропорт_призначення_id = a2.id WHERE r.дата_час_відправлення >= current_date + interval '1 day' AND r.дата_час_відправлення < current_date + interval '2 days' ORDER BY r.дата_час_відправлення;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_006",
+    "db_id": "авіакомпанія",
+    "question": "Розрахуйте середню вартість бронювання для кожного класу обслуговування.",
+    "gold_sql": "SELECT ko.назва, AVG(b.загальна_вартість) AS середня_вартість FROM бронювання b JOIN класи_обслуговування ko ON b.клас_обслуговування_id = ko.id GROUP BY ko.назва;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_007",
+    "db_id": "авіакомпанія",
+    "question": "Визначте 3 найзавантаженіші маршрути за кількістю виконаних рейсів за останні 6 місяців.",
+    "gold_sql": "SELECT a1.місто AS місто_відправлення, a2.місто AS місто_призначення, COUNT(r.id) AS кількість_рейсів FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id JOIN аеропорти a1 ON m.аеропорт_відправлення_id = a1.id JOIN аеропорти a2 ON m.аеропорт_призначення_id = a2.id JOIN статуси_рейсів sr ON r.статус_id = sr.id WHERE sr.назва = 'Виконано' AND r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '6 months' GROUP BY a1.місто, a2.місто ORDER BY кількість_рейсів DESC LIMIT 3;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_008",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть пасажирів, які бронювали рейси як у бізнес-, так і в економ-класі за останній рік.",
+    "gold_sql": "WITH PassengerBookings AS ( SELECT bp.пасажир_id, ko.назва AS клас_обслуговування FROM бронювання b JOIN бронювання_пасажири bp ON b.id = bp.бронювання_id JOIN класи_обслуговування ko ON b.клас_обслуговування_id = ko.id JOIN рейси r ON b.рейс_id = r.id WHERE r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year' AND ko.назва IN ('Бізнес', 'Економ') GROUP BY bp.пасажир_id, ko.назва ) SELECT p.прізвище, p.імя FROM пасажири p JOIN PassengerBookings pb ON p.id = pb.пасажир_id GROUP BY p.id, p.прізвище, p.імя HAVING COUNT(DISTINCT pb.клас_обслуговування) = 2;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_009",
+    "db_id": "авіакомпанія",
+    "question": "Які літаки проходили технічне обслуговування типу 'Капітальний ремонт'?",
+    "gold_sql": "SELECT DISTINCT l.реєстраційний_номер FROM літаки l JOIN технічне_обслуговування t ON l.id = t.літак_id WHERE t.тип_обслуговування = 'Капітальний ремонт';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_010",
+    "db_id": "авіакомпанія",
+    "question": "Скільки пасажирів скористалися послугою 'Додатковий багаж'?",
+    "gold_sql": "SELECT COUNT(DISTINCT bp.пасажир_id) FROM надані_послуги np JOIN послуги p ON np.послуга_id = p.id JOIN бронювання b ON np.бронювання_id = b.id JOIN бронювання_пасажири bp ON b.id = bp.бронювання_id WHERE p.назва = 'Додатковий багаж';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_011",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть персонал, який виконував роль 'Капітан' на рейсах за останній місяць.",
+    "gold_sql": "SELECT DISTINCT p.прізвище, p.імя FROM персонал p JOIN рейси_персонал rp ON p.id = rp.персонал_id JOIN рейси r ON rp.рейс_id = r.id WHERE rp.роль = 'Капітан' AND r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 month';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_012",
+    "db_id": "авіакомпанія",
+    "question": "Яка середня тривалість технічного обслуговування для кожного типу літака?",
+    "gold_sql": "SELECT tl.назва AS тип_літака, AVG(t.дата_завершення - t.дата_початку) AS середня_тривалість_днів FROM технічне_обслуговування t JOIN літаки l ON t.літак_id = l.id JOIN типи_літаків tl ON l.тип_літака_id = tl.id WHERE t.дата_завершення IS NOT NULL AND t.дата_початку IS NOT NULL AND t.дата_завершення >= t.дата_початку GROUP BY tl.назва;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_013",
+    "db_id": "авіакомпанія",
+    "question": "Визначте найпопулярніший метод оплати бронювань.",
+    "gold_sql": "SELECT mo.назва, COUNT(b.id) AS кількість_бронювань FROM бронювання b JOIN методи_оплати mo ON b.метод_оплати_id = mo.id GROUP BY mo.назва ORDER BY кількість_бронювань DESC LIMIT 1;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_014",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть усі послуги, доступні для пасажирів першого класу.",
+    "gold_sql": "SELECT назва, вартість FROM послуги WHERE доступність_в_класах LIKE '%перший клас%';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_015",
+    "db_id": "авіакомпанія",
+    "question": "Для кожного аеропорту порахуйте кількість відправлень та прибуттів за останній рік.",
+    "gold_sql": "WITH AirportFlights AS ( SELECT m.аеропорт_відправлення_id AS airport_id, 'відправлення' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') UNION ALL SELECT m.аеропорт_призначення_id AS airport_id, 'прибуття' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_прибуття >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') ) SELECT a.назва, a.місто, SUM(CASE WHEN af.type = 'відправлення' THEN 1 ELSE 0 END) AS кількість_відправлень, SUM(CASE WHEN af.type = 'прибуття' THEN 1 ELSE 0 END) AS кількість_прибуттів FROM AirportFlights af JOIN аеропорти a ON af.airport_id = a.id GROUP BY a.id, a.назва, a.місто ORDER BY кількість_відправлень DESC, кількість_прибуттів DESC;",
+    "difficulty": "complex"
+  },
+  {
+      "question_id": "лікарня_gen_001",
+      "db_id": "лікарня",
+      "question": "Скільки пацієнтів зареєстровано у лікарні?",
+      "gold_sql": "SELECT COUNT(*) FROM пацієнти;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "лікарня_gen_002",
+      "db_id": "лікарня",
+      "question": "Перелічіть назви всіх відділень лікарні.",
+      "gold_sql": "SELECT назва FROM відділення WHERE активне = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "лікарня_gen_003",
+      "db_id": "лікарня",
+      "question": "Знайдіть персонал за прізвищем 'Петренко'.",
+      "gold_sql": "SELECT імя, прізвище, табельний_номер FROM персонал WHERE прізвище = 'Петренко';",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "лікарня_gen_004",
+      "db_id": "лікарня",
+      "question": "Які медикаменти є рецептурними?",
+      "gold_sql": "SELECT назва, виробник FROM медикаменти WHERE рецептурний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "лікарня_gen_005",
+      "db_id": "лікарня",
+      "question": "Скільки лікарів мають спеціалізацію 'Хірургія'?",
+      "gold_sql": "SELECT COUNT(DISTINCT сл.лікар_ід) FROM спеціалізації_лікарів сл JOIN спеціалізації с ON сл.спеціалізація_ід = с.ід WHERE с.назва = 'Хірургія';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "лікарня_gen_006",
+      "db_id": "лікарня",
+      "question": "Знайдіть пацієнтів з групою крові 'A+' (II+).",
+      "gold_sql": "SELECT імя, прізвище, дата_народження FROM пацієнти WHERE група_крові = 'A' AND резус_фактор = '+';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "лікарня_gen_007",
+      "db_id": "лікарня",
+      "question": "Які візити були скасовані за останній тиждень?",
+      "gold_sql": "SELECT в.ід, п.прізвище AS пацієнт, пер.прізвище AS лікар, в.дата_час FROM візити в JOIN пацієнти п ON в.пацієнт_ід = п.ід JOIN персонал пер ON в.лікар_ід = пер.ід WHERE в.статус = 'скасований' AND в.дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "лікарня_gen_008",
+      "db_id": "лікарня",
+      "question": "Порахуйте середню зарплату для кожної категорії персоналу.",
+      "gold_sql": "SELECT пп.категорія, AVG(п.зарплата) AS середня_зарплата FROM персонал п JOIN посади_персоналу пп ON п.посада_ід = пп.ід WHERE п.активний = TRUE GROUP BY пп.категорія;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "лікарня_gen_009",
+      "db_id": "лікарня",
+      "question": "Перелічіть діагнози, встановлені пацієнту з ID 123.",
+      "gold_sql": "SELECT х.назва, д.дата_встановлення, пер.прізвище AS лікар FROM діагнози д JOIN хвороби х ON д.хвороба_ід = х.ід JOIN персонал пер ON д.лікар_ід = пер.ід WHERE д.пацієнт_ід = 123 ORDER BY д.дата_встановлення DESC;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "лікарня_gen_010",
+      "db_id": "лікарня",
+      "question": "Знайдіть 5 найдорожчих медичних послуг.",
+      "gold_sql": "SELECT назва, ціна FROM послуги ORDER BY ціна DESC NULLS LAST LIMIT 5;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "лікарня_gen_011",
+      "db_id": "лікарня",
+      "question": "Для кожного відділення знайдіть кількість госпіталізацій за останній місяць.",
+      "gold_sql": "SELECT в.назва, COUNT(г.ід) AS кількість_госпіталізацій FROM відділення в LEFT JOIN госпіталізації г ON в.ід = г.відділення_ід AND г.дата_надходження >= CURRENT_DATE - INTERVAL '1 month' WHERE в.активне = TRUE GROUP BY в.назва ORDER BY кількість_госпіталізацій DESC;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "лікарня_gen_012",
+      "db_id": "лікарня",
+      "question": "Знайдіть лікарів, які виписали найбільше рецептів за останній квартал.",
+      "gold_sql": "SELECT п.імя, п.прізвище, COUNT(р.ід) AS кількість_рецептів FROM персонал п JOIN рецепти р ON п.ід = р.лікар_ід WHERE р.дата_виписки >= CURRENT_DATE - INTERVAL '3 months' GROUP BY п.ід, п.імя, п.прізвище ORDER BY кількість_рецептів DESC LIMIT 10;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "лікарня_gen_013",
+      "db_id": "лікарня",
+      "question": "Визначте середню тривалість госпіталізації для пацієнтів з хворобою 'Пневмонія'.",
+      "gold_sql": "SELECT AVG(EXTRACT(DAY FROM (г.дата_виписки - г.дата_надходження))) AS середня_тривалість_днів FROM госпіталізації г JOIN діагнози д ON г.діагноз_ід = д.ід JOIN хвороби х ON д.хвороба_ід = х.ід WHERE х.назва = 'Пневмонія' AND г.дата_виписки IS NOT NULL AND г.дата_надходження IS NOT NULL;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "лікарня_gen_014",
+      "db_id": "лікарня",
+      "question": "Знайдіть пацієнтів, які мали візити до кардіолога та невролога.",
+"gold_sql": "WITH PatientVisits AS ( SELECT в.пацієнт_ід, с.назва AS спеціалізація FROM візити в JOIN персонал п ON в.лікар_ід = п.ід JOIN спеціалізації_лікарів сл ON п.ід = сл.лікар_ід JOIN спеціалізації с ON сл.спеціалізація_ід = с.ід WHERE с.назва IN ('Кардіологія', 'Неврологія') ) SELECT п.прізвище, п.імя FROM пацієнти п JOIN PatientVisits pv ON п.ід = pv.пацієнт_ід GROUP BY п.ід, п.прізвище, п.імя HAVING COUNT(DISTINCT pv.спеціалізація) = 2;",      "difficulty": "complex"
+    },
+    {
+      "question_id": "лікарня_gen_015",
+      "db_id": "лікарня",
+      "question": "Порахуйте загальну суму наданих платних послуг за минулий місяць для кожної страхової компанії.",
+      "gold_sql": "SELECT ск.назва, SUM(пос.ціна) AS загальна_сума FROM надані_послуги нп JOIN послуги пос ON нп.послуга_ід = пос.ід JOIN пацієнти п ON нп.пацієнт_ід = п.ід JOIN страховки_пацієнтів сп ON п.ід = сп.пацієнт_ід JOIN страхові_компанії ск ON сп.страхова_компанія_ід = ск.ід WHERE нп.дата_час >= date_trunc('month', CURRENT_DATE - interval '1 month') AND нп.дата_час < date_trunc('month', CURRENT_DATE) AND пос.ціна > 0 AND сп.активна = TRUE GROUP BY ск.назва ORDER BY загальна_сума DESC;",      "difficulty": "complex"
+    },
+    {
+      "question_id": "ресторан_gen_001",
+      "db_id": "ресторан",
+      "question": "Скільки страв є вегетаріанськими?",
+      "gold_sql": "SELECT COUNT(*) FROM страви WHERE вегетаріанська = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "ресторан_gen_002",
+      "db_id": "ресторан",
+      "question": "Перелічіть назви всіх категорій страв.",
+      "gold_sql": "SELECT назва FROM категорії WHERE активна = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "ресторан_gen_003",
+      "db_id": "ресторан",
+      "question": "Знайдіть персонал за прізвищем 'Іваненко'.",
+      "gold_sql": "SELECT імя, прізвище, телефон FROM персонал WHERE прізвище = 'Іваненко' AND активний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "ресторан_gen_004",
+      "db_id": "ресторан",
+      "question": "Які столики розраховані на 4 місця?",
+      "gold_sql": "SELECT номер, розташування FROM столики WHERE кількість_місць = 4 AND активний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "ресторан_gen_005",
+      "db_id": "ресторан",
+      "question": "Які інгредієнти є алергенами?",
+      "gold_sql": "SELECT назва, опис FROM інгредієнти WHERE алерген = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "ресторан_gen_006",
+      "db_id": "ресторан",
+      "question": "Знайдіть страви дорожчі за 200.",
+      "gold_sql": "SELECT назва, ціна FROM страви WHERE ціна > 200 AND активна = TRUE;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "ресторан_gen_007",
+      "db_id": "ресторан",
+      "question": "Які замовлення обслуговував офіціант 'Петро Сидоренко'?",
+      "gold_sql": "SELECT з.ід, з.дата_час, з.фінальна_сума FROM замовлення з JOIN персонал п ON з.офіціант_ід = п.ід WHERE п.імя = 'Петро' AND п.прізвище = 'Сидоренко';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "ресторан_gen_008",
+      "db_id": "ресторан",
+      "question": "Яка середня вартість страв у категорії 'Десерти'?",
+      "gold_sql": "SELECT AVG(с.ціна) FROM страви с JOIN категорії к ON с.категорія_ід = к.ід WHERE к.назва = 'Десерти' AND с.активна = TRUE;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "ресторан_gen_009",
+      "db_id": "ресторан",
+      "question": "Знайдіть резервації на сьогоднішній вечір (після 18:00).",
+      "gold_sql": "SELECT р.ід, с.номер AS столик, р.прізвище_клієнта, р.телефон_клієнта, р.час_початку FROM резервації р JOIN столики с ON р.столик_ід = с.ід JOIN статуси_резервацій ст ON р.статус_ід = ст.ід WHERE р.дата = CURRENT_DATE AND р.час_початку >= '18:00:00' AND ст.назва = 'Підтверджено';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "ресторан_gen_010",
+      "db_id": "ресторан",
+      "question": "Скільки інгредієнтів постачає постачальник 'Продукти Плюс'?",
+      "gold_sql": "SELECT COUNT(i.ід) FROM інгредієнти i JOIN постачальники p ON i.постачальник_ід = p.ід WHERE p.назва = 'Продукти Плюс' AND i.активний = TRUE;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "ресторан_gen_011",
+      "db_id": "ресторан",
+      "question": "Визначте 5 найпопулярніших страв за кількістю замовлень.",
+      "gold_sql": "SELECT с.назва, COUNT(пз.ід) AS кількість_замовлень FROM страви с JOIN позиції_замовлення пз ON с.ід = пз.страва_ід GROUP BY с.назва, с.ід ORDER BY кількість_замовлень DESC LIMIT 5;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "ресторан_gen_012",
+      "db_id": "ресторан",
+      "question": "Знайдіть офіціантів, чия середня сума замовлення перевищує 500 за останній місяць.",
+      "gold_sql": "SELECT п.імя, п.прізвище, AVG(з.фінальна_сума) AS середня_сума_замовлення FROM персонал п JOIN замовлення з ON п.ід = з.офіціант_ід JOIN посади по ON п.посада_ід = по.ід WHERE по.назва = 'Офіціант' AND з.дата_час >= CURRENT_DATE - INTERVAL '1 month' GROUP BY п.ід, п.імя, п.прізвище HAVING AVG(з.фінальна_сума) > 500;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "ресторан_gen_013",
+      "db_id": "ресторан",
+      "question": "Які інгредієнти потрібно замовити (кількість на складі менше мінімальної)?",
+      "gold_sql": "SELECT назва, кількість_на_складі, мінімальна_кількість FROM інгредієнти WHERE кількість_на_складі < мінімальна_кількість AND активний = TRUE;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "ресторан_gen_014",
+      "db_id": "ресторан",
+      "question": "Розрахуйте загальну суму чайових за минулий тиждень.",
+      "gold_sql": "SELECT SUM(чайові) AS загальні_чайові FROM замовлення WHERE дата_час >= CURRENT_DATE - INTERVAL '7 days' AND статус_ід IN (SELECT ід FROM статуси_замовлень WHERE є_фінальним = TRUE);",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "ресторан_gen_015",
+      "db_id": "ресторан",
+      "question": "Знайдіть клієнтів, які робили резервації та не з'явилися.",
+      "gold_sql": "SELECT DISTINCT р.прізвище_клієнта, р.імя_клієнта, р.телефон_клієнта FROM резервації р JOIN статуси_резервацій ср ON р.статус_ід = ср.ід WHERE ср.назва = 'Не з''явився';",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "спортивклуб_gen_001",
+      "db_id": "спортивний_клуб",
+      "question": "Скільки активних членів клубу зареєстровано?",
+      "gold_sql": "SELECT COUNT(*) FROM члени_клубу WHERE активний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "спортклуб_gen_002",
+      "db_id": "спортивний_клуб",
+      "question": "Перелічіть назви всіх типів абонементів.",
+      "gold_sql": "SELECT назва FROM типи_абонементів WHERE активний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "спортклуб_gen_003",
+      "db_id": "спортивний_клуб",
+      "question": "Знайдіть тренера за прізвищем 'Ковальчук'.",
+      "gold_sql": "SELECT імя, прізвище, телефон FROM тренери WHERE прізвище = 'Ковальчук' AND активний = TRUE;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "спортклуб_gen_004",
+      "db_id": "спортивний_клуб",
+      "question": "Які приміщення є басейнами?",
+      "gold_sql": "SELECT п.назва, п.площа FROM приміщення п JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id WHERE тп.назва = 'Басейн';",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "спортклуб_gen_005",
+      "db_id": "спортивний_клуб",
+      "question": "Перелічіть групові заняття з рівнем складності 'Високий'.",
+      "gold_sql": "SELECT гз.назва, гз.опис FROM групові_заняття гз JOIN рівні_складності рс ON гз.рівень_складності_id = рс.id WHERE рс.назва = 'Високий';",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "спортклуб_gen_006",
+      "db_id": "спортивний_клуб",
+      "question": "Які тренери спеціалізуються на йозі?",
+      "gold_sql": "SELECT т.імя, т.прізвище FROM тренери т JOIN спеціалізації_тренерів ст ON т.спеціалізація_id = ст.id WHERE ст.назва = 'Йога' AND т.активний = TRUE;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "спортклуб_gen_007",
+      "db_id": "спортивний_клуб",
+      "question": "Знайдіть членів клубу, чиє членство закінчується цього місяця.",
+      "gold_sql": "SELECT чк.імя, чк.прізвище, ч.дата_завершення FROM члени_клубу чк JOIN членства ч ON чк.членство_id = ч.id WHERE ч.дата_завершення >= date_trunc('month', CURRENT_DATE) AND ч.дата_завершення < date_trunc('month', CURRENT_DATE) + interval '1 month';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "спортклуб_gen_008",
+      "db_id": "спортивний_клуб",
+      "question": "Яка середня вартість абонементів?",
+      "gold_sql": "SELECT AVG(вартість) FROM типи_абонементів WHERE активний = TRUE;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "спортклуб_gen_009",
+      "db_id": "спортивний_клуб",
+      "question": "Перелічіть обладнання, придбане минулого року.",
+      "gold_sql": "SELECT назва, виробник, дата_придбання FROM обладнання WHERE EXTRACT(YEAR FROM дата_придбання) = EXTRACT(YEAR FROM CURRENT_DATE) - 1;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "спортклуб_gen_010",
+      "db_id": "спортивний_клуб",
+      "question": "Знайдіть платежі, здійснені за допомогою 'Картка'.",
+      "gold_sql": "SELECT п.id, чк.прізвище AS член_клубу, п.сума, п.дата_платежу FROM платежі п JOIN члени_клубу чк ON п.член_клубу_id = чк.id WHERE п.спосіб_оплати = 'Картка';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "спортклуб_gen_011",
+      "db_id": "спортивний_клуб",
+      "question": "Які групові заняття мають найбільшу кількість записів?",
+      "gold_sql": "SELECT гз.назва, COUNT(зз.id) AS кількість_записів FROM групові_заняття гз JOIN розклад_занять рз ON гз.id = рз.заняття_id JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id JOIN статуси_записів сз ON зз.статус_id = сз.id WHERE сз.назва = 'Записано' GROUP BY гз.назва ORDER BY кількість_записів DESC LIMIT 5;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "спортклуб_gen_012",
+      "db_id": "спортивний_клуб",
+      "question": "Знайдіть тренерів з середньою оцінкою вище 4.5.",
+      "gold_sql": "SELECT т.імя, т.прізвище, AVG(о.оцінка) AS середня_оцінка FROM тренери т JOIN оцінки_тренерів о ON т.id = о.тренер_id WHERE т.активний = TRUE GROUP BY т.id, т.імя, т.прізвище HAVING AVG(о.оцінка) > 4.5;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "спортклуб_gen_013",
+      "db_id": "спортивний_клуб",
+      "question": "Визначте найпопулярніший день тижня для відвідувань клубу.",
+      "gold_sql": "SELECT EXTRACT(ISODOW FROM дата_відвідування) AS день_тижня, COUNT(id) AS кількість_відвідувань FROM відвідування GROUP BY день_тижня ORDER BY кількість_відвідувань DESC LIMIT 1;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "спортклуб_gen_014",
+      "db_id": "спортивний_клуб",
+      "question": "Знайдіть членів клубу, які відвідували і басейн, і сауну.",
+      "gold_sql": "WITH MemberVisits AS ( SELECT в.член_клубу_id, тп.назва AS тип_приміщення FROM відвідування в LEFT JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id LEFT JOIN індивідуальні_бронювання іб ON в.індивідуальне_бронювання_id = іб.id LEFT JOIN розклад_занять рз ON зз.розклад_заняття_id = рз.id LEFT JOIN приміщення п ON рз.приміщення_id = п.id OR іб.приміщення_id = п.id LEFT JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id WHERE тп.назва IN ('Басейн', 'Сауна') ) SELECT чк.імя, чк.прізвище FROM члени_клубу чк JOIN MemberVisits mv ON чк.id = mv.член_клубу_id WHERE чк.активний = TRUE GROUP BY чк.id, чк.імя, чк.прізвище HAVING COUNT(DISTINCT mv.тип_приміщення) = 2;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "спортклуб_gen_015",
+      "db_id": "спортивний_клуб",
+      "question": "Розрахуйте дохід від кожного типу абонементу за останній рік.",
+      "gold_sql": "SELECT та.назва, SUM(п.сума) AS загальний_дохід FROM типи_абонементів та JOIN членства ч ON та.id = ч.тип_абонементу_id JOIN платежі п ON ч.id = п.членство_id WHERE п.дата_платежу >= CURRENT_DATE - INTERVAL '1 year' AND п.статус = 'Оплачено' GROUP BY та.назва ORDER BY загальний_дохід DESC;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "університет_gen_001",
+      "db_id": "університет",
+      "question": "Скільки студентів навчається на кожному факультеті?",
+      "gold_sql": "SELECT T1.назва ,  count(*) FROM факультети AS T1 JOIN кафедри AS T2 ON T1.ід  =  T2.факультет_ід JOIN напрями AS N ON T2.ід = N.кафедра_ід JOIN групи AS T3 ON N.ід  =  T3.напрям_ід JOIN студенти AS T4 ON T3.ід  =  T4.група_ід GROUP BY T1.ід, T1.назва;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_002",
+      "db_id": "університет",
+      "question": "Перелічіть усі курси, які викладає викладач з прізвищем 'Мельник'.",
+      "gold_sql": "SELECT T2.назва FROM викладачі AS T1 JOIN заняття AS T3 ON T1.ід  =  T3.викладач_ід JOIN курси AS T2 ON T3.курс_ід  =  T2.ід WHERE T1.прізвище  =  'Мельник';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_003",
+      "db_id": "університет",
+      "question": "Який середній бал студентів групи 'ПМ-21'?",
+      "gold_sql": "SELECT avg(T1.середній_бал) FROM студенти AS T1 JOIN групи AS T2 ON T1.група_ід  =  T2.ід WHERE T2.назва  =  'ПМ-21';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_004",
+      "db_id": "університет",
+      "question": "Які аудиторії мають проектор та місткість понад 50 осіб?",
+      "gold_sql": "SELECT T1.номер ,  T2.назва FROM аудиторії AS T1 JOIN будівлі AS T2 ON T1.будівля_ід  =  T2.ід WHERE T1.має_проектор IS TRUE AND T1.місткість  >  50;",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "університет_gen_005",
+      "db_id": "університет",
+      "question": "Знайдіть імена та електронні адреси всіх завідувачів кафедр.",
+      "gold_sql": "SELECT T2.прізвище ,  T2.імя ,  T2.електронна_пошта FROM кафедри AS T1 JOIN викладачі AS T2 ON T1.завідувач_ід  =  T2.ід;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_006",
+      "db_id": "університет",
+      "question": "Скільки курсів пропонує кожна кафедра?",
+      "gold_sql": "SELECT T1.назва ,  count(T2.ід) FROM кафедри AS T1 JOIN курси AS T2 ON T1.ід  =  T2.кафедра_ід GROUP BY T1.ід, T1.назва;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_007",
+      "db_id": "університет",
+      "question": "Перелічіть студентів, які вступили до університету після 1 вересня 2022 року.",
+      "gold_sql": "SELECT прізвище ,  імя FROM студенти WHERE дата_вступу  >  '2022-09-01'",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "університет_gen_008",
+      "db_id": "університет",
+      "question": "Які існують типи занять?",
+      "gold_sql": "SELECT назва FROM типи_занять",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "університет_gen_009",
+      "db_id": "університет",
+      "question": "Знайдіть усіх викладачів з науковим ступенем 'Доктор наук'.",
+      "gold_sql": "SELECT T1.прізвище ,  T1.імя FROM викладачі AS T1 JOIN академічні_ступені AS T2 ON T1.науковий_ступінь_ід  =  T2.ід WHERE T2.назва  =  'Доктор наук'",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_010",
+      "db_id": "університет",
+      "question": "Який розклад занять для курсу 'Програмування' у поточному семестрі?",
+      "gold_sql": "SELECT T3.день_тижня ,  T3.час_початку ,  T3.час_кінця ,  T5.номер FROM курси AS T1 JOIN заняття AS T2 ON T1.ід  =  T2.курс_ід JOIN розклад_занять AS T3 ON T2.ід  =  T3.заняття_ід JOIN семестри AS T4 ON T2.семестр_ід  =  T4.ід JOIN аудиторії AS T5 ON T3.аудиторія_ід  =  T5.ід WHERE T1.назва  =  'Програмування' AND T4.є_активним IS TRUE;",
+      "difficulty": "complex"
+    },
+    {
+      "question_id": "університет_gen_011",
+      "db_id": "університет",
+      "question": "Перелічіть усі факультети та імена їхніх деканів.",
+      "gold_sql": "SELECT T1.назва ,  T2.прізвище ,  T2.імя FROM факультети AS T1 JOIN викладачі AS T2 ON T1.декан_ід  =  T2.ід;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_012",
+      "db_id": "університет",
+      "question": "Скільки студентів у кожній групі навчається на бюджетній формі?",
+      "gold_sql": "SELECT T1.назва ,  count(T2.ід) FROM групи AS T1 JOIN студенти AS T2 ON T1.ід  =  T2.група_ід WHERE T2.фінансування  =  'Бюджет' GROUP BY T1.ід, T1.назва;",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_013",
+      "db_id": "університет",
+      "question": "Знайдіть навчальні матеріали (назву та тип), доступні для курсу 'Математичний аналіз'.",
+      "gold_sql": "SELECT T1.назва ,  T1.тип FROM навчальні_матеріали AS T1 JOIN курси AS T2 ON T1.курс_ід  =  T2.ід WHERE T2.назва  =  'Математичний аналіз';",
+      "difficulty": "medium"
+    },
+    {
+      "question_id": "університет_gen_014",
+      "db_id": "університет",
+      "question": "Яка загальна кількість викладачів в університеті?",
+      "gold_sql": "SELECT count(*) FROM викладачі WHERE активний = TRUE",
+      "difficulty": "simple"
+    },
+    {
+      "question_id": "університет_gen_015",
+      "db_id": "університет",
+      "question": "Перелічіть студентів (прізвище, ім'я) із середнім балом вище 90.",
+      "gold_sql": "SELECT прізвище ,  імя FROM студенти WHERE середній_бал  >  90",
+      "difficulty": "simple"
+    }
+]

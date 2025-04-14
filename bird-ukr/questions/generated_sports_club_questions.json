@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "спортклуб_gen_001",
+    "db_id": "спортивний_клуб",
+    "question": "Скільки активних членів клубу зареєстровано?",
+    "gold_sql": "SELECT COUNT(*) FROM члени_клубу WHERE активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "спортклуб_gen_002",
+    "db_id": "спортивний_клуб",
+    "question": "Перелічіть назви всіх типів абонементів.",
+    "gold_sql": "SELECT назва FROM типи_абонементів WHERE активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "спортклуб_gen_003",
+    "db_id": "спортивний_клуб",
+    "question": "Знайдіть тренера за прізвищем 'Ковальчук'.",
+    "gold_sql": "SELECT імя, прізвище, телефон FROM тренери WHERE прізвище = 'Ковальчук' AND активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "спортклуб_gen_004",
+    "db_id": "спортивний_клуб",
+    "question": "Які приміщення є басейнами?",
+    "gold_sql": "SELECT п.назва, п.площа FROM приміщення п JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id WHERE тп.назва = 'Басейн';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "спортклуб_gen_005",
+    "db_id": "спортивний_клуб",
+    "question": "Перелічіть групові заняття з рівнем складності 'Високий'.",
+    "gold_sql": "SELECT гз.назва, гз.опис FROM групові_заняття гз JOIN рівні_складності рс ON гз.рівень_складності_id = рс.id WHERE рс.назва = 'Високий';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "спортклуб_gen_006",
+    "db_id": "спортивний_клуб",
+    "question": "Які тренери спеціалізуються на йозі?",
+    "gold_sql": "SELECT т.імя, т.прізвище FROM тренери т JOIN спеціалізації_тренерів ст ON т.спеціалізація_id = ст.id WHERE ст.назва = 'Йога' AND т.активний = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "спортклуб_gen_007",
+    "db_id": "спортивний_клуб",
+    "question": "Знайдіть членів клубу, чиє членство закінчується цього місяця.",
+    "gold_sql": "SELECT чк.імя, чк.прізвище, ч.дата_завершення FROM члени_клубу чк JOIN членства ч ON чк.членство_id = ч.id WHERE ч.дата_завершення >= date_trunc('month', CURRENT_DATE) AND ч.дата_завершення < date_trunc('month', CURRENT_DATE) + interval '1 month';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "спортклуб_gen_008",
+    "db_id": "спортивний_клуб",
+    "question": "Яка середня вартість абонементів?",
+    "gold_sql": "SELECT AVG(вартість) FROM типи_абонементів WHERE активний = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "спортклуб_gen_009",
+    "db_id": "спортивний_клуб",
+    "question": "Перелічіть обладнання, придбане минулого року.",
+    "gold_sql": "SELECT назва, виробник, дата_придбання FROM обладнання WHERE EXTRACT(YEAR FROM дата_придбання) = EXTRACT(YEAR FROM CURRENT_DATE) - 1;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "спортклуб_gen_010",
+    "db_id": "спортивний_клуб",
+    "question": "Знайдіть платежі, здійснені за допомогою 'Картка'.",
+    "gold_sql": "SELECT п.id, чк.прізвище AS член_клубу, п.сума, п.дата_платежу FROM платежі п JOIN члени_клубу чк ON п.член_клубу_id = чк.id WHERE п.спосіб_оплати = 'Картка';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "спортклуб_gen_011",
+    "db_id": "спортивний_клуб",
+    "question": "Які групові заняття мають найбільшу кількість записів?",
+    "gold_sql": "SELECT гз.назва, COUNT(зз.id) AS кількість_записів FROM групові_заняття гз JOIN розклад_занять рз ON гз.id = рз.заняття_id JOIN записи_на_заняття зз ON рз.id = зз.розклад_заняття_id JOIN статуси_записів сз ON зз.статус_id = сз.id WHERE сз.назва = 'Записано' GROUP BY гз.назва ORDER BY кількість_записів DESC LIMIT 5;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "спортклуб_gen_012",
+    "db_id": "спортивний_клуб",
+    "question": "Знайдіть тренерів з середньою оцінкою вище 4.5.",
+    "gold_sql": "SELECT т.імя, т.прізвище, AVG(о.оцінка) AS середня_оцінка FROM тренери т JOIN оцінки_тренерів о ON т.id = о.тренер_id WHERE т.активний = TRUE GROUP BY т.id, т.імя, т.прізвище HAVING AVG(о.оцінка) > 4.5;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "спортклуб_gen_013",
+    "db_id": "спортивний_клуб",
+    "question": "Визначте найпопулярніший день тижня для відвідувань клубу.",
+    "gold_sql": "SELECT EXTRACT(ISODOW FROM дата_відвідування) AS день_тижня, COUNT(id) AS кількість_відвідувань FROM відвідування GROUP BY день_тижня ORDER BY кількість_відвідувань DESC LIMIT 1;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "спортклуб_gen_014",
+    "db_id": "спортивний_клуб",
+    "question": "Знайдіть членів клубу, які відвідували і басейн, і сауну.",
+    "gold_sql": "WITH MemberVisits AS ( SELECT в.член_клубу_id, тп.назва AS тип_приміщення FROM відвідування в LEFT JOIN записи_на_заняття зз ON в.запис_на_заняття_id = зз.id LEFT JOIN індивідуальні_бронювання іб ON в.індивідуальне_бронювання_id = іб.id LEFT JOIN розклад_занять рз ON зз.розклад_заняття_id = рз.id LEFT JOIN приміщення п ON рз.приміщення_id = п.id OR іб.приміщення_id = п.id LEFT JOIN типи_приміщень тп ON п.тип_приміщення_id = тп.id WHERE тп.назва IN ('Басейн', 'Сауна') ) SELECT чк.імя, чк.прізвище FROM члени_клубу чк JOIN MemberVisits mv ON чк.id = mv.член_клубу_id WHERE чк.активний = TRUE GROUP BY чк.id, чк.імя, чк.прізвище HAVING COUNT(DISTINCT mv.тип_приміщення) = 2;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "спортклуб_gen_015",
+    "db_id": "спортивний_клуб",
+    "question": "Розрахуйте дохід від кожного типу абонементу за останній рік.",
+    "gold_sql": "SELECT та.назва, SUM(п.сума) AS загальний_дохід FROM типи_абонементів та JOIN членства ч ON та.id = ч.тип_абонементу_id JOIN платежі п ON ч.id = п.членство_id WHERE п.дата_платежу >= CURRENT_DATE - INTERVAL '1 year' AND п.статус = 'Оплачено' GROUP BY та.назва ORDER BY загальний_дохід DESC;",
+    "difficulty": "complex"
+  }
+] 

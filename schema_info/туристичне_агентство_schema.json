@@ -1,0 +1,1308 @@
+{
+    "tables": {
+        "активні_тури": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ціна",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "включено_харчування",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_харчування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "включені_екскурсії",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "готель",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зірок_готелю",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "бронювання_готелів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"бронювання_готелів_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "готель_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_кімнати_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_заїзду",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_виїзду",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_кімнат",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "кількість_осіб",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_бронювання",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "бронювання_транспорту": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"бронювання_транспорту_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "транспорт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_бронювання",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "кількість_місць",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "бронювання_турів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"бронювання_турів_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тур_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_бронювання",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "кількість_осіб",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "знижка_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальна_вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_підтвердження",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "відгуки": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"відгуки_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тур_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "готель_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "оцінка",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "коментар",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_відгуку",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "модерований",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "фото_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "готелі": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"готелі_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зірок",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зручності",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фото_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "веб_сайт",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактний_телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "email",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "знижки": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"знижки_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "відсоток",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фіксована_сума",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "клієнти": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"клієнти_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "паспорт",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "email",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_реєстрації",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": "CURRENT_DATE"
+                }
+            ]
+        },
+        "країни": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"країни_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вимоги_для_візи",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "валюта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "континент",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мова",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "логи_бронювань": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"логи_бронювань_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "бронювання_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_бронювання",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "старий_статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "новий_статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_зміни",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "методи_оплати": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"методи_оплати_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "міста": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"міста_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "популярність",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "платежі": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"платежі_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "бронювання_тур_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бронювання_готель_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бронювання_транспорт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_платежу",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "метод_оплати_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "номер_транзакції",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'Оплачено'::character varying"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "посади": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"посади_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мін_зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "макс_зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "працівники": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"працівники_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "email",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "посада_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_прийому",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_звільнення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фото_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "рейтинг_турів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "середня_оцінка",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_відгуків",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_бронювання": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"статуси_бронювання_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "типи_кімнат": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_кімнат_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "типи_транспорту": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_транспорту_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "транспорт": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"транспорт_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "тип_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "компанія",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "номер_рейсу",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто_відправлення_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто_прибуття_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_відправлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_прибуття",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ціна",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_місць",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "тури": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"тури_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "готель_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ціна",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "включено_харчування",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "тип_харчування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "включені_екскурсії",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_кількість_туристів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_DATE"
+                },
+                {
+                    "column_name": "працівник_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фото_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "інформація_про_бронювання": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_бронювання",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_осіб",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальна_вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "клієнт",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон_клієнта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тур",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "працівник",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "історія_пошуків": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"історія_пошуків_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "пошуковий_запит",
+                    "data_type": "text",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_пошуку",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "результати_знайдено",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ip_адреса",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "user_agent",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        }
+    }
+}

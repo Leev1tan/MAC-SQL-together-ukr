@@ -1,515 +1,2037 @@
 {
-    "інтернет_магазин_001": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_002": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_003": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_004": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_005": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_006": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_007": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_008": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_009": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_010": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_011": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_012": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_013": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_014": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_015": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_016": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_017": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_018": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_019": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "інтернет_магазин_020": {
-        "error": "Failed to execute query on database інтернет_магазин"
-    },
-    "авіакомпанія_001": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_002": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_003": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_004": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_005": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_006": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_007": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_008": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_009": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_010": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_011": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_012": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_013": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_014": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "авіакомпанія_015": {
-        "error": "Failed to execute query on database авіакомпанія"
-    },
-    "бібліотека_001": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_002": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_003": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_004": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_005": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_006": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_007": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_008": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_009": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_010": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_011": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_012": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_013": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_014": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_015": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_016": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_017": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_018": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_019": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_020": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_021": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_022": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_023": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_024": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "бібліотека_025": {
-        "error": "Failed to execute query on database бібліотека"
-    },
-    "лікарня_001": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_002": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_003": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_004": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_005": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_006": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_007": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_008": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_009": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_010": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_011": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_012": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_013": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_014": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_015": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_016": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_017": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_018": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_019": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_020": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_021": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_022": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_023": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_024": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "лікарня_025": {
-        "error": "Failed to execute query on database лікарня"
-    },
-    "ресторан_001": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_002": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_003": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_004": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_005": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_006": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_007": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_008": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_009": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_010": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_011": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_012": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_013": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_014": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_015": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_016": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "ресторан_017": {
-        "error": "Failed to execute query on database ресторан"
-    },
-    "спортивний_клуб_001": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_002": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_003": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_004": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_005": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_006": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_007": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_008": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_009": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_010": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_011": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_012": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_013": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_014": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_015": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_016": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_017": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_018": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_019": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_020": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_021": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_022": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_023": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_024": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_025": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_026": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_027": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_028": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_029": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_030": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_031": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_032": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_033": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_034": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "спортивний_клуб_035": {
-        "error": "Failed to execute query on database спортивний_клуб"
-    },
-    "туристичне_агентство_001": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_002": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_003": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_004": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_005": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_006": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_007": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_008": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_009": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_010": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_011": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_012": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_013": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_014": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_015": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_016": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "туристичне_агентство_017": {
-        "error": "Failed to execute query on database туристичне_агентство"
-    },
-    "університет_001": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_002": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_003": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_004": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_005": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_006": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_007": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_008": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_009": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_010": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_011": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_012": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_013": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_014": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_015": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_016": {
-        "error": "Failed to execute query on database університет"
-    },
-    "університет_017": {
-        "error": "Failed to execute query on database університет"
+    "авіакомпанія_gen_001": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                2
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_002": {
+        "columns": [
+            "назва",
+            "виробник"
+        ],
+        "rows": [
+            [
+                "Boeing 787-9 Dreamliner",
+                "Boeing"
+            ],
+            [
+                "Airbus A330-300",
+                "Airbus"
+            ],
+            [
+                "Airbus A380",
+                "Airbus"
+            ],
+            [
+                "Boeing 777-300ER",
+                "Boeing"
+            ],
+            [
+                "Boeing 777-300ER",
+                "Boeing"
+            ],
+            [
+                "Airbus A380",
+                "Airbus"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_003": {
+        "columns": [
+            "назва"
+        ],
+        "rows": [
+            [
+                "Запланований"
+            ],
+            [
+                "Посадка"
+            ],
+            [
+                "Вилетів"
+            ],
+            [
+                "У польоті"
+            ],
+            [
+                "Прибув"
+            ],
+            [
+                "Затримано"
+            ],
+            [
+                "Скасовано"
+            ],
+            [
+                "Перенаправлено"
+            ],
+            [
+                "Технічні причини"
+            ],
+            [
+                "Погодні умови"
+            ],
+            [
+                "Запланований"
+            ],
+            [
+                "Реєстрація"
+            ],
+            [
+                "Посадка"
+            ],
+            [
+                "В польоті"
+            ],
+            [
+                "Прибув"
+            ],
+            [
+                "Затримано"
+            ],
+            [
+                "Скасовано"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_004": {
+        "columns": [
+            "прізвище",
+            "імя",
+            "зарплата"
+        ],
+        "rows": [
+            [
+                "Петренко",
+                "Іван",
+                130000.0
+            ],
+            [
+                "Коваленко",
+                "Олександр",
+                90000.0
+            ],
+            [
+                "Петренко",
+                "Олександр",
+                85000.0
+            ],
+            [
+                "Петренко",
+                "Олександр",
+                85000.0
+            ],
+            [
+                "Павленко",
+                "Сергій",
+                84000.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_005": {
+        "columns": [
+            "номер_рейсу",
+            "місто_відправлення",
+            "місто_призначення",
+            "дата_час_відправлення"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_006": {
+        "columns": [
+            "назва",
+            "середня_вартість"
+        ],
+        "rows": [
+            [
+                "Бізнес",
+                24820.833333333332
+            ],
+            [
+                "Економ+",
+                3750.0
+            ],
+            [
+                "Перший клас",
+                26000.0
+            ],
+            [
+                "Економ",
+                7645.833333333333
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_007": {
+        "columns": [
+            "місто_відправлення",
+            "місто_призначення",
+            "кількість_рейсів"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_008": {
+        "columns": [
+            "прізвище",
+            "імя"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_009": {
+        "columns": [
+            "реєстраційний_номер"
+        ],
+        "rows": [
+            [
+                "UR-DDD"
+            ],
+            [
+                "UR-PSH"
+            ],
+            [
+                "UR-PSI"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_010": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                7
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_011": {
+        "columns": [
+            "прізвище",
+            "імя"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_012": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "function pg_catalog.extract(unknown, integer) does not exist\nLINE 1: SELECT tl.назва AS тип_літака, AVG(EXTRACT(EPOCH FROM (t.дат...\n                                           ^\nHINT:  No function matches the given name and argument types. You might need to add explicit type casts.\n",
+        "error_details": {
+            "pgcode": "42883",
+            "pgerror": "ERROR:  function pg_catalog.extract(unknown, integer) does not exist\nLINE 1: SELECT tl.назва AS тип_літака, AVG(EXTRACT(EPOCH FROM (t.дат...\n                                           ^\nHINT:  No function matches the given name and argument types. You might need to add explicit type casts.\n",
+            "diag": {
+                "message_primary": "function pg_catalog.extract(unknown, integer) does not exist",
+                "message_detail": null,
+                "message_hint": "No function matches the given name and argument types. You might need to add explicit type casts.",
+                "statement_position": "36",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "авіакомпанія_gen_013": {
+        "columns": [
+            "назва",
+            "кількість_бронювань"
+        ],
+        "rows": [
+            [
+                "Кредитна картка",
+                8
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_014": {
+        "columns": [
+            "назва",
+            "вартість"
+        ],
+        "rows": [
+            [
+                "Додатковий багаж",
+                500.0
+            ],
+            [
+                "Спеціальне харчування",
+                300.0
+            ],
+            [
+                "Стандартне харчування",
+                0.0
+            ],
+            [
+                "Спеціальне харчування",
+                150.0
+            ],
+            [
+                "Додатковий багаж",
+                500.0
+            ],
+            [
+                "Надлишковий багаж",
+                100.0
+            ],
+            [
+                "Зустріч біля трапу",
+                1200.0
+            ],
+            [
+                "Трансфер до/з аеропорту",
+                1000.0
+            ],
+            [
+                "Дитячий набір",
+                150.0
+            ],
+            [
+                "Страхування подорожі",
+                350.0
+            ],
+            [
+                "Супровід неповнолітнього",
+                800.0
+            ],
+            [
+                "Перевезення тварин",
+                1200.0
+            ],
+            [
+                "VIP-обслуговування",
+                5000.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "авіакомпанія_gen_015": {
+        "columns": [
+            "назва",
+            "місто",
+            "кількість_відправлень",
+            "кількість_прибуттів"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_001": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                21
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_002": {
+        "columns": [
+            "назва"
+        ],
+        "rows": [
+            [
+                "Інфекційне відділення"
+            ],
+            [
+                "Гінекологія"
+            ],
+            [
+                "Урологія"
+            ],
+            [
+                "Офтальмологія"
+            ],
+            [
+                "Отоларингологія"
+            ],
+            [
+                "Реанімація"
+            ],
+            [
+                "Ендокринологія"
+            ],
+            [
+                "Кардіологія"
+            ],
+            [
+                "Неврологія"
+            ],
+            [
+                "Хірургія"
+            ],
+            [
+                "Педіатрія"
+            ],
+            [
+                "Травматологія"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_003": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "табельний_номер"
+        ],
+        "rows": [
+            [
+                "Михайло",
+                "Петренко",
+                "0001"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_004": {
+        "columns": [
+            "назва",
+            "виробник"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_005": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column с.id does not exist\nLINE 1: ... сл JOIN спеціалізації с ON сл.спеціалізація_ід = с.id WHERE...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column с.id does not exist\nLINE 1: ... сл JOIN спеціалізації с ON сл.спеціалізація_ід = с.id WHERE...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column с.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "112",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_006": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "дата_народження"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_007": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column п.id does not exist\nLINE 1: ...с FROM візити в JOIN пацієнти п ON в.пацієнт_ід = п.id JOIN ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column п.id does not exist\nLINE 1: ...с FROM візити в JOIN пацієнти п ON в.пацієнт_ід = п.id JOIN ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column п.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "119",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_008": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column пп.id does not exist\nLINE 1: ...сонал п JOIN посади_персоналу пп ON п.посада_ід = пп.id WHER...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column пп.id does not exist\nLINE 1: ...сонал п JOIN посади_персоналу пп ON п.посада_ід = пп.id WHER...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column пп.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "116",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_009": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column х.id does not exist\nLINE 1: ... FROM діагнози д JOIN хвороби х ON д.хвороба_ід = х.id JOIN ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column х.id does not exist\nLINE 1: ... FROM діагнози д JOIN хвороби х ON д.хвороба_ід = х.id JOIN ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column х.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "109",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_010": {
+        "columns": [
+            "назва",
+            "ціна"
+        ],
+        "rows": [
+            [
+                "Лапароскопічна холецистектомія",
+                25000.0
+            ],
+            [
+                "Артроскопія колінного суглоба",
+                18000.0
+            ],
+            [
+                "Апендектомія",
+                15000.0
+            ],
+            [
+                "Герніопластика пахова",
+                12000.0
+            ],
+            [
+                "Тонзилектомія",
+                8000.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "лікарня_gen_011": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column в.id does not exist\nLINE 1: ...й FROM відділення в LEFT JOIN госпіталізації г ON в.id = г.в...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column в.id does not exist\nLINE 1: ...й FROM відділення в LEFT JOIN госпіталізації г ON в.id = г.в...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column в.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "105",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_012": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column п.id does not exist\nLINE 1: ...ькість_рецептів FROM персонал п JOIN рецепти р ON п.id = р.л...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column п.id does not exist\nLINE 1: ...ькість_рецептів FROM персонал п JOIN рецепти р ON п.id = р.л...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column п.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "95",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_013": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column д.id does not exist\nLINE 1: ...оспіталізації г JOIN діагнози д ON г.діагноз_ід = д.id JOIN ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column д.id does not exist\nLINE 1: ...оспіталізації г JOIN діагнози д ON г.діагноз_ід = д.id JOIN ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column д.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "152",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_014": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column п.id does not exist\nLINE 1: ...ція FROM візити в JOIN персонал п ON в.лікар_ід = п.id JOIN ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column п.id does not exist\nLINE 1: ...ція FROM візити в JOIN персонал п ON в.лікар_ід = п.id JOIN ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column п.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "117",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "лікарня_gen_015": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column пос.id does not exist\nLINE 1: ...ні_послуги нп JOIN послуги пос ON нп.послуга_ід = пос.id JOI...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column пос.id does not exist\nLINE 1: ...ні_послуги нп JOIN послуги пос ON нп.послуга_ід = пос.id JOI...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column пос.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "108",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_001": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                26
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_002": {
+        "columns": [
+            "назва"
+        ],
+        "rows": [
+            [
+                "Закуски"
+            ],
+            [
+                "Супи"
+            ],
+            [
+                "Салати"
+            ],
+            [
+                "Основні страви"
+            ],
+            [
+                "Піца"
+            ],
+            [
+                "Паста"
+            ],
+            [
+                "Гарніри"
+            ],
+            [
+                "Десерти"
+            ],
+            [
+                "Напої"
+            ],
+            [
+                "Холодні закуски"
+            ],
+            [
+                "Гарячі закуски"
+            ],
+            [
+                "Брускети та тости"
+            ],
+            [
+                "Тарілки для компанії"
+            ],
+            [
+                "Супи-пюре"
+            ],
+            [
+                "Бульйони"
+            ],
+            [
+                "Традиційні українські супи"
+            ],
+            [
+                "Сезонні супи"
+            ],
+            [
+                "Легкі салати"
+            ],
+            [
+                "Ситні салати"
+            ],
+            [
+                "Теплі салати"
+            ],
+            [
+                "М'ясні страви"
+            ],
+            [
+                "Рибні страви"
+            ],
+            [
+                "Вегетаріанські страви"
+            ],
+            [
+                "Страви на грилі"
+            ],
+            [
+                "Фірмові страви"
+            ],
+            [
+                "Класична піца"
+            ],
+            [
+                "Біла піца"
+            ],
+            [
+                "Фірмова піца"
+            ],
+            [
+                "Паста з томатним соусом"
+            ],
+            [
+                "Паста з вершковим соусом"
+            ],
+            [
+                "Паста з морепродуктами"
+            ],
+            [
+                "Картопляні гарніри"
+            ],
+            [
+                "Овочеві гарніри"
+            ],
+            [
+                "Крупи та каші"
+            ],
+            [
+                "Торти та тістечка"
+            ],
+            [
+                "Морозиво та сорбети"
+            ],
+            [
+                "Фруктові десерти"
+            ],
+            [
+                "Традиційні українські десерти"
+            ],
+            [
+                "Безалкогольні напої"
+            ],
+            [
+                "Гарячі напої"
+            ],
+            [
+                "Алкогольні напої"
+            ],
+            [
+                "Коктейлі"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_003": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "телефон"
+        ],
+        "rows": [
+            [
+                "Віктор",
+                "Іваненко",
+                "+380503456789"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_004": {
+        "columns": [
+            "номер",
+            "розташування"
+        ],
+        "rows": [
+            [
+                "3",
+                "основний зал"
+            ],
+            [
+                "4",
+                "основний зал"
+            ],
+            [
+                "9",
+                "тераса"
+            ],
+            [
+                "10",
+                "тераса"
+            ],
+            [
+                "11",
+                "VIP зал"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_005": {
+        "columns": [
+            "назва",
+            "опис"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_006": {
+        "columns": [
+            "назва",
+            "ціна"
+        ],
+        "rows": [
+            [
+                "Карпачо з яловичини",
+                220.0
+            ],
+            [
+                "Тартар з лосося",
+                250.0
+            ],
+            [
+                "Асорті сирів",
+                320.0
+            ],
+            [
+                "М'ясне асорті",
+                290.0
+            ],
+            [
+                "Креветки в часниковому соусі",
+                270.0
+            ],
+            [
+                "Кальмари фрі",
+                210.0
+            ],
+            [
+                "Цезар з куркою",
+                210.0
+            ],
+            [
+                "Салат з тунцем",
+                220.0
+            ],
+            [
+                "Теплий салат з телятиною",
+                240.0
+            ],
+            [
+                "Стейк рібай",
+                390.0
+            ],
+            [
+                "Курка по-київськи",
+                240.0
+            ],
+            [
+                "Лосось з овочами",
+                320.0
+            ],
+            [
+                "Дорадо запечена",
+                340.0
+            ],
+            [
+                "Різото з грибами",
+                230.0
+            ],
+            [
+                "Качина грудка з вишневим соусом",
+                350.0
+            ],
+            [
+                "Чотири сири",
+                210.0
+            ],
+            [
+                "Піца від шефа",
+                250.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_007": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column п.id does not exist\nLINE 1: ...M замовлення з JOIN персонал п ON з.офіціант_ід = п.id WHERE...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column п.id does not exist\nLINE 1: ...M замовлення з JOIN персонал п ON з.офіціант_ід = п.id WHERE...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column п.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "95",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_008": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column к.id does not exist\nLINE 1: ...ROM страви с JOIN категорії к ON с.категорія_ід = к.id WHERE...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column к.id does not exist\nLINE 1: ...ROM страви с JOIN категорії к ON с.категорія_ід = к.id WHERE...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column к.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "71",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_009": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column с.id does not exist\nLINE 1: ...FROM резервації р JOIN столики с ON р.столик_ід = с.id JOIN ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column с.id does not exist\nLINE 1: ...FROM резервації р JOIN столики с ON р.столик_ід = с.id JOIN ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column с.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "136",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_010": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column p.id does not exist\nLINE 1: ...нти i JOIN постачальники p ON i.постачальник_ід = p.id WHERE...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column p.id does not exist\nLINE 1: ...нти i JOIN постачальники p ON i.постачальник_ід = p.id WHERE...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column p.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "83",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_011": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column с.id does not exist\nLINE 1: ...влень FROM страви с JOIN позиції_замовлення пз ON с.id = пз....\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column с.id does not exist\nLINE 1: ...влень FROM страви с JOIN позиції_замовлення пз ON с.id = пз....\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column с.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "97",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_012": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column п.id does not exist\nLINE 1: ...а_замовлення FROM персонал п JOIN замовлення з ON п.id = з.о...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column п.id does not exist\nLINE 1: ...а_замовлення FROM персонал п JOIN замовлення з ON п.id = з.о...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column п.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "112",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_013": {
+        "columns": [
+            "назва",
+            "кількість_на_складі",
+            "мінімальна_кількість"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "ресторан_gen_014": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column \"id\" does not exist\nLINE 1: ...DATE - INTERVAL '7 days' AND статус_ід IN (SELECT id FROM ст...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column \"id\" does not exist\nLINE 1: ...DATE - INTERVAL '7 days' AND статус_ід IN (SELECT id FROM ст...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column \"id\" does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "131",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "ресторан_gen_015": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column ср.id does not exist\nLINE 1: ...ції р JOIN статуси_резервацій ср ON р.статус_ід = ср.id WHER...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column ср.id does not exist\nLINE 1: ...ції р JOIN статуси_резервацій ср ON р.статус_ід = ср.id WHER...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column ср.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "132",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "спортклуб_gen_001": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                25
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_002": {
+        "columns": [
+            "назва"
+        ],
+        "rows": [
+            [
+                "Разовий візит"
+            ],
+            [
+                "Денний стандарт"
+            ],
+            [
+                "Стандарт"
+            ],
+            [
+                "Стандарт+"
+            ],
+            [
+                "Преміум"
+            ],
+            [
+                "VIP"
+            ],
+            [
+                "Раннє відвідування"
+            ],
+            [
+                "Вечірнє відвідування"
+            ],
+            [
+                "8 відвідувань"
+            ],
+            [
+                "12 відвідувань"
+            ],
+            [
+                "12 відвідувань + групові"
+            ],
+            [
+                "Квартальний стандарт"
+            ],
+            [
+                "Квартальний стандарт+"
+            ],
+            [
+                "Квартальний преміум"
+            ],
+            [
+                "Піврічний стандарт"
+            ],
+            [
+                "Піврічний стандарт+"
+            ],
+            [
+                "Піврічний преміум"
+            ],
+            [
+                "Річний стандарт"
+            ],
+            [
+                "Річний стандарт+"
+            ],
+            [
+                "Річний преміум"
+            ],
+            [
+                "Річний VIP"
+            ],
+            [
+                "Студентський"
+            ],
+            [
+                "Сімейний"
+            ],
+            [
+                "Корпоративний"
+            ],
+            [
+                "Індивідуальні тренування (5)"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_003": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "телефон"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_004": {
+        "columns": [
+            "назва",
+            "площа"
+        ],
+        "rows": [
+            [
+                "Басейн",
+                350.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_005": {
+        "columns": [
+            "назва",
+            "опис"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_006": {
+        "columns": [
+            "імя",
+            "прізвище"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_007": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "дата_завершення"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_008": {
+        "columns": [
+            "avg"
+        ],
+        "rows": [
+            [
+                5000.0
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_009": {
+        "columns": [
+            "назва",
+            "виробник",
+            "дата_придбання"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_010": {
+        "columns": [
+            "id",
+            "член_клубу",
+            "сума",
+            "дата_платежу"
+        ],
+        "rows": [
+            [
+                3,
+                "Іваненко",
+                1500.0,
+                "2023-06-01T00:00:00"
+            ],
+            [
+                4,
+                "Петренко",
+                3600.0,
+                "2023-05-15T00:00:00"
+            ],
+            [
+                6,
+                "Коваленко",
+                5000.0,
+                "2023-06-05T00:00:00"
+            ],
+            [
+                7,
+                "Мельник",
+                1200.0,
+                "2023-06-10T00:00:00"
+            ],
+            [
+                8,
+                "Бондаренко",
+                3000.0,
+                "2023-05-20T00:00:00"
+            ],
+            [
+                10,
+                "Захарченко",
+                6000.0,
+                "2023-04-01T00:00:00"
+            ],
+            [
+                11,
+                "Кравченко",
+                900.0,
+                "2023-06-25T00:00:00"
+            ],
+            [
+                12,
+                "Шевченко",
+                2500.0,
+                "2023-05-10T00:00:00"
+            ],
+            [
+                13,
+                "Романенко",
+                1800.0,
+                "2023-06-12T00:00:00"
+            ],
+            [
+                15,
+                "Павленко",
+                2200.0,
+                "2023-05-25T00:00:00"
+            ],
+            [
+                16,
+                "Кузьменко",
+                950.0,
+                "2023-06-08T00:00:00"
+            ],
+            [
+                18,
+                "Гончаренко",
+                1500.0,
+                "2023-05-01T00:00:00"
+            ],
+            [
+                19,
+                "Лисенко",
+                3600.0,
+                "2023-04-15T00:00:00"
+            ],
+            [
+                20,
+                "Тимошенко",
+                6000.0,
+                "2023-01-10T00:00:00"
+            ],
+            [
+                22,
+                "Савченко",
+                1800.0,
+                "2023-04-20T00:00:00"
+            ],
+            [
+                24,
+                "Клименко",
+                1500.0,
+                "2023-03-15T00:00:00"
+            ],
+            [
+                25,
+                "Пономаренко",
+                1000.0,
+                "2023-04-01T00:00:00"
+            ],
+            [
+                27,
+                "Демченко",
+                950.0,
+                "2023-04-05T00:00:00"
+            ],
+            [
+                28,
+                "Кириленко",
+                1200.0,
+                "2023-05-01T00:00:00"
+            ],
+            [
+                29,
+                "Симоненко",
+                5000.0,
+                "2023-03-15T00:00:00"
+            ],
+            [
+                30,
+                "Гнатюк",
+                2500.0,
+                "2023-04-10T00:00:00"
+            ],
+            [
+                32,
+                "Дорошенко",
+                1800.0,
+                "2023-05-20T00:00:00"
+            ],
+            [
+                33,
+                "Кириленко",
+                -600.0,
+                "2023-05-10T00:00:00"
+            ],
+            [
+                34,
+                "Симоненко",
+                -4000.0,
+                "2023-04-05T00:00:00"
+            ],
+            [
+                35,
+                "Гнатюк",
+                -1800.0,
+                "2023-04-25T00:00:00"
+            ],
+            [
+                37,
+                "Дорошенко",
+                -1400.0,
+                "2023-05-30T00:00:00"
+            ],
+            [
+                38,
+                "Іваненко",
+                500.0,
+                "2023-06-10T00:00:00"
+            ],
+            [
+                39,
+                "Петренко",
+                500.0,
+                "2023-06-05T00:00:00"
+            ],
+            [
+                41,
+                "Коваленко",
+                500.0,
+                "2023-06-20T00:00:00"
+            ],
+            [
+                42,
+                "Мельник",
+                700.0,
+                "2023-06-12T00:00:00"
+            ],
+            [
+                44,
+                "Ткаченко",
+                500.0,
+                "2023-06-25T00:00:00"
+            ],
+            [
+                45,
+                "Захарченко",
+                500.0,
+                "2023-06-08T00:00:00"
+            ],
+            [
+                47,
+                "Шевченко",
+                700.0,
+                "2023-06-22T00:00:00"
+            ],
+            [
+                48,
+                "Іваненко",
+                1500.0,
+                "2023-07-01T00:00:00"
+            ],
+            [
+                49,
+                "Петренко",
+                1200.0,
+                "2023-07-15T00:00:00"
+            ],
+            [
+                51,
+                "Коваленко",
+                900.0,
+                "2023-07-05T00:00:00"
+            ],
+            [
+                52,
+                "Мельник",
+                1200.0,
+                "2023-07-10T00:00:00"
+            ],
+            [
+                53,
+                "Бондаренко",
+                3000.0,
+                "2023-07-01T00:00:00"
+            ],
+            [
+                54,
+                "Бондаренко",
+                1500.0,
+                "2023-07-01T00:00:00"
+            ],
+            [
+                57,
+                "Захарченко",
+                2500.0,
+                "2023-07-05T00:00:00"
+            ],
+            [
+                58,
+                "Захарченко",
+                1000.0,
+                "2023-07-05T00:00:00"
+            ],
+            [
+                59,
+                "Кравченко",
+                900.0,
+                "2023-07-01T00:00:00"
+            ],
+            [
+                60,
+                "Шевченко",
+                2500.0,
+                "2023-07-05T00:00:00"
+            ],
+            [
+                61,
+                "Романенко",
+                1800.0,
+                "2023-07-10T00:00:00"
+            ],
+            [
+                64,
+                "Романенко",
+                1800.0,
+                "2023-07-12T00:00:00"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_011": {
+        "columns": [
+            "назва",
+            "кількість_записів"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_012": {
+        "columns": [
+            "імя",
+            "прізвище",
+            "середня_оцінка"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_013": {
+        "columns": [
+            "день_тижня",
+            "кількість_відвідувань"
+        ],
+        "rows": [
+            [
+                1.0,
+                48
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_014": {
+        "columns": [
+            "імя",
+            "прізвище"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "спортклуб_gen_015": {
+        "columns": [
+            "назва",
+            "загальний_дохід"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "університет_gen_001": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t1.id does not exist\nLINE 1: ...nt(*) FROM факультети AS T1 JOIN кафедри AS T2 ON T1.id  =  ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t1.id does not exist\nLINE 1: ...nt(*) FROM факультети AS T1 JOIN кафедри AS T2 ON T1.id  =  ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t1.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "73",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_002": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t1.id does not exist\nLINE 1: ....назва FROM викладачі AS T1 JOIN заняття AS T3 ON T1.id  =  ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t1.id does not exist\nLINE 1: ....назва FROM викладачі AS T1 JOIN заняття AS T3 ON T1.id  =  ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t1.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "60",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_003": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t2.id does not exist\nLINE 1: ...туденти AS T1 JOIN групи AS T2 ON T1.група_ід  =  T2.id WHER...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t2.id does not exist\nLINE 1: ...туденти AS T1 JOIN групи AS T2 ON T1.група_ід  =  T2.id WHER...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t2.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "85",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_004": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t2.id does not exist\nLINE 1: ...рії AS T1 JOIN будівлі AS T2 ON T1.будівля_ід  =  T2.id WHER...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t2.id does not exist\nLINE 1: ...рії AS T1 JOIN будівлі AS T2 ON T1.будівля_ід  =  T2.id WHER...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t2.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "90",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_005": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t2.id does not exist\nLINE 1: ...едри AS T1 JOIN викладачі AS T2 ON T1.завідувач_ід  =  T2.id\n                                                                  ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t2.id does not exist\nLINE 1: ...едри AS T1 JOIN викладачі AS T2 ON T1.завідувач_ід  =  T2.id\n                                                                  ^\n",
+            "diag": {
+                "message_primary": "column t2.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "116",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_006": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t1.id does not exist\nLINE 1: ...unt(T2.id) FROM кафедри AS T1 JOIN курси AS T2 ON T1.id  =  ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t1.id does not exist\nLINE 1: ...unt(T2.id) FROM кафедри AS T1 JOIN курси AS T2 ON T1.id  =  ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t1.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "72",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_007": {
+        "columns": [
+            "прізвище",
+            "імя"
+        ],
+        "rows": [
+            [
+                "Пономаренко",
+                "Віталій"
+            ],
+            [
+                "Ткаченко",
+                "Вікторія"
+            ],
+            [
+                "Романенко",
+                "Олексій"
+            ],
+            [
+                "Гончаренко",
+                "Артур"
+            ],
+            [
+                "Литвин",
+                "Дарія"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "університет_gen_008": {
+        "columns": [
+            "назва"
+        ],
+        "rows": [
+            [
+                "Лекція"
+            ],
+            [
+                "Практичне заняття"
+            ],
+            [
+                "Лабораторна робота"
+            ],
+            [
+                "Семінар"
+            ],
+            [
+                "Консультація"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "університет_gen_009": {
+        "columns": [
+            "прізвище",
+            "імя"
+        ],
+        "rows": [
+            [
+                "Петренко",
+                "Олександр"
+            ],
+            [
+                "Шевченко",
+                "Віктор"
+            ],
+            [
+                "Григоренко",
+                "Андрій"
+            ],
+            [
+                "Бондаренко",
+                "Сергій"
+            ],
+            [
+                "Кравченко",
+                "Наталія"
+            ],
+            [
+                "Литвиненко",
+                "Максим"
+            ],
+            [
+                "Василенко",
+                "Іван"
+            ],
+            [
+                "Сергієнко",
+                "Людмила"
+            ],
+            [
+                "Козаченко",
+                "Артем"
+            ],
+            [
+                "Мельниченко",
+                "Оксана"
+            ],
+            [
+                "Даниленко",
+                "Василь"
+            ],
+            [
+                "Ковальчук",
+                "Тетяна"
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "університет_gen_010": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t1.id does not exist\nLINE 1: ...  T5.номер FROM курси AS T1 JOIN заняття AS T2 ON T1.id  =  ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t1.id does not exist\nLINE 1: ...  T5.номер FROM курси AS T1 JOIN заняття AS T2 ON T1.id  =  ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t1.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "107",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_011": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t2.id does not exist\nLINE 1: ...культети AS T1 JOIN викладачі AS T2 ON T1.декан_ід  =  T2.id\n                                                                  ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t2.id does not exist\nLINE 1: ...культети AS T1 JOIN викладачі AS T2 ON T1.декан_ід  =  T2.id\n                                                                  ^\n",
+            "diag": {
+                "message_primary": "column t2.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "104",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_012": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t1.id does not exist\nLINE 1: ...nt(T2.id) FROM групи AS T1 JOIN студенти AS T2 ON T1.id  =  ...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t1.id does not exist\nLINE 1: ...nt(T2.id) FROM групи AS T1 JOIN студенти AS T2 ON T1.id  =  ...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t1.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "73",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_013": {
+        "columns": [],
+        "rows": [],
+        "success": false,
+        "error_message": "column t2.id does not exist\nLINE 1: ...атеріали AS T1 JOIN курси AS T2 ON T1.курс_ід  =  T2.id WHER...\n                                                             ^\n",
+        "error_details": {
+            "pgcode": "42703",
+            "pgerror": "ERROR:  column t2.id does not exist\nLINE 1: ...атеріали AS T1 JOIN курси AS T2 ON T1.курс_ід  =  T2.id WHER...\n                                                             ^\n",
+            "diag": {
+                "message_primary": "column t2.id does not exist",
+                "message_detail": null,
+                "message_hint": null,
+                "statement_position": "93",
+                "context": null,
+                "schema_name": null,
+                "table_name": null,
+                "column_name": null,
+                "datatype_name": null,
+                "constraint_name": null
+            }
+        }
+    },
+    "університет_gen_014": {
+        "columns": [
+            "count"
+        ],
+        "rows": [
+            [
+                21
+            ]
+        ],
+        "success": true,
+        "error_message": null,
+        "error_details": null
+    },
+    "університет_gen_015": {
+        "columns": [
+            "прізвище",
+            "імя"
+        ],
+        "rows": [],
+        "success": true,
+        "error_message": null,
+        "error_details": null
     }
 }

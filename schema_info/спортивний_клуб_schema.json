@@ -1,0 +1,1084 @@
+{
+    "tables": {
+        "відвідування": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"відвідування_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "член_клубу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_відвідування",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_приходу",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_виходу",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "запис_на_заняття_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "індивідуальне_бронювання_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "групові_заняття": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"групові_заняття_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рівень_складності_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_кількість_учасників",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "калорії_витрата",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "спеціалізація_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "записи_на_заняття": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"записи_на_заняття_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "член_клубу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "розклад_заняття_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_запису",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "обладнання": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"обладнання_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_придбання",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "термін_експлуатації",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стан",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_останнього_обслуговування",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "виробник",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "обладнання_приміщень": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"обладнання_приміщень_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "приміщення_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "обладнання_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "дата_встановлення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "оцінки_тренерів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"оцінки_тренерів_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "тренер_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "член_клубу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "оцінка",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "коментар",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_оцінки",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                }
+            ]
+        },
+        "платежі": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"платежі_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "член_клубу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_платежу",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "спосіб_оплати",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "призначення",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "членство_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "номер_транзакції",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "приміщення": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"приміщення_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_приміщення_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "площа",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_кількість_осіб",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "поверх",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стан",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "доступність",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "розклад_занять": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"розклад_занять_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "заняття_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тренер_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "приміщення_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "день_тижня",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_закінчення",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "повторюваність",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'Щотижня'::character varying"
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_кількість_учасників",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "рівні_складності": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "спеціалізації_тренерів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"спеціалізації_тренерів_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_бронювання": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_записів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_платежів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_членства": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "типи_абонементів": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_абонементів_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_відвідувань",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_відвідування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "групові_заняття",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "індивідуальні_тренування",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "сауна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "басейн",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "знижка_відсоток",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "типи_приміщень": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_приміщень_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "тренери": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"тренери_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "email",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фото",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "освіта",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "спеціалізація_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "досвід_роботи",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_найму",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_звільнення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ставка_за_годину",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "біографія",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "члени_клубу": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"члени_клубу_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "email",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фото",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "медичні_обмеження",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рівень_підготовки",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мета_тренувань",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_реєстрації",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "членство_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_відвідувань",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "членства": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"членства_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "тип_абонементу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_завершення",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_заморозки",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_розморозки",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "залишок_відвідувань",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "залишок_індивідуальних_тренувань",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість_фактична",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                }
+            ]
+        },
+        "індивідуальні_бронювання": {
+            "columns": [
+                {
+                    "column_name": "id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"індивідуальні_бронювання_id_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "член_клубу_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тренер_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_закінчення",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус_id",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "приміщення_id",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мета_тренування",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "результати",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "списано_з_абонементу",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        }
+    }
+}

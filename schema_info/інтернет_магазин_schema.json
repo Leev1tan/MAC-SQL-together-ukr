@@ -1,0 +1,1090 @@
+{
+    "tables": {
+        "адреси": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"адреси_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "країна",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'Україна'::character varying"
+                },
+                {
+                    "column_name": "область",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місто",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "поштовий_індекс",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вулиця",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "будинок",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "квартира",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "за_замовчуванням",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "контактна_особа",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактний_телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_оновлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                }
+            ]
+        },
+        "відгуки": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"відгуки_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "товар_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "клієнт_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "замовлення_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рейтинг",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "заголовок",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "текст",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "переваги",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "недоліки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "відповідь_адміністратора",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_відгуку",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_відповіді",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "модерований",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "опубліковано",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "корисно_голосів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "неправдивий_голосів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                }
+            ]
+        },
+        "доставки": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"доставки_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "замовлення_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "метод",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "відстеження_номер",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя_отримувача",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон_отримувача",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вага",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_відправлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "орієнтовна_дата_доставки",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фактична_дата_доставки",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "особливі_вказівки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "замовлення": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"замовлення_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "номер",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "клієнт_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса_доставки_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальна_сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума_знижки",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "вартість_доставки",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "кількість_товарів",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "знижка_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "метод_доставки",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_замовлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_підтвердження",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бажана_дата_доставки",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_відправлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_доставки",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "знижки": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"знижки_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "значення",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мінімальна_сума_замовлення",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_сума_знижки",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "категорія_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "товар_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "одноразова",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_завершення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "обмеження_використань",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "поточні_використання",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                }
+            ]
+        },
+        "категорії": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"категорії_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "батьківська_категорія_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зображення_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "порядок_сортування",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "активна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_оновлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                }
+            ]
+        },
+        "клієнти": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"клієнти_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "емейл",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "пароль_хеш",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_реєстрації",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "останній_вхід",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активований",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "токен_активації",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "токен_відновлення_паролю",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "термін_дії_токену",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бонусні_бали",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "рівень_лояльності",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'Стандарт'::character varying"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "кошики": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"кошики_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "клієнт_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сесія_ід",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_оновлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                }
+            ]
+        },
+        "кошики_товари": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"кошики_товари_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "кошик_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "товар_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "дата_додавання",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                }
+            ]
+        },
+        "методи_доставки": {
+            "columns": [
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "термін_доставки_днів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "методи_оплати": {
+            "columns": [
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "платежі": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"платежі_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "замовлення_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "метод",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "транзакція_ід",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_платежу",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_підтвердження",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "позиції_замовлення": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"позиції_замовлення_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "замовлення_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "товар_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва_товару",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "артикул",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ціна_за_одиницю",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума_знижки",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                }
+            ]
+        },
+        "статуси_замовлень": {
+            "columns": [
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "товари": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"товари_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "артикул",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "ціна",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стара_ціна",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_на_складі",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "категорія_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бренд",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вага",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "розміри",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "колір",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "матеріал",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "особливості",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зображення_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "додаткові_зображення",
+                    "data_type": "ARRAY",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рейтинг",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "кількість_відгуків",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "популярність",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "новинка",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "хіт_продажу",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "на_розпродажі",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                },
+                {
+                    "column_name": "дата_оновлення",
+                    "data_type": "timestamp without time zone",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_TIMESTAMP"
+                }
+            ]
+        }
+    }
+}

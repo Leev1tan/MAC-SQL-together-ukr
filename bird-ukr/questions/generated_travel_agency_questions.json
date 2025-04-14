@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "турагентство_gen_001",
+    "db_id": "туристичне_агентство",
+    "question": "Скільки клієнтів зареєстровано в агентстві?",
+    "gold_sql": "SELECT COUNT(*) FROM клієнти;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "турагентство_gen_002",
+    "db_id": "туристичне_агентство",
+    "question": "Перелічіть назви всіх країн, до яких пропонуються тури.",
+    "gold_sql": "SELECT DISTINCT к.назва FROM країни к JOIN тури т ON к.id = т.країна_id WHERE т.активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "турагентство_gen_003",
+    "db_id": "туристичне_агентство",
+    "question": "Знайдіть працівника за прізвищем 'Ткаченко'.",
+    "gold_sql": "SELECT імя, прізвище, телефон FROM працівники WHERE прізвище = 'Ткаченко';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "турагентство_gen_004",
+    "db_id": "туристичне_агентство",
+    "question": "Які готелі мають 5 зірок?",
+    "gold_sql": "SELECT назва, адреса FROM готелі WHERE зірок = 5;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "турагентство_gen_005",
+    "db_id": "туристичне_агентство",
+    "question": "Перелічіть активні тури з включеним харчуванням.",
+    "gold_sql": "SELECT назва, ціна FROM тури WHERE включено_харчування = TRUE AND активний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "турагентство_gen_006",
+    "db_id": "туристичне_агентство",
+    "question": "Які тури пропонуються до міста Париж?",
+    "gold_sql": "SELECT т.назва, т.ціна, т.тривалість FROM тури т JOIN міста м ON т.місто_id = м.id WHERE м.назва = 'Париж' AND т.активний = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "турагентство_gen_007",
+    "db_id": "туристичне_агентство",
+    "question": "Знайдіть клієнтів, які бронювали тури вартістю понад 30000.",
+    "gold_sql": "SELECT DISTINCT к.імя, к.прізвище, к.телефон FROM клієнти к JOIN бронювання_турів бт ON к.id = бт.клієнт_id WHERE бт.загальна_вартість > 30000;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "турагентство_gen_008",
+    "db_id": "туристичне_агентство",
+    "question": "Яка середня тривалість турів?",
+    "gold_sql": "SELECT AVG(тривалість) FROM тури WHERE активний = TRUE;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "турагентство_gen_009",
+    "db_id": "туристичне_агентство",
+    "question": "Перелічіть транспортні рейси (літак) на наступний тиждень.",
+    "gold_sql": "SELECT тр.номер_рейсу, тр.компанія, м_відпр.назва AS місто_відправлення, м_приб.назва AS місто_прибуття, тр.дата_відправлення FROM транспорт тр JOIN типи_транспорту тт ON тр.тип_id = тт.id JOIN міста м_відпр ON тр.місто_відправлення_id = м_відпр.id JOIN міста м_приб ON тр.місто_прибуття_id = м_приб.id WHERE тт.назва = 'Літак' AND тр.дата_відправлення >= CURRENT_DATE AND тр.дата_відправлення < CURRENT_DATE + INTERVAL '7 days';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "турагентство_gen_010",
+    "db_id": "туристичне_агентство",
+    "question": "Знайдіть відгуки з оцінкою 5 для готелів.",
+    "gold_sql": "SELECT г.назва AS готель, к.прізвище AS клієнт, в.коментар, в.дата_відгуку FROM відгуки в JOIN готелі г ON в.готель_id = г.id JOIN клієнти к ON в.клієнт_id = к.id WHERE в.оцінка = 5 AND в.готель_id IS NOT NULL;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "турагентство_gen_011",
+    "db_id": "туристичне_агентство",
+    "question": "Визначте 3 найпопулярніші країни за кількістю бронювань турів.",
+    "gold_sql": "SELECT кр.назва, COUNT(бт.id) AS кількість_бронювань FROM країни кр JOIN тури т ON кр.id = т.країна_id JOIN бронювання_турів бт ON т.id = бт.тур_id JOIN статуси_бронювання сб ON бт.статус_id = сб.id WHERE сб.назва = 'Підтверджено' GROUP BY кр.назва ORDER BY кількість_бронювань DESC LIMIT 3;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "турагентство_gen_012",
+    "db_id": "туристичне_агентство",
+    "question": "Знайдіть працівників, які оформили найбільше бронювань за останній місяць.",
+    "gold_sql": "SELECT п.імя, п.прізвище, COUNT(б.id) AS кількість_бронювань FROM працівники п LEFT JOIN ( SELECT працівник_id, id, дата_бронювання FROM бронювання_турів UNION ALL SELECT працівник_id, id, дата_бронювання FROM бронювання_готелів UNION ALL SELECT працівник_id, id, дата_бронювання FROM бронювання_транспорту ) б ON п.id = б.працівник_id WHERE б.дата_бронювання >= CURRENT_DATE - INTERVAL '1 month' GROUP BY п.id, п.імя, п.прізвище ORDER BY кількість_бронювань DESC LIMIT 5;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "турагентство_gen_013",
+    "db_id": "туристичне_агентство",
+    "question": "Яка середня вартість туру на одну особу для турів до Єгипту?",
+    "gold_sql": "SELECT AVG(т.ціна / бт.кількість_осіб) AS середня_вартість_на_особу FROM тури т JOIN бронювання_турів бт ON т.id = бт.тур_id JOIN країни к ON т.країна_id = к.id JOIN статуси_бронювання сб ON бт.статус_id = сб.id WHERE к.назва = 'Єгипет' AND сб.назва = 'Підтверджено' AND бт.кількість_осіб > 0;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "турагентство_gen_014",
+    "db_id": "туристичне_агентство",
+    "question": "Знайдіть клієнтів, які бронювали і тури, і окремо готелі.",
+    "gold_sql": "SELECT к.прізвище, к.імя, к.телефон FROM клієнти к WHERE EXISTS (SELECT 1 FROM бронювання_турів бт WHERE бт.клієнт_id = к.id) AND EXISTS (SELECT 1 FROM бронювання_готелів бг WHERE бг.клієнт_id = к.id);",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "турагентство_gen_015",
+    "db_id": "туристичне_агентство",
+    "question": "Розрахуйте загальний дохід від продажу турів за минулий рік, згрупований по місяцях.",
+    "gold_sql": "SELECT EXTRACT(YEAR FROM п.дата_платежу) AS рік, EXTRACT(MONTH FROM п.дата_платежу) AS місяць, SUM(п.сума) AS загальний_дохід FROM платежі п JOIN бронювання_турів бт ON п.бронювання_тур_id = бт.id WHERE п.статус = 'Оплачено' AND п.дата_платежу >= date_trunc('year', CURRENT_DATE - interval '1 year') AND п.дата_платежу < date_trunc('year', CURRENT_DATE) GROUP BY рік, місяць ORDER BY рік, місяць;",
+    "difficulty": "complex"
+  }
+] 

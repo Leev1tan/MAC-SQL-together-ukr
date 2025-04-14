@@ -1,0 +1,2874 @@
+{
+    "tables": {
+        "автори_публікацій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"автори_публікацій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "публікація_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_автор_прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_автор_імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_автор_установа",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "порядок_авторів",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "є_кореспондуючим",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "академічні_ступені": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"академічні_ступені_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "скорочення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "активні_позичання": {
+            "columns": [
+                {
+                    "column_name": "позичання_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва_книги",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "автор",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_користувача",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "користувач",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_видачі",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "очікувана_дата_повернення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прострочено",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "днів_прострочення",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "аудиторії": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"аудиторії_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "номер",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "будівля_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "поверх",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місткість",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "площа",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "має_компютери",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "має_проектор",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "будівлі": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"будівлі_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_поверхів",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рік_побудови",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальна_площа",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "бібліотечні_фонди": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"бібліотечні_фонди_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "розташування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "відповідальний_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактний_телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "електронна_пошта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_книг",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "викладачі": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"викладачі_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "табельний_номер",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "посада_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "науковий_ступінь_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вчене_звання_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_прийняття",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_звільнення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактний_телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "електронна_пошта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "викладачі_повна_інформація": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "табельний_номер",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "повне_імя",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "факультет",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "посада",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "науковий_ступінь",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вчене_звання",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_прийняття",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_звільнення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "гранти": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"гранти_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "організація",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "валюта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'UAH'::character varying"
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": "'активний'::character varying"
+                },
+                {
+                    "column_name": "дослідження_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "керівник_гранту_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "умови",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "групи": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"групи_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рік_вступу",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "напрям_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "куратор_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_студентів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "активна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "доповідачі_конференцій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"доповідачі_конференцій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "конференція_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "секція_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_доповідач_прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_доповідач_імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_доповідач_установа",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тема_доповіді",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_доповіді",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість_хвилин",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "короткий_опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "презентація_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стаття_публікація_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "дослідники_дослідження": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"дослідники_дослідження_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "дослідження_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "роль",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "навантаження",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "заняття": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"заняття_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "курс_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "семестр_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_заняття_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "записи_на_курси": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"записи_на_курси_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "студент_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "заняття_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_запису",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": "CURRENT_DATE"
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": "'активний'::character varying"
+                }
+            ]
+        },
+        "кафедри": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"кафедри_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "скорочення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_заснування",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "факультет_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "завідувач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "електронна_пошта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "розташування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активна",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "книги_університету": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"книги_університету_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "автор",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "видавництво",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рік_видання",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_сторінок",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "isbn",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мова",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'українська'::character varying"
+                },
+                {
+                    "column_name": "фонд_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_придбання",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'підручник'::character varying"
+                },
+                {
+                    "column_name": "кількість_примірників",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "доступна_кількість",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "1"
+                },
+                {
+                    "column_name": "ключові_слова",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "конференції": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"конференції_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місце_проведення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "організатор_кафедра_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "головний_організатор_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "формат",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вебсайт",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "емейл_контакт",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон_контакт",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимум_учасників",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "вартість_участі",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "валюта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'UAH'::character varying"
+                },
+                {
+                    "column_name": "дедлайн_реєстрації",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дедлайн_тез",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'запланована'::character varying"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "курси": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"курси_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_кредитів",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "години_лекцій",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "години_практичних",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "години_лабораторних",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "години_самостійної",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "має_екзамен",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "навантаження_викладачів": {
+            "columns": [
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "семестр",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "навчальний_рік",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_занять",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "години_лекцій",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "години_практичних",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "години_лабораторних",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальні_години",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "навчальні_матеріали": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"навчальні_матеріали_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "курс_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "автор_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_створення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": "CURRENT_DATE"
+                },
+                {
+                    "column_name": "файл_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рік_видання",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "видавництво",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "напрями": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"напрями_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "код",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рівень",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_кредитів",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тривалість_навчання_роки",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        },
+        "наукові_дослідження": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"наукові_дослідження_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": "'активне'::character varying"
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "бюджет",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "джерело_фінансування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кафедра_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "керівник_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "пріоритетність",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "3"
+                },
+                {
+                    "column_name": "номер_держреєстрації",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "наукові_звання": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"наукові_звання_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "скорочення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "оцінки": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"оцінки_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "запис_на_курс_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_оцінювання",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "оцінка",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_оцінка",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": "100"
+                },
+                {
+                    "column_name": "коментар",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                }
+            ]
+        },
+        "оцінки_студентів": {
+            "columns": [
+                {
+                    "column_name": "студентський_квиток",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "студент",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "курс",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "код_курсу",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_оцінювання",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "оцінка",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_оцінка",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "семестр",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "навчальний_рік",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус_запису",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "позичання_книг": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"позичання_книг_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "книга_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "студент_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_видачі",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "очікувана_дата_повернення",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_повернення",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "продовжено_разів",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'видано'::character varying"
+                },
+                {
+                    "column_name": "видав_співробітник_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прийняв_співробітник_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "посади": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"посади_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "мінімальна_зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимальна_зарплата",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "публікації": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"публікації_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "видання",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рік",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "том",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "номер",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сторінки",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "doi",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імпакт_фактор",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "індексація",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "цитування_кількість",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": "0"
+                },
+                {
+                    "column_name": "дослідження_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "розклад_занять": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"розклад_занять_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "заняття_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "день_тижня",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_кінця",
+                    "data_type": "time without time zone",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "аудиторія_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "регулярність",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'щотижня'::character varying"
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_кінця",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "розклад_повна_інформація": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "курс",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "код_курсу",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_заняття",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "день_тижня",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_кінця",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "аудиторія",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "регулярність",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "семестр",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "секції_конференцій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"секції_конференцій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "конференція_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "голова_секції_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_початку",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "час_закінчення",
+                    "data_type": "time without time zone",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місце",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "максимум_доповідей",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "семестри": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"семестри_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_кінця",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "навчальний_рік",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "є_активним",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                }
+            ]
+        },
+        "середній_бал_семестру": {
+            "columns": [
+                {
+                    "column_name": "студент_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "студент",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "семестр",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "навчальний_рік",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "середній_бал",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_курсів",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "спонсорство_конференцій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"спонсорство_конференцій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "конференція_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва_організації",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_спонсорства",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "сума_внеску",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "валюта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'UAH'::character varying"
+                },
+                {
+                    "column_name": "контактна_особа",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "емейл",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "логотип_url",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статистика_бібліотеки": {
+            "columns": [
+                {
+                    "column_name": "загальна_кількість_книг",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_найменувань",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "загальна_кількість_примірників",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_виданих_книг",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_прострочених",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "видано_за_останні_30_днів",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активних_студентів_читачів",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активних_викладачів_читачів",
+                    "data_type": "bigint",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "статуси_студентів": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"статуси_студентів_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "стипендії": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"стипендії_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "студент_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_стипендії_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "розмір",
+                    "data_type": "numeric",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_кінця",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "підстава",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "студенти": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"студенти_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "студентський_квиток",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_вступу",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_випуску",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "форма_навчання",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фінансування",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактний_телефон",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "електронна_пошта",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "адреса",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "середній_бал",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "студенти_повна_інформація": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "студентський_квиток",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "по_батькові",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "повне_імя",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "стать",
+                    "data_type": "character",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_народження",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "група",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "напрям",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "рівень",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "форма_навчання",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фінансування",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "середній_бал",
+                    "data_type": "numeric",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_вступу",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_випуску",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "типи_занять": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_занять_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "типи_стипендій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"типи_стипендій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "кількість_виплат_на_рік",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "учасники_конференцій": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"учасники_конференцій_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "конференція_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "студент_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_учасник_прізвище",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_учасник_імя",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "зовнішній_учасник_установа",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "роль",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_реєстрації",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": "CURRENT_DATE"
+                },
+                {
+                    "column_name": "оплата_статус",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": "'не оплачено'::character varying"
+                },
+                {
+                    "column_name": "сертифікат_виданий",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "false"
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "участь_у_конференціях": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"участь_у_конференціях_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "викладач_ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва_конференції",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "місце_проведення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_початку",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_закінчення",
+                    "data_type": "date",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "тип_участі",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "назва_доповіді",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "публікація_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "фінансування_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "примітки",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                }
+            ]
+        },
+        "факультети": {
+            "columns": [
+                {
+                    "column_name": "ід",
+                    "data_type": "integer",
+                    "is_nullable": "NO",
+                    "column_default": "nextval('\"факультети_ід_seq\"'::regclass)"
+                },
+                {
+                    "column_name": "назва",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "скорочення",
+                    "data_type": "character varying",
+                    "is_nullable": "NO",
+                    "column_default": null
+                },
+                {
+                    "column_name": "опис",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "дата_заснування",
+                    "data_type": "date",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "декан_ід",
+                    "data_type": "integer",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "контактна_інформація",
+                    "data_type": "text",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "веб_сайт",
+                    "data_type": "character varying",
+                    "is_nullable": "YES",
+                    "column_default": null
+                },
+                {
+                    "column_name": "активний",
+                    "data_type": "boolean",
+                    "is_nullable": "YES",
+                    "column_default": "true"
+                }
+            ]
+        }
+    }
+}

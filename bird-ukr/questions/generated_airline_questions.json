@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "авіакомпанія_gen_001",
+    "db_id": "авіакомпанія",
+    "question": "Скільки аеропортів знаходиться у місті Київ?",
+    "gold_sql": "SELECT COUNT(*) FROM аеропорти WHERE місто = 'Київ';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_002",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть назви та виробників типів літаків з пасажиромісткістю понад 250 осіб.",
+    "gold_sql": "SELECT назва, виробник FROM типи_літаків WHERE максимальна_кількість_пасажирів > 250;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_003",
+    "db_id": "авіакомпанія",
+    "question": "Які існують статуси рейсів?",
+    "gold_sql": "SELECT назва FROM статуси_рейсів;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_004",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть 5 співробітників з найвищою зарплатою.",
+    "gold_sql": "SELECT прізвище, імя, зарплата FROM персонал ORDER BY зарплата DESC NULLS LAST LIMIT 5;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_005",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть рейси, заплановані на завтра, вказавши місто відправлення та місто призначення.",
+    "gold_sql": "SELECT r.номер_рейсу, a1.місто AS місто_відправлення, a2.місто AS місто_призначення, r.дата_час_відправлення FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id JOIN аеропорти a1 ON m.аеропорт_відправлення_id = a1.id JOIN аеропорти a2 ON m.аеропорт_призначення_id = a2.id WHERE r.дата_час_відправлення >= current_date + interval '1 day' AND r.дата_час_відправлення < current_date + interval '2 days' ORDER BY r.дата_час_відправлення;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_006",
+    "db_id": "авіакомпанія",
+    "question": "Розрахуйте середню вартість бронювання для кожного класу обслуговування.",
+    "gold_sql": "SELECT ko.назва, AVG(b.загальна_вартість) AS середня_вартість FROM бронювання b JOIN класи_обслуговування ko ON b.клас_обслуговування_id = ko.id GROUP BY ko.назва;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_007",
+    "db_id": "авіакомпанія",
+    "question": "Визначте 3 найзавантаженіші маршрути за кількістю виконаних рейсів за останні 6 місяців.",
+    "gold_sql": "SELECT a1.місто AS місто_відправлення, a2.місто AS місто_призначення, COUNT(r.id) AS кількість_рейсів FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id JOIN аеропорти a1 ON m.аеропорт_відправлення_id = a1.id JOIN аеропорти a2 ON m.аеропорт_призначення_id = a2.id JOIN статуси_рейсів sr ON r.статус_id = sr.id WHERE sr.назва = 'Виконано' AND r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '6 months' GROUP BY a1.місто, a2.місто ORDER BY кількість_рейсів DESC LIMIT 3;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_008",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть пасажирів, які бронювали рейси як у бізнес-, так і в економ-класі за останній рік.",
+    "gold_sql": "WITH PassengerBookings AS ( SELECT bp.пасажир_id, ko.назва AS клас_обслуговування FROM бронювання b JOIN бронювання_пасажири bp ON b.id = bp.бронювання_id JOIN класи_обслуговування ko ON b.клас_обслуговування_id = ko.id JOIN рейси r ON b.рейс_id = r.id WHERE r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year' AND ko.назва IN ('Бізнес', 'Економ') GROUP BY bp.пасажир_id, ko.назва ) SELECT p.прізвище, p.імя FROM пасажири p JOIN PassengerBookings pb ON p.id = pb.пасажир_id GROUP BY p.id, p.прізвище, p.імя HAVING COUNT(DISTINCT pb.клас_обслуговування) = 2;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_009",
+    "db_id": "авіакомпанія",
+    "question": "Які літаки проходили технічне обслуговування типу 'Капітальний ремонт'?",
+    "gold_sql": "SELECT DISTINCT l.реєстраційний_номер FROM літаки l JOIN технічне_обслуговування t ON l.id = t.літак_id WHERE t.тип_обслуговування = 'Капітальний ремонт';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_010",
+    "db_id": "авіакомпанія",
+    "question": "Скільки пасажирів скористалися послугою 'Додатковий багаж'?",
+    "gold_sql": "SELECT COUNT(DISTINCT bp.пасажир_id) FROM надані_послуги np JOIN послуги p ON np.послуга_id = p.id JOIN бронювання b ON np.бронювання_id = b.id JOIN бронювання_пасажири bp ON b.id = bp.бронювання_id WHERE p.назва = 'Додатковий багаж';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_011",
+    "db_id": "авіакомпанія",
+    "question": "Знайдіть персонал, який виконував роль 'Капітан' на рейсах за останній місяць.",
+    "gold_sql": "SELECT DISTINCT p.прізвище, p.імя FROM персонал p JOIN рейси_персонал rp ON p.id = rp.персонал_id JOIN рейси r ON rp.рейс_id = r.id WHERE rp.роль = 'Капітан' AND r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 month';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "авіакомпанія_gen_012",
+    "db_id": "авіакомпанія",
+    "question": "Яка середня тривалість технічного обслуговування для кожного типу літака?",
+    "gold_sql": "SELECT tl.назва AS тип_літака, AVG(EXTRACT(EPOCH FROM (t.дата_завершення - t.дата_початку))/86400) AS середня_тривалість_днів FROM технічне_обслуговування t JOIN літаки l ON t.літак_id = l.id JOIN типи_літаків tl ON l.тип_літака_id = tl.id WHERE t.дата_завершення IS NOT NULL AND t.дата_початку IS NOT NULL GROUP BY tl.назва;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "авіакомпанія_gen_013",
+    "db_id": "авіакомпанія",
+    "question": "Визначте найпопулярніший метод оплати бронювань.",
+    "gold_sql": "SELECT mo.назва, COUNT(b.id) AS кількість_бронювань FROM бронювання b JOIN методи_оплати mo ON b.метод_оплати_id = mo.id GROUP BY mo.назва ORDER BY кількість_бронювань DESC LIMIT 1;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_014",
+    "db_id": "авіакомпанія",
+    "question": "Перелічіть усі послуги, доступні для пасажирів першого класу.",
+    "gold_sql": "SELECT назва, вартість FROM послуги WHERE доступність_в_класах LIKE '%перший клас%';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "авіакомпанія_gen_015",
+    "db_id": "авіакомпанія",
+    "question": "Для кожного аеропорту порахуйте кількість відправлень та прибуттів за останній рік.",
+    "gold_sql": "WITH AirportFlights AS ( SELECT m.аеропорт_відправлення_id AS airport_id, 'відправлення' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') UNION ALL SELECT m.аеропорт_призначення_id AS airport_id, 'прибуття' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_прибуття >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') ) SELECT a.назва, a.місто, SUM(CASE WHEN af.type = 'відправлення' THEN 1 ELSE 0 END) AS кількість_відправлень, SUM(CASE WHEN af.type = 'прибуття' THEN 1 ELSE 0 END) AS кількість_прибуттів FROM AirportFlights af JOIN аеропорти a ON af.airport_id = a.id GROUP BY a.id, a.назва, a.місто ORDER BY кількість_відправлень DESC, кількість_прибуттів DESC;",
+    "difficulty": "complex"
+  }
+] 

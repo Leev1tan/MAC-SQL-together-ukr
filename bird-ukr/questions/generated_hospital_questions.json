@@ -1,0 +1,107 @@
+[
+  {
+    "question_id": "лікарня_gen_001",
+    "db_id": "лікарня",
+    "question": "Скільки пацієнтів зареєстровано у лікарні?",
+    "gold_sql": "SELECT COUNT(*) FROM пацієнти;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "лікарня_gen_002",
+    "db_id": "лікарня",
+    "question": "Перелічіть назви всіх відділень лікарні.",
+    "gold_sql": "SELECT назва FROM відділення WHERE активне = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "лікарня_gen_003",
+    "db_id": "лікарня",
+    "question": "Знайдіть персонал за прізвищем 'Петренко'.",
+    "gold_sql": "SELECT імя, прізвище, табельний_номер FROM персонал WHERE прізвище = 'Петренко';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "лікарня_gen_004",
+    "db_id": "лікарня",
+    "question": "Які медикаменти є рецептурними?",
+    "gold_sql": "SELECT назва, виробник FROM медикаменти WHERE рецептурний = TRUE;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "лікарня_gen_005",
+    "db_id": "лікарня",
+    "question": "Скільки лікарів мають спеціалізацію 'Хірургія'?",
+    "gold_sql": "SELECT COUNT(DISTINCT сл.лікар_ід) FROM спеціалізації_лікарів сл JOIN спеціалізації с ON сл.спеціалізація_ід = с.id WHERE с.назва = 'Хірургія';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "лікарня_gen_006",
+    "db_id": "лікарня",
+    "question": "Знайдіть пацієнтів з групою крові 'A+' (II+).",
+    "gold_sql": "SELECT імя, прізвище, дата_народження FROM пацієнти WHERE група_крові = 'A' AND резус_фактор = '+';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "лікарня_gen_007",
+    "db_id": "лікарня",
+    "question": "Які візити були скасовані за останній тиждень?",
+    "gold_sql": "SELECT в.id, п.прізвище AS пацієнт, пер.прізвище AS лікар, в.дата_час FROM візити в JOIN пацієнти п ON в.пацієнт_ід = п.id JOIN персонал пер ON в.лікар_ід = пер.id WHERE в.статус = 'скасований' AND в.дата_час >= CURRENT_DATE - INTERVAL '7 days';",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "лікарня_gen_008",
+    "db_id": "лікарня",
+    "question": "Порахуйте середню зарплату для кожної категорії персоналу.",
+    "gold_sql": "SELECT пп.категорія, AVG(п.зарплата) AS середня_зарплата FROM персонал п JOIN посади_персоналу пп ON п.посада_ід = пп.id WHERE п.активний = TRUE GROUP BY пп.категорія;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "лікарня_gen_009",
+    "db_id": "лікарня",
+    "question": "Перелічіть діагнози, встановлені пацієнту з ID 123.",
+    "gold_sql": "SELECT х.назва, д.дата_встановлення, пер.прізвище AS лікар FROM діагнози д JOIN хвороби х ON д.хвороба_ід = х.id JOIN персонал пер ON д.лікар_ід = пер.id WHERE д.пацієнт_ід = 123 ORDER BY д.дата_встановлення DESC;",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "лікарня_gen_010",
+    "db_id": "лікарня",
+    "question": "Знайдіть 5 найдорожчих медичних послуг.",
+    "gold_sql": "SELECT назва, ціна FROM послуги ORDER BY ціна DESC NULLS LAST LIMIT 5;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "лікарня_gen_011",
+    "db_id": "лікарня",
+    "question": "Для кожного відділення знайдіть кількість госпіталізацій за останній місяць.",
+    "gold_sql": "SELECT в.назва, COUNT(г.id) AS кількість_госпіталізацій FROM відділення в LEFT JOIN госпіталізації г ON в.id = г.відділення_ід AND г.дата_надходження >= CURRENT_DATE - INTERVAL '1 month' WHERE в.активне = TRUE GROUP BY в.назва ORDER BY кількість_госпіталізацій DESC;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "лікарня_gen_012",
+    "db_id": "лікарня",
+    "question": "Знайдіть лікарів, які виписали найбільше рецептів за останній квартал.",
+    "gold_sql": "SELECT п.імя, п.прізвище, COUNT(р.id) AS кількість_рецептів FROM персонал п JOIN рецепти р ON п.id = р.лікар_ід WHERE р.дата_виписки >= CURRENT_DATE - INTERVAL '3 months' GROUP BY п.id, п.імя, п.прізвище ORDER BY кількість_рецептів DESC LIMIT 10;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "лікарня_gen_013",
+    "db_id": "лікарня",
+    "question": "Визначте середню тривалість госпіталізації для пацієнтів з хворобою 'Пневмонія'.",
+    "gold_sql": "SELECT AVG(EXTRACT(DAY FROM (г.дата_виписки - г.дата_надходження))) AS середня_тривалість_днів FROM госпіталізації г JOIN діагнози д ON г.діагноз_ід = д.id JOIN хвороби х ON д.хвороба_ід = х.id WHERE х.назва = 'Пневмонія' AND г.дата_виписки IS NOT NULL;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "лікарня_gen_014",
+    "db_id": "лікарня",
+    "question": "Знайдіть пацієнтів, які мали візити до кардіолога та невролога.",
+    "gold_sql": "WITH PatientVisits AS ( SELECT в.пацієнт_ід, с.назва AS спеціалізація FROM візити в JOIN персонал п ON в.лікар_ід = п.id JOIN спеціалізації_лікарів сл ON п.id = сл.лікар_ід JOIN спеціалізації с ON сл.спеціалізація_ід = с.id WHERE с.назва IN ('Кардіологія', 'Неврологія') ) SELECT п.прізвище, п.імя FROM пацієнти п JOIN PatientVisits pv ON п.id = pv.пацієнт_ід GROUP BY п.id, п.прізвище, п.імя HAVING COUNT(DISTINCT pv.спеціалізація) = 2;",
+    "difficulty": "complex"
+  },
+  {
+    "question_id": "лікарня_gen_015",
+    "db_id": "лікарня",
+    "question": "Порахуйте загальну суму наданих платних послуг за минулий місяць для кожної страхової компанії.",
+    "gold_sql": "SELECT ск.назва, SUM(пос.ціна) AS загальна_сума FROM надані_послуги нп JOIN послуги пос ON нп.послуга_ід = пос.id JOIN пацієнти п ON нп.пацієнт_ід = п.id JOIN страховки_пацієнтів сп ON п.id = сп.пацієнт_ід JOIN страхові_компанії ск ON сп.страхова_компанія_ід = ск.id WHERE нп.дата_час >= date_trunc('month', CURRENT_DATE - interval '1 month') AND нп.дата_час < date_trunc('month', CURRENT_DATE) AND пос.ціна > 0 AND сп.активна = TRUE GROUP BY ск.назва ORDER BY загальна_сума DESC;",
+    "difficulty": "complex"
+  }
+] 

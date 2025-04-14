@@ -11,7 +11,7 @@ load_dotenv()
 
 # --- Configuration ---
 INPUT_JSON_PATH = "bird-ukr/questions/generated_all_questions.json"
-OUTPUT_JSON_PATH = "bird-ukr/query_results.json"
+OUTPUT_JSON_PATH = "bird-ukr/error_query_results.json"
 
 # --- Environment Variable Check ---
 # Ensure necessary environment variables are set
@@ -100,7 +100,7 @@ def execute_query(db_name, sql_query):
     return results
 
 def main():
-    """Main function to read JSON, execute queries, and save results."""
+    """Main function to read JSON, execute queries, and save only failed queries."""
     # Read input JSON
     try:
         with open(INPUT_JSON_PATH, 'r', encoding='utf-8') as f:
@@ -112,7 +112,7 @@ def main():
         print(f"Error: Could not decode JSON from {INPUT_JSON_PATH}")
         return
 
-    all_results = {}
+    error_results = {}
 
     # Process each question
     for item in all_questions:
@@ -127,14 +127,21 @@ def main():
         print(f"Executing query for {question_id} on database '{db_id}'...")
         query_result = execute_query(db_id, gold_sql)
         
-        # Always include the result, even if there was an error
-        all_results[question_id] = query_result
+        # Only include results where an error occurred
+        if not query_result["success"]:
+            error_results[question_id] = {
+                "query_result": query_result,
+                "db_id": db_id,
+                "gold_sql": gold_sql,
+                "question": item.get("question", "")
+            }
 
     # Write output JSON with custom encoder to handle PostgreSQL types
     try:
         with open(OUTPUT_JSON_PATH, 'w', encoding='utf-8') as f:
-            json.dump(all_results, f, ensure_ascii=False, indent=4, cls=PostgreSQLJSONEncoder)
-        print(f"Successfully saved results to {OUTPUT_JSON_PATH}")
+            json.dump(error_results, f, ensure_ascii=False, indent=4, cls=PostgreSQLJSONEncoder)
+        print(f"Successfully saved error results to {OUTPUT_JSON_PATH}")
+        print(f"Found {len(error_results)} queries with errors out of {len(all_questions)} total queries.")
     except IOError as e:
         print(f"Error writing output JSON to {OUTPUT_JSON_PATH}: {e}")
 
