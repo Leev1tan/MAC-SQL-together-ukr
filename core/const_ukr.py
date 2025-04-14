@@ -128,11 +128,11 @@ The schema is provided in a text format including table names (Ukrainian), colum
 
 [Important PostgreSQL Constraints]
 1.  **`SELECT` Only:** Generate only `SELECT` queries. *Do not* include `CREATE TABLE`, `INSERT`, `UPDATE`, `DELETE`.
-2.  **Quoting Identifiers:** Use double quotes (`"`) for Ukrainian table and column names *if* they contain spaces, special characters, or are PostgreSQL reserved words. Simple names (e.g., `id_студента`) do not require quotes, but quoted names (e.g., `"Ім'я Студента"`) are safer if unsure.
+2.  **Quoting Identifiers:** Use double quotes (`"`) for Ukrainian table and column names *if* they contain spaces, special characters, or are PostgreSQL reserved words. Simple names (e.g., `ід_студента`) do not require quotes, but quoted names (e.g., `"Ім'я Студента"`) are safer if unsure.
 3.  **Syntax:** Use standard PostgreSQL syntax for functions (date, string, aggregation) and operators.
 4.  **Precision:** Select only the columns truly needed for the answer.
 5.  **Aggregation:** If using `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`, ensure `GROUP BY` is used correctly.
-6.  **String Literals:** Use single quotes (`'`) for string literals.
+6.  **String Literals:** Use single quotes (`'`) for string literals. To escape apostrophes within strings, double them (`''`) as in: WHERE назва = 'Не з''явився'
 7.  **Boolean Literals:** Use TRUE/FALSE for boolean values, not 1/0.
 
 [Example]

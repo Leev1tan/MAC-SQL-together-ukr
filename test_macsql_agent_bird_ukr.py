@@ -636,7 +636,7 @@ def parse_arguments():
     parser.add_argument("--seed", type=int, default=42,
                         help="Random seed for sampling")
     
-    parser.add_argument("--model", type=str, default=os.environ.get("MODEL_NAME", "meta-llama/Llama-3.3-70B-Instruct-Turbo"),
+    parser.add_argument("--model", type=str, default=os.environ.get("MODEL_NAME", "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"),
                         help="Model name to use")
     parser.add_argument("--cache-dir", type=str, default=None,
                         help="Directory to cache API responses")

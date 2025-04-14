@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-04-14 16:05:19",
+  "model": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+  "dataset": "bird-ukr",
+  "execution_accuracy": 0.0,
+  "num_samples": 3,
+  "random_seed": 42,
+  "avg_gold_time": 0.0033365885416666665,
+  "avg_pred_time": 0.0010008811950683594,
+  "results": [
+    {
+      "question_id": "авіакомпанія_gen_015",
+      "db_id": "авіакомпанія",
+      "question": "Для кожного аеропорту порахуйте кількість відправлень та прибуттів за останній рік.",
+      "evidence": "",
+      "gold_sql": "WITH AirportFlights AS ( SELECT m.аеропорт_відправлення_id AS airport_id, 'відправлення' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_відправлення >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') UNION ALL SELECT m.аеропорт_призначення_id AS airport_id, 'прибуття' AS type FROM рейси r JOIN маршрути m ON r.маршрут_id = m.id WHERE r.дата_час_прибуття >= CURRENT_DATE - INTERVAL '1 year' AND r.статус_id IN (SELECT id FROM статуси_рейсів WHERE назва = 'Виконано') ) SELECT a.назва, a.місто, SUM(CASE WHEN af.type = 'відправлення' THEN 1 ELSE 0 END) AS кількість_відправлень, SUM(CASE WHEN af.type = 'прибуття' THEN 1 ELSE 0 END) AS кількість_прибуттів FROM AirportFlights af JOIN аеропорти a ON af.airport_id = a.id GROUP BY a.id, a.назва, a.місто ORDER BY кількість_відправлень DESC, кількість_прибуттів DESC;",
+      "status": "Success",
+      "agent_time": 0,
+      "gold_time": 0.005004405975341797,
+      "pred_time": 0,
+      "execution_match": false,
+      "pred_error": "column t3.код_аеропорту_відправлення does not exist\nLINE 10:       ON T2.\"код_іата\" = T3.\"код_аеропорту_відправлення\"\n                                  ^\n",
+      "exact_match": false,
+      "pred_sql": "SELECT T1.\"назва\", \n       COALESCE(T2.departures, 0) AS departures,\n       COALESCE(T3.arrivals, 0) AS arrivals\n  FROM аеропорти AS T1\n  LEFT JOIN (\n    SELECT T2.\"код_іата\", \n           COUNT(*) AS departures\n      FROM аеропорти AS T2\n      JOIN рейси AS T3\n      ON T2.\"код_іата\" = T3.\"код_аеропорту_відправлення\"\n      WHERE T3.\"дата_час_відправлення\" >= NOW() - INTERVAL '1 year'\n      GROUP BY T2.\"код_іата\"\n  ) AS T2\n  ON T1.\"код_іата\" = T2.\"код_іата\"\n  LEFT JOIN (\n    SELECT T2.\"код_іата\", \n           COUNT(*) AS arrivals\n      FROM аеропорти AS T2\n      JOIN рейси AS T3\n      ON T2.\"код_іата\" = T3.\"код_аеропорту_прибуття\"\n      WHERE T3.\"дата_час_прибуття\" >= NOW() - INTERVAL '1 year'\n      GROUP BY T2.\"код_іата\"\n  ) AS T3\n  ON T1.\"код_іата\" = T3.\"код_іата\"\n  GROUP BY T1.\"назва\""
+    },
+    {
+      "question_id": "авіакомпанія_gen_004",
+      "db_id": "авіакомпанія",
+      "question": "Знайдіть 5 співробітників з найвищою зарплатою.",
+      "evidence": "",
+      "gold_sql": "SELECT прізвище, імя, зарплата FROM персонал ORDER BY зарплата DESC NULLS LAST LIMIT 5;",
+      "status": "Success",
+      "agent_time": 0,
+      "gold_time": 0.002002716064453125,
+      "pred_time": 0.0010004043579101562,
+      "execution_match": false,
+      "exact_match": false,
+      "pred_sql": "SELECT \"прізвище\", \"імя\", \"по_батькові\", \"зарплата\"\n  FROM персонал\n  ORDER BY \"зарплата\" DESC\n  LIMIT 5;"
+    },
+    {
+      "question_id": "ресторан_gen_006",
+      "db_id": "ресторан",
+      "question": "Знайдіть страви дорожчі за 200.",
+      "evidence": "",
+      "gold_sql": "SELECT назва, ціна FROM страви WHERE ціна > 200 AND активна = TRUE;",
+      "status": "Success",
+      "agent_time": 0,
+      "gold_time": 0.003002643585205078,
+      "pred_time": 0.002002239227294922,
+      "execution_match": false,
+      "exact_match": false,
+      "pred_sql": "SELECT назва, опис, вага_грам, час_приготування_хвилин\n  FROM страви\n  WHERE ціна > 200"
+    }
+  ]
+}
